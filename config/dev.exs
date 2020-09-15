@@ -26,7 +26,7 @@ config :atmanirbhar, AtmanirbharWeb.Endpoint,
       "--mode",
       "development",
       "--watch-stdin",
-      cd: Path.expand("../assets", __DIR__)
+      cd: Path.expand("../apps/atmanirbhar/assets", __DIR__)
     ]
   ]
 
