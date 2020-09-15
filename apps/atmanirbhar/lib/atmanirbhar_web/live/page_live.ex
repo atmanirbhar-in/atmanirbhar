@@ -3,7 +3,9 @@ defmodule AtmanirbharWeb.PageLive do
 
   @impl true
   def mount(_params, _session, socket) do
-    {:ok, assign(socket, query: "", results: %{})}
+    shops = Atmanirbhar.Marketplace.list_shops()
+
+    {:ok, assign(socket, query: "", results: %{}, shops: shops)}
   end
 
   @impl true

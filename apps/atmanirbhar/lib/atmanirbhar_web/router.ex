@@ -92,6 +92,19 @@ defmodule AtmanirbharWeb.Router do
     live "/cities/:id", CityLive.Show, :show
     live "/cities/:id/show/edit", CityLive.Show, :edit
 
+    live "/shops", ShopLive.Index, :index
+    live "/shops/new", ShopLive.Index, :new
+    live "/shops/:id/edit", ShopLive.Index, :edit
+    live "/shops/:id", ShopLive.Show, :show
+    live "/shops/:id/show/edit", ShopLive.Show, :edit
+
+    live "/advertisements", AdvertisementLive.Index, :index
+    live "/advertisements/new", AdvertisementLive.Index, :new
+    live "/advertisements/:id/edit", AdvertisementLive.Index, :edit
+    live "/advertisements/:id", AdvertisementLive.Show, :show
+    live "/advertisements/:id/show/edit", AdvertisementLive.Show, :edit
+
+
 
   end
 
