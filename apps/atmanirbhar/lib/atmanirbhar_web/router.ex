@@ -77,6 +77,22 @@ defmodule AtmanirbharWeb.Router do
     get "/users/confirm", UserConfirmationController, :new
     post "/users/confirm", UserConfirmationController, :create
     get "/users/confirm/:token", UserConfirmationController, :confirm
+
+    live "/pincodes", PincodeLive.Index, :index
+    live "/pincodes/new", PincodeLive.Index, :new
+    live "/pincodes/:id/edit", PincodeLive.Index, :edit
+
+    live "/pincodes/:id", PincodeLive.Show, :show
+    live "/pincodes/:id/show/edit", PincodeLive.Show, :edit
+
+    live "/cities", CityLive.Index, :index
+    live "/cities/new", CityLive.Index, :new
+    live "/cities/:id/edit", CityLive.Index, :edit
+
+    live "/cities/:id", CityLive.Show, :show
+    live "/cities/:id/show/edit", CityLive.Show, :edit
+
+
   end
 
   if Mix.env == :dev do

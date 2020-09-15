@@ -1,0 +1,39 @@
+<h1>Listing Pincodes</h1>
+
+<%= if @live_action in [:new, :edit] do %>
+  <%= live_modal @socket, AtmanirbharWeb.PincodeLive.FormComponent,
+    id: @pincode.id || :new,
+    title: @page_title,
+    action: @live_action,
+    pincode: @pincode,
+    return_to: Routes.pincode_index_path(@socket, :index) %>
+<% end %>
+
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>City</th>
+      <th>Description</th>
+
+      <th></th>
+    </tr>
+  </thead>
+  <tbody id="pincodes">
+    <%= for pincode <- @pincodes do %>
+      <tr id="pincode-<%= pincode.id %>">
+        <td><%= pincode.name %></td>
+        <td><%= pincode.city %></td>
+        <td><%= pincode.description %></td>
+
+        <td>
+          <span><%= live_redirect "Show", to: Routes.pincode_show_path(@socket, :show, pincode) %></span>
+          <span><%= live_patch "Edit", to: Routes.pincode_index_path(@socket, :edit, pincode) %></span>
+          <span><%= link "Delete", to: "#", phx_click: "delete", phx_value_id: pincode.id, data: [confirm: "Are you sure?"] %></span>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<span><%= live_patch "New Pincode", to: Routes.pincode_index_path(@socket, :new) %></span>

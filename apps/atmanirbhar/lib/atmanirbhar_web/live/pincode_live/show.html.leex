@@ -1,0 +1,32 @@
+<h1>Show Pincode</h1>
+
+<%= if @live_action in [:edit] do %>
+  <%= live_modal @socket, AtmanirbharWeb.PincodeLive.FormComponent,
+    id: @pincode.id,
+    title: @page_title,
+    action: @live_action,
+    pincode: @pincode,
+    return_to: Routes.pincode_show_path(@socket, :show, @pincode) %>
+<% end %>
+
+<ul>
+
+  <li>
+    <strong>Name:</strong>
+    <%= @pincode.name %>
+  </li>
+
+  <li>
+    <strong>City:</strong>
+    <%= @pincode.city %>
+  </li>
+
+  <li>
+    <strong>Description:</strong>
+    <%= @pincode.description %>
+  </li>
+
+</ul>
+
+<span><%= live_patch "Edit", to: Routes.pincode_show_path(@socket, :edit, @pincode), class: "button" %></span>
+<span><%= live_redirect "Back", to: Routes.pincode_index_path(@socket, :index) %></span>
