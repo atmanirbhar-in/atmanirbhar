@@ -4,8 +4,13 @@ defmodule AtmanirbharWeb.PageLive do
   @impl true
   def mount(_params, _session, socket) do
     shops = Atmanirbhar.Marketplace.list_shops()
+    advertisements = Atmanirbhar.Marketplace.list_advertisements()
 
-    {:ok, assign(socket, query: "", results: %{}, shops: shops)}
+    {:ok, assign(socket, query: "",
+        results: %{},
+        shops: shops,
+        advertisements: advertisements
+      )}
   end
 
   @impl true
