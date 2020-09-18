@@ -41,7 +41,7 @@ defmodule AtmanirbharWeb.Router do
 
     scope "/" do
       pipe_through :browser
-      live_dashboard "/dashboard", metrics: AtmanirbharWeb.Telemetry
+      live_dashboard "/live_dashboard", metrics: AtmanirbharWeb.Telemetry
     end
   end
 
@@ -68,6 +68,9 @@ defmodule AtmanirbharWeb.Router do
     put "/users/settings/update_email", UserSettingsController, :update_email
     get "/users/settings/confirm_email/:token", UserSettingsController, :confirm_email
     put "/users/settings/update_avatar", UserSettingsController, :update_avatar
+
+    live "/dashboard", UserDashboardLive.Index, :index
+
   end
 
   scope "/", AtmanirbharWeb do
