@@ -40,6 +40,19 @@ defmodule AtmanirbharWeb.AdvertisementLive.FormComponent do
     end
   end
 
+  defp save_advertisement(socket, :new_ad, advertisement_params) do
+    case Marketplace.create_advertisement(advertisement_params) do
+      {:ok, _advertisement} ->
+        {:noreply,
+         socket
+         |> put_flash(:info, "Advertisement created successfully")
+         |> push_redirect(to: socket.assigns.return_to)}
+
+      {:error, %Ecto.Changeset{} = changeset} ->
+        {:noreply, assign(socket, changeset: changeset)}
+    end
+  end
+
   defp save_advertisement(socket, :new, advertisement_params) do
     case Marketplace.create_advertisement(advertisement_params) do
       {:ok, _advertisement} ->
