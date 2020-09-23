@@ -1,6 +1,6 @@
 defmodule AtmanirbharWeb.Router do
   use AtmanirbharWeb, :router
-  use Kaffy.Routes #, scope: "/admin", pipe_through: [:some_plug, :authenticate]
+  use Kaffy.Routes , scope: "/admin"
 
   import AtmanirbharWeb.UserAuth
 
@@ -12,6 +12,18 @@ defmodule AtmanirbharWeb.Router do
     plug :protect_from_forgery
     plug :put_secure_browser_headers
     plug :fetch_current_user
+  end
+
+  # Admin Dashboard
+  pipeline :kaffy_browser do
+    plug :accepts, ["html"]
+    plug :fetch_session
+    plug :fetch_live_flash
+    # plug :put_root_layout, {AtmanirbharWeb.LayoutView, :root}
+    plug :protect_from_forgery
+    plug :put_secure_browser_headers
+    plug :fetch_current_user
+    plug :require_authenticated_user
   end
 
   pipeline :api do
