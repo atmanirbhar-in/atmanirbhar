@@ -27,8 +27,10 @@ config :logger, :console,
 config :phoenix, :json_library, Jason
 
 config :waffle,
-  storage: Waffle.Storage.S3, # or Waffle.Storage.Local
-  bucket: System.get_env("AWS_BUCKET_NAME") # if using S3
+  # or Waffle.Storage.Local
+  storage: Waffle.Storage.S3,
+  # if using S3
+  bucket: System.get_env("AWS_BUCKET_NAME")
 
 # If using S3:
 config :ex_aws,
@@ -42,9 +44,12 @@ config :atmanirbhar, Atmanirbhar.Mailer,
   api_key: "my_api_key"
 
 config :kaffy,
-   otp_app: :atmanirbhar,
-   ecto_repo: Atmanirbhar.Repo,
-   router: AtmanirbharWeb.Router
+  otp_app: :atmanirbhar,
+  ecto_repo: Atmanirbhar.Repo,
+  router: AtmanirbharWeb.Router,
+  admin_title: "Admanirbhar Dashboard",
+  admin_logo: "/images/atmanirbhar-logo-wide.png",
+  admin_logo_mini: "/images/atmanirbhar-logo.png"
 
 # Import environment specific config. This must remain at the bottom
 # of this file so it overrides the configuration defined above.
