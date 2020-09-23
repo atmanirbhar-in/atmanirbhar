@@ -82,6 +82,7 @@ defmodule AtmanirbharWeb.Router do
     put "/users/settings/update_avatar", UserSettingsController, :update_avatar
 
     live "/dashboard", UserDashboardLive.Index, :index
+    live "/dashboard/new_advertisement", UserDashboardLive.Index, :new_ad
 
   end
 

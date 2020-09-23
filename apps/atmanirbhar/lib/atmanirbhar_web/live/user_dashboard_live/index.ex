@@ -1,5 +1,6 @@
 defmodule AtmanirbharWeb.UserDashboardLive.Index do
   use AtmanirbharWeb, :live_view
+  alias Atmanirbhar.Marketplace.Advertisement
 
   @impl true
   def mount(_params, _session, socket) do
@@ -25,5 +26,12 @@ defmodule AtmanirbharWeb.UserDashboardLive.Index do
     |> assign(:page_title, "Edit config")
     # |> assign(:advertisement, Marketplace.get_advertisement!(id))
   end
+
+  defp apply_action(socket, :new_ad, _params) do
+    socket
+    |> assign(:page_title, "New Advertisement")
+    |> assign(:advertisement, %Advertisement{})
+  end
+
 
 end

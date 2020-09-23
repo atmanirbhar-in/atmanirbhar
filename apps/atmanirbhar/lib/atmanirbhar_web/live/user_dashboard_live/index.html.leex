@@ -4,7 +4,23 @@
 
 
 <button class="btn btn-sm">Post a Deal</button>
-<button class="btn btn-sm">Post an Advertisement</button>
+<button class="btn btn-sm">
+  <%= live_patch "Post an Advertisement", to: Routes.user_dashboard_index_path(@socket, :new_ad) %>
+</button>
+
+<%= if @live_action in [:new_ad, :edit_ad] do %>
+  <%= live_modal @socket, AtmanirbharWeb.AdvertisementLive.FormComponent,
+    id: @advertisement.id || :new,
+    title: @page_title,
+    action: @live_action,
+    advertisement: @advertisement,
+    return_to: Routes.advertisement_index_path(@socket, :index) %>
+<% end %>
+
+
+<span>
+</span>
+
 
 <p>
   Add my Business.
