@@ -33,5 +33,10 @@ defmodule AtmanirbharWeb.UserDashboardLive.Index do
     |> assign(:advertisement, %Advertisement{})
   end
 
+  def handle_event("recover_wizard", params, socket) do
+    # rebuild state based on client input data up to the current step
+    IO.puts "---------- recover wizaer "
+    {:noreply, socket}
+  end
 
 end

@@ -4,6 +4,7 @@ module.exports = {
     './src/**/*.leex',
   ],
   plugins: [
-    require('kutty'),
+      require('kutty'),
+      require('@tailwindcss/custom-forms'),
   ]
 }
