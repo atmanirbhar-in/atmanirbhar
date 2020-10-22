@@ -4,5 +4,5 @@
     <%= link "Logout", to: Routes.user_session_path(@conn, :delete), method: :delete, class: "btn btn-sm btn-link" %>
 <% else %>
   <%= link "Sign In", to: Routes.user_session_path(@conn, :new), class: "btn btn-sm btn-link" %>
-  <%= link "Get Started", to: Routes.user_registration_path(@conn, :new), class: "btn btn-sm btn-primary" %>
+  <%= link "Register", to: Routes.user_registration_path(@conn, :new), class: "btn btn-sm btn-primary" %>
 <% end %>
