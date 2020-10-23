@@ -89,11 +89,19 @@
     <%= @inner_content %>
 
     <footer class="footer bg-gray-800 text-gray-600 mt-auto py-6">
-      <div class="container mx-auto px-4 max-w-6xl flex flex-1">
-        <div class="flex w-1/2">
-          <span class="text-muted">Atmanirbhar</span>
+      <div class="container mx-auto px-4 max-w-6xl flex flex-col md:flex-row flex-1">
+        <div class="flex flex-col w-full md:w-1/2">
+          <span class="text-muted font-bold">Atmanirbhar.in</span>
+          <p class="text-sm">
+            We are making it easy for small Business reach more Audience. i.e Vocal for Local.
+            <br/>
+            Just Enter Pincode any find nearby Businesses. Post limited time deals daily.
+            <br/>
+            List your Business, post product advertisement.
+          </p>
+          <p>Helping micro Businesses and home based business become <span class="font-semibold">Atmanirbhar</span></p>
         </div>
-        <div class="w-1/2">
+        <div class="w-full md:w-1/2">
           <div class="md:inline-flex space-x-1 text-white">
             <%= link "Vocal For Local", to: Routes.page_path(@conn, :index), class: "btn btn-sm btn-link text-white" %>
             <%= link "Digital Services", to: Routes.page_path(@conn, :index), class: "btn btn-sm btn-link text-white" %>
