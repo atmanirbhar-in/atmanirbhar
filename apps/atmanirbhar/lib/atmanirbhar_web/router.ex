@@ -120,7 +120,12 @@ defmodule AtmanirbharWeb.Router do
     live "/advertisements/:id", AdvertisementLive.Show, :show
     live "/advertisements/:id/show/edit", AdvertisementLive.Show, :edit
 
+    live "/deals", DealLive.Index, :index
+    live "/deals/new", DealLive.Index, :new
+    live "/deals/:id/edit", DealLive.Index, :edit
 
+    live "/deals/:id", DealLive.Show, :show
+    live "/deals/:id/show/edit", DealLive.Show, :edit
 
   end
 

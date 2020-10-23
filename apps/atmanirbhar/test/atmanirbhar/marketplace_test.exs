@@ -134,4 +134,73 @@ defmodule Atmanirbhar.MarketplaceTest do
       assert %Ecto.Changeset{} = Marketplace.change_advertisement(advertisement)
     end
   end
+
+  describe "deals" do
+    alias Atmanirbhar.Marketplace.Deal
+
+    @valid_attrs %{availability: "some availability", description: "some description", is_approved: true, name: "some name", name_hindi: "some name_hindi", price: 42}
+    @update_attrs %{availability: "some updated availability", description: "some updated description", is_approved: false, name: "some updated name", name_hindi: "some updated name_hindi", price: 43}
+    @invalid_attrs %{availability: nil, description: nil, is_approved: nil, name: nil, name_hindi: nil, price: nil}
+
+    def deal_fixture(attrs \\ %{}) do
+      {:ok, deal} =
+        attrs
+        |> Enum.into(@valid_attrs)
+        |> Marketplace.create_deal()
+
+      deal
+    end
+
+    test "list_deals/0 returns all deals" do
+      deal = deal_fixture()
+      assert Marketplace.list_deals() == [deal]
+    end
+
+    test "get_deal!/1 returns the deal with given id" do
+      deal = deal_fixture()
+      assert Marketplace.get_deal!(deal.id) == deal
+    end
+
+    test "create_deal/1 with valid data creates a deal" do
+      assert {:ok, %Deal{} = deal} = Marketplace.create_deal(@valid_attrs)
+      assert deal.availability == "some availability"
+      assert deal.description == "some description"
+      assert deal.is_approved == true
+      assert deal.name == "some name"
+      assert deal.name_hindi == "some name_hindi"
+      assert deal.price == 42
+    end
+
+    test "create_deal/1 with invalid data returns error changeset" do
+      assert {:error, %Ecto.Changeset{}} = Marketplace.create_deal(@invalid_attrs)
+    end
+
+    test "update_deal/2 with valid data updates the deal" do
+      deal = deal_fixture()
+      assert {:ok, %Deal{} = deal} = Marketplace.update_deal(deal, @update_attrs)
+      assert deal.availability == "some updated availability"
+      assert deal.description == "some updated description"
+      assert deal.is_approved == false
+      assert deal.name == "some updated name"
+      assert deal.name_hindi == "some updated name_hindi"
+      assert deal.price == 43
+    end
+
+    test "update_deal/2 with invalid data returns error changeset" do
+      deal = deal_fixture()
+      assert {:error, %Ecto.Changeset{}} = Marketplace.update_deal(deal, @invalid_attrs)
+      assert deal == Marketplace.get_deal!(deal.id)
+    end
+
+    test "delete_deal/1 deletes the deal" do
+      deal = deal_fixture()
+      assert {:ok, %Deal{}} = Marketplace.delete_deal(deal)
+      assert_raise Ecto.NoResultsError, fn -> Marketplace.get_deal!(deal.id) end
+    end
+
+    test "change_deal/1 returns a deal changeset" do
+      deal = deal_fixture()
+      assert %Ecto.Changeset{} = Marketplace.change_deal(deal)
+    end
+  end
 end
