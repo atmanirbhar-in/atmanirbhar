@@ -34,3 +34,4 @@ npm-debug.log
 /priv/static/
 !/priv/static/images/atmanirbhar-logo.png
 !/priv/static/images/atmanirbhar-logo-wide.png
+!/priv/static/images/default/*
