@@ -53,6 +53,7 @@ defmodule AtmanirbharWeb.AdvertisementLive.FormComponent do
     end
   end
 
+  defp save_advertisement(socket, :new_advertisement, advertisement_params), do: save_advertisement(socket, :new, advertisement_params)
   defp save_advertisement(socket, :new, advertisement_params) do
     case Marketplace.create_advertisement(advertisement_params) do
       {:ok, _advertisement} ->
@@ -65,4 +66,5 @@ defmodule AtmanirbharWeb.AdvertisementLive.FormComponent do
         {:noreply, assign(socket, changeset: changeset)}
     end
   end
+
 end

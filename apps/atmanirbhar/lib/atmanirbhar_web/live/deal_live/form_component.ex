@@ -40,6 +40,8 @@ defmodule AtmanirbharWeb.DealLive.FormComponent do
     end
   end
 
+
+  defp save_deal(socket, :new_deal, deal_params), do: save_deal(socket, :new, Map.put_new(deal_params, "is_approved", true) )
   defp save_deal(socket, :new, deal_params) do
     case Marketplace.create_deal(deal_params) do
       {:ok, _deal} ->
