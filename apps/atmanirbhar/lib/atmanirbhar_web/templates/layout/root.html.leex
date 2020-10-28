@@ -22,9 +22,10 @@
     <header class="z-30 fixed top-0 right-0 left-0 bg-white shadow px-2 sm:px-4 py-4">
       <div class="container mx-auto flex justify-between items-center">
         <div class="flex">
-          <a href="/" title="Atmanirbhar Home Page" class="flex items-center text-xl text-gray-900 mr-2">
-            <%= img_tag(Routes.path(@conn, "/images/atmanirbhar-logo.png"), class: "w-8 h-8 md:w-12 md:h-12") %>
-          </a>
+          <%= live_redirect to: Routes.page_path(@conn, :index), class: "text-xl" do %>
+          <%= img_tag(Routes.path(@conn, "/images/atmanirbhar-logo.png"), class: "w-8 h-8 md:w-12 md:h-12") %>
+          <% end %>
+
           <div class="flex">
             <input name="" type="text" value="" placeholder="your Pincode"
                    class="p-1 md:p-2 text-gray-600 font-semibold text-xs
