@@ -34,6 +34,8 @@ defmodule AtmanirbharWeb.Router do
     pipe_through :browser
 
     live "/", PageLive, :index
+    live "/new_deal", PageLive, :new_deal
+    live "/new_advertisement", PageLive, :new_advertisement
   end
 
   # Other scopes may use custom stacks.
@@ -84,6 +86,18 @@ defmodule AtmanirbharWeb.Router do
     live "/dashboard", UserDashboardLive.Index, :index
     live "/dashboard/new_advertisement", UserDashboardLive.Index, :new_ad
 
+    live "/advertisements", AdvertisementLive.Index, :index
+    live "/advertisements/new", AdvertisementLive.Index, :new
+    live "/advertisements/:id/edit", AdvertisementLive.Index, :edit
+    live "/advertisements/:id", AdvertisementLive.Show, :show
+    live "/advertisements/:id/show/edit", AdvertisementLive.Show, :edit
+
+    live "/deals", DealLive.Index, :index
+    live "/deals/new", DealLive.Index, :new
+    live "/deals/:id/edit", DealLive.Index, :edit
+
+    live "/deals/:id", DealLive.Show, :show
+    live "/deals/:id/show/edit", DealLive.Show, :edit
   end
 
   scope "/", AtmanirbharWeb do
@@ -114,18 +128,6 @@ defmodule AtmanirbharWeb.Router do
     live "/shops/:id", ShopLive.Show, :show
     live "/shops/:id/show/edit", ShopLive.Show, :edit
 
-    live "/advertisements", AdvertisementLive.Index, :index
-    live "/advertisements/new", AdvertisementLive.Index, :new
-    live "/advertisements/:id/edit", AdvertisementLive.Index, :edit
-    live "/advertisements/:id", AdvertisementLive.Show, :show
-    live "/advertisements/:id/show/edit", AdvertisementLive.Show, :edit
-
-    live "/deals", DealLive.Index, :index
-    live "/deals/new", DealLive.Index, :new
-    live "/deals/:id/edit", DealLive.Index, :edit
-
-    live "/deals/:id", DealLive.Show, :show
-    live "/deals/:id/show/edit", DealLive.Show, :edit
 
     live "/resources", RawMaterialLive.Index, :index
     live "/raw_materials/new", RawMaterialLive.Index, :new

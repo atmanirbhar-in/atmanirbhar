@@ -1,6 +1,8 @@
 defmodule AtmanirbharWeb.PageLive do
   use AtmanirbharWeb, :live_view
 
+  alias Atmanirbhar.Marketplace.{Advertisement, Deal}
+
   @impl true
   def mount(_params, _session, socket) do
     shops = Atmanirbhar.Marketplace.list_shops()
@@ -19,6 +21,11 @@ defmodule AtmanirbharWeb.PageLive do
   def handle_event("suggest", %{"q" => query}, socket) do
     {:noreply, assign(socket, results: search(query), query: query)}
   end
+
+  def handle_params(params, _url, socket) do
+    {:noreply, apply_action(socket, socket.assigns.live_action, params)}
+  end
+
 
   @impl true
   def handle_event("search", %{"q" => query}, socket) do
@@ -45,4 +52,21 @@ defmodule AtmanirbharWeb.PageLive do
         into: %{},
         do: {app, vsn}
   end
+
+  defp apply_action(socket, :index, _params) do
+    socket
+    |> assign(:page_title, "Micro businesses in this region")
+  end
+
+  defp apply_action(socket, :new_deal, _params) do
+    socket
+    |> assign(:page_title, "Add your deal in this region")
+    |> assign(:deal, %Deal{})
+  end
+  defp apply_action(socket, :new_advertisement, _params) do
+    socket
+    |> assign(:page_title, "Add your Advertisement in this region")
+    |> assign(:advertisement, %Advertisement{})
+  end
+
 end
