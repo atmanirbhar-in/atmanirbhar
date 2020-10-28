@@ -1,0 +1,47 @@
+<h1>Show Raw material</h1>
+
+<%= if @live_action in [:edit] do %>
+  <%= live_modal @socket, AtmanirbharWeb.RawMaterialLive.FormComponent,
+    id: @raw_material.id,
+    title: @page_title,
+    action: @live_action,
+    raw_material: @raw_material,
+    return_to: Routes.raw_material_show_path(@socket, :show, @raw_material) %>
+<% end %>
+
+<ul>
+
+  <li>
+    <strong>Name:</strong>
+    <%= @raw_material.name %>
+  </li>
+
+  <li>
+    <strong>Package quantity:</strong>
+    <%= @raw_material.package_quantity %>
+  </li>
+
+  <li>
+    <strong>Picture url:</strong>
+    <%= @raw_material.picture_url %>
+  </li>
+
+  <li>
+    <strong>Price:</strong>
+    <%= @raw_material.price %>
+  </li>
+
+  <li>
+    <strong>Category:</strong>
+    <%= @raw_material.category_id %>
+  </li>
+
+  <li>
+    <strong>Seller:</strong>
+    <%= @raw_material.seller_id %>
+  </li>
+
+</ul>
+
+<span><%= live_patch "Edit", to: Routes.raw_material_show_path(@socket, :edit, @raw_material), class: "button" %></span>
+<span><%= live_redirect "Back", to: Routes.raw_material_index_path(@socket, :index) %></span>

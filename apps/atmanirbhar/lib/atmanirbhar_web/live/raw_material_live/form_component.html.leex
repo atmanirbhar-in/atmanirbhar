@@ -1,0 +1,34 @@
+<h2><%= @title %></h2>
+
+<%= f = form_for @changeset, "#",
+  id: "raw_material-form",
+  phx_target: @myself,
+  phx_change: "validate",
+  phx_submit: "save" %>
+
+  <%= label f, :name %>
+  <%= text_input f, :name %>
+  <%= error_tag f, :name %>
+
+  <%= label f, :package_quantity %>
+  <%= text_input f, :package_quantity %>
+  <%= error_tag f, :package_quantity %>
+
+  <%= label f, :picture_url %>
+  <%= text_input f, :picture_url %>
+  <%= error_tag f, :picture_url %>
+
+  <%= label f, :price %>
+  <%= text_input f, :price %>
+  <%= error_tag f, :price %>
+
+  <%= label f, :category_id %>
+  <%= text_input f, :category_id %>
+  <%= error_tag f, :category_id %>
+
+  <%= label f, :seller_id %>
+  <%= text_input f, :seller_id %>
+  <%= error_tag f, :seller_id %>
+
+  <%= submit "Save", phx_disable_with: "Saving..." %>
+</form>

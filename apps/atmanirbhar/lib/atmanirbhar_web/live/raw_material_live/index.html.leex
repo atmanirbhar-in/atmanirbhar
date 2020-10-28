@@ -1,0 +1,44 @@
+<%= if @live_action in [:new, :edit] do %>
+  <%= live_modal @socket, AtmanirbharWeb.RawMaterialLive.FormComponent,
+    id: @raw_material.id || :new,
+    title: @page_title,
+    action: @live_action,
+    raw_material: @raw_material,
+    return_to: Routes.raw_material_index_path(@socket, :index) %>
+<% end %>
+
+<section class="container">
+  <h1>
+    Get raw materials you need.
+    Wholesale price for members who listed their Business on our platform.
+  </h1>
+  <h2>Delivery in Pune and other major cities in India</h2>
+</section>
+
+
+<section class="flex flex-wrap">
+    <%= for raw_material <- @raw_materials do %>
+      <div id="raw_material-<%= raw_material.id %>" class="w-1/2 md:w-1/3 lg:w-1/4 xd:w-1/5
+                                                           p-2 md:p-4
+                                                           ">
+        <div class="bg-white w-full">
+          <img alt="" src="https://picsum.photos/200?gray" class="bg-gray w-11/12 h-auto" />
+          <p>
+            <%= raw_material.name %>
+          </p>
+
+          <p>
+            <%= raw_material.package_quantity %>
+          </p>
+          <h5 class="text-right">
+            Retail price <%= raw_material.retail_price %> INR
+            <br/>
+            Member price <%= raw_material.wholesale_price %> INR
+          </h5>
+        </div>
+      </div>
+    <% end %>
+
+</section>
+
+

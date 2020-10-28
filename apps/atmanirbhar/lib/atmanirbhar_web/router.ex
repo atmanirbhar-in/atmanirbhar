@@ -127,6 +127,15 @@ defmodule AtmanirbharWeb.Router do
     live "/deals/:id", DealLive.Show, :show
     live "/deals/:id/show/edit", DealLive.Show, :edit
 
+    live "/resources", RawMaterialLive.Index, :index
+    live "/raw_materials/new", RawMaterialLive.Index, :new
+    live "/raw_materials/:id/edit", RawMaterialLive.Index, :edit
+
+    live "/raw_materials/:id", RawMaterialLive.Show, :show
+    live "/raw_materials/:id/show/edit", RawMaterialLive.Show, :edit
+
+
+
   end
 
   if Mix.env == :dev do
