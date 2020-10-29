@@ -1,17 +1,9 @@
 <section class="container-full mx-auto">
   <div class="flex flex-wrap w-full">
 
-    <%= if @live_action in [:new_deal] do %>
-    <%= live_modal @socket, AtmanirbharWeb.DealLive.FormComponent,
-        id: @deal.id || :new,
-        title: @page_title,
-        action: @live_action,
-        deal: @deal,
-        return_to: Routes.page_path(@socket, :index) %>
-    <% end %>
 
     <div class="w-1/2 md:w-1/3 lg:w-1/4 xl:w-1/5 p-1 mb-1 lg:mb-6">
-      <%= live_patch to: Routes.page_path(@socket, :new_deal), class: "text-xl" do %>
+      <%= live_patch to: Routes.user_dashboard_index_path(@socket, :new_deal), class: "text-xl" do %>
       <div class="h-full max-h-48 w-full md:w-56 md:h-56
                   rounded shadow-lg bg-white p-1
                   flex flex-col justify-between
@@ -72,21 +64,11 @@
 <section class="container-full mx-auto">
 
 
-  <%= if @live_action in [:new_advertisement] do %>
-  <%= live_modal @socket, AtmanirbharWeb.AdvertisementLive.FormComponent,
-      id: @advertisement.id || :new,
-      title: @page_title,
-      action: @live_action,
-      advertisement: @advertisement,
-      return_to: Routes.page_path(@socket, :index) %>
-  <% end %>
-
-
 
   <div class="flex flex-wrap content-around">
 
     <div class="w-full md:w-1/2 lg:w-1/3 xl:w-1/4 p-1 md:p-2 lg:p-4 max-w-md text-center">
-      <%= live_patch to: Routes.page_path(@socket, :new_advertisement), class: "text-xl" do %>
+      <%= live_patch to: Routes.user_dashboard_index_path(@socket, :new_advertisement), class: "text-xl" do %>
       <div class="rounded shadow-lg bg-white p-1 w-full
                   flex flex-col
                   h-40 md:h-48

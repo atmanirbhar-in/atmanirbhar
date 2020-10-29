@@ -34,8 +34,8 @@ defmodule AtmanirbharWeb.Router do
     pipe_through :browser
 
     live "/", PageLive, :index
-    live "/new_deal", PageLive, :new_deal
-    live "/new_advertisement", PageLive, :new_advertisement
+    live "/new_deal", UserDashboardLive.Index, :new_deal
+    live "/new_advertisement", UserDashboardLive.Index, :new_advertisement
   end
 
   # Other scopes may use custom stacks.
