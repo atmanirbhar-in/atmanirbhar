@@ -210,7 +210,12 @@ defmodule Atmanirbhar.Marketplace do
 
   """
   def list_deals do
-    Repo.all(Deal)
+    Repo.all(from d in Deal, order_by: [desc: d.inserted_at])
+  end
+  def list_deals_for_pincode(pincode) do
+    Repo.all(from d in Deal,
+      where: d.pincode == ^pincode,
+      order_by: [desc: d.inserted_at])
   end
 
   @doc """
@@ -245,6 +250,7 @@ defmodule Atmanirbhar.Marketplace do
     %Deal{}
     |> Deal.changeset(attrs)
     |> Repo.insert()
+    |> broadcast(:deal_created)
   end
 
   @doc """
@@ -293,4 +299,19 @@ defmodule Atmanirbhar.Marketplace do
   def change_deal(%Deal{} = deal, attrs \\ %{}) do
     Deal.changeset(deal, attrs)
   end
+
+  def subscribe(pincode) do
+    Phoenix.PubSub.subscribe(Atmanirbhar.PubSub, "marketplace:#{pincode}")
+  end
+  def subscribe() do
+    Phoenix.PubSub.subscribe(Atmanirbhar.PubSub, "marketplace")
+  end
+
+  defp broadcast({:error, reason} = error, _pincode, _event), do: error
+  defp broadcast({:ok, deal = %Deal{}}, event) do
+    Phoenix.PubSub.broadcast(Atmanirbhar.PubSub, "marketplace:#{deal.pincode}", {event, deal})
+    {:ok, deal}
+  end
+
+
 end

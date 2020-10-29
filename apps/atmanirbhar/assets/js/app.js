@@ -19,6 +19,26 @@ import {LiveSocket} from "phoenix_live_view"
 import {InitToast} from "./init_toast.js"
 
 let Hooks = {}
+
+Hooks.SetSession = {
+    DEBOUNCE_MS: 2000,
+
+    // Called when a LiveView is mounted, if it includes an element that uses this hook.
+    mounted() {
+        // `this.el` is the form.
+        this.el.addEventListener("input", (e) => {
+            clearTimeout(this.timeout)
+            this.timeout = setTimeout(() => {
+                // Ajax request to update session.
+                fetch(`/api/session?${e.target.name}=${encodeURIComponent(e.target.value)}`, { method: "post" })
+
+                // Optionally, include this so other LiveViews can be notified of changes.
+                this.pushEventTo(".phx-hook-subscribe-to-session", "updated_session_data", [e.target.name, e.target.value])
+            }, this.DEBOUNCE_MS)
+        })
+    },
+}
+
 Hooks.InitToast = InitToast
 
 let csrfToken = document.querySelector("meta[name='csrf-token']").getAttribute("content")

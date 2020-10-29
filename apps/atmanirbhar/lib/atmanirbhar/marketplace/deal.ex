@@ -10,6 +10,7 @@ defmodule Atmanirbhar.Marketplace.Deal do
     field :name_hindi, :string
     field :price, :integer
     field :user_id, :id
+    field :pincode, :integer
 
     timestamps()
   end
@@ -17,7 +18,7 @@ defmodule Atmanirbhar.Marketplace.Deal do
   @doc false
   def changeset(deal, attrs) do
     deal
-    |> cast(attrs, [:name, :name_hindi, :description, :availability, :price, :is_approved])
+    |> cast(attrs, [:name, :name_hindi, :description, :availability, :price, :is_approved, :pincode])
     |> validate_required([:name, :name_hindi, :description, :availability, :price, :is_approved])
   end
 end

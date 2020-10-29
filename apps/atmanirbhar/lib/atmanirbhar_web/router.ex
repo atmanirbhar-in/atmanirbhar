@@ -28,6 +28,7 @@ defmodule AtmanirbharWeb.Router do
 
   pipeline :api do
     plug :accepts, ["json"]
+    plug :fetch_session
   end
 
   scope "/", AtmanirbharWeb do
@@ -36,12 +37,15 @@ defmodule AtmanirbharWeb.Router do
     live "/", PageLive, :index
     live "/new_deal", UserDashboardLive.Index, :new_deal
     live "/new_advertisement", UserDashboardLive.Index, :new_advertisement
+    live "/pincode/:pincode", PageLive, :pincode
   end
 
   # Other scopes may use custom stacks.
-  # scope "/api", AtmanirbharWeb do
-  #   pipe_through :api
-  # end
+  scope "/api", AtmanirbharWeb do
+    pipe_through :api
+
+    post "/session", SessionController, :set
+  end
 
   # Enables LiveDashboard only for development
   #
@@ -83,6 +87,7 @@ defmodule AtmanirbharWeb.Router do
     get "/users/settings/confirm_email/:token", UserSettingsController, :confirm_email
     put "/users/settings/update_avatar", UserSettingsController, :update_avatar
 
+
     live "/dashboard", UserDashboardLive.Index, :index
     live "/dashboard/new_advertisement", UserDashboardLive.Index, :new_ad
 
@@ -102,6 +107,7 @@ defmodule AtmanirbharWeb.Router do
 
   scope "/", AtmanirbharWeb do
     pipe_through [:browser]
+
 
     delete "/users/logout", UserSessionController, :delete
     get "/users/confirm", UserConfirmationController, :new

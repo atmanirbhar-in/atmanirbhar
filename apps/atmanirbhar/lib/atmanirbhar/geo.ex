@@ -21,6 +21,10 @@ defmodule Atmanirbhar.Geo do
     Repo.all(Pincode)
   end
 
+  def list_only_pincodes do
+    Repo.all(from p in Pincode, select: p.name)
+  end
+
   @doc """
   Gets a single pincode.
 

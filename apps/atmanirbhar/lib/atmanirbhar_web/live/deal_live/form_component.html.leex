@@ -3,7 +3,7 @@
 <%= f = form_for @changeset, "#",
     id: "deal-form",
     phx_target: @myself,
-    class: "w-full",
+    class: "w-full flex flex-col p-4 bg-white",
     phx_change: "validate",
     phx_submit: "save" %>
 
@@ -68,5 +68,18 @@
   </div>
 </div>
 
-<%= submit "Save", phx_disable_with: "Saving...", class: "btn btn-primary" %>
+<div class="form-admin-fieldset">
+  <div class="label-box">
+    <%= label f, :pincode %>
+  </div>
+  <div class="input-box">
+    <%= text_input f, :pincode %>
+    <span class="error-msg">
+      <%= error_tag f, :pincode %>
+    </span>
+  </div>
+</div>
+
+
+<%= submit "Save", phx_disable_with: "Saving...", class: "btn btn-primary mt-2" %>
 </form>
