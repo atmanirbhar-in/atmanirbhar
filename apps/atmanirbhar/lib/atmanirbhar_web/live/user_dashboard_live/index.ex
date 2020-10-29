@@ -27,11 +27,11 @@ defmodule AtmanirbharWeb.UserDashboardLive.Index do
     # |> assign(:advertisement, Marketplace.get_advertisement!(id))
   end
 
-  defp apply_action(socket, :new_ad, _params) do
-    socket
-    |> assign(:page_title, "New Advertisement")
-    |> assign(:advertisement, %Advertisement{})
-  end
+  # defp apply_action(socket, :new_ad, _params) do
+  #   socket
+  #   |> assign(:page_title, "New Advertisement")
+  #   |> assign(:advertisement, %Advertisement{})
+  # end
 
   defp apply_action(socket, :new_advertisement, _params) do
     socket
