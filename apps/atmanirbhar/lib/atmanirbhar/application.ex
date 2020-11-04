@@ -13,6 +13,8 @@ defmodule Atmanirbhar.Application do
       AtmanirbharWeb.Telemetry,
       # Start the PubSub system
       {Phoenix.PubSub, name: Atmanirbhar.PubSub},
+      # Start Presence process
+      Atmanirbhar.Presence,
       # Start the Endpoint (http/https)
       AtmanirbharWeb.Endpoint
       # Start a worker by calling: Atmanirbhar.Worker.start_link(arg)

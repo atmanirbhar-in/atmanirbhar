@@ -7,6 +7,7 @@ defmodule Atmanirbhar.Marketplace do
   alias Atmanirbhar.Repo
 
   alias Atmanirbhar.Marketplace.Shop
+  alias Atmanirbhar.Marketplace.LocationForm
 
   @doc """
   Returns the list of shops.
@@ -102,6 +103,10 @@ defmodule Atmanirbhar.Marketplace do
     Shop.changeset(shop, attrs)
   end
 
+  def change_location_form(%LocationForm{} = location_form, attrs \\ %{}) do
+    LocationForm.changeset(location_form, attrs)
+  end
+
   alias Atmanirbhar.Marketplace.Advertisement
 
   @doc """
@@ -194,6 +199,7 @@ defmodule Atmanirbhar.Marketplace do
       %Ecto.Changeset{data: %Advertisement{}}
 
   """
+
   def change_advertisement(%Advertisement{} = advertisement, attrs \\ %{}) do
     Advertisement.changeset(advertisement, attrs)
   end

@@ -1,16 +1,30 @@
-
-
 <section class="container-full mx-auto my-2">
-  <form phx-hook="SetSession">
-    <label for="p-2 font-semibold text-sm">Enter your zipcode / pincode</label>
-    <input type="text" name="pincode" value="<%= @pincode %>"
-           class="text-gray-600 font-semibold text-xs
-                  w-32 md:w-40 h-full p-1 md:p-2
-                  border border-solid border-purple-900
-                  phx-hook-subscribe-to-session
-                  outline-none"
-           />
-  </form>
+
+  <%= f = form_for @pincode_changeset, "#",
+      id: "pincode-form",
+      phx_change: "validate-location-form",
+      class: "flex",
+      phx_submit: "set-pincode" %>
+
+  <div class="flex">
+    <%= label f, :pincode, class: "p-2 font-semibold text-sm" %>
+    <div class="flex">
+      <%= text_input f, :pincode, class: "text-gray-600 font-semibold text-xs
+                                          w-32 md:w-40 h-full p-1 md:p-2
+                                          border border-solid border-purple-900
+                                          phx-hook-subscribe-to-session
+                                          outline-none"
+          %>
+      <%= submit "Submit", phx_disable_with: "Submitting...", class: "btn btn-primary" %>
+    </div>
+    <%= error_tag f, :pincode %>
+  </div>
+
+</form>
+
+  <p>
+    <%= @reader_count %> people watching in this pincode
+  </p>
 
 </section>
 
