@@ -203,4 +203,69 @@ defmodule Atmanirbhar.MarketplaceTest do
       assert %Ecto.Changeset{} = Marketplace.change_deal(deal)
     end
   end
+
+  describe "businesses" do
+    alias Atmanirbhar.Marketplace.Business
+
+    @valid_attrs %{address: "some address", description: "some description", power_index: 42, title: "some title"}
+    @update_attrs %{address: "some updated address", description: "some updated description", power_index: 43, title: "some updated title"}
+    @invalid_attrs %{address: nil, description: nil, power_index: nil, title: nil}
+
+    def business_fixture(attrs \\ %{}) do
+      {:ok, business} =
+        attrs
+        |> Enum.into(@valid_attrs)
+        |> Marketplace.create_business()
+
+      business
+    end
+
+    test "list_businesses/0 returns all businesses" do
+      business = business_fixture()
+      assert Marketplace.list_businesses() == [business]
+    end
+
+    test "get_business!/1 returns the business with given id" do
+      business = business_fixture()
+      assert Marketplace.get_business!(business.id) == business
+    end
+
+    test "create_business/1 with valid data creates a business" do
+      assert {:ok, %Business{} = business} = Marketplace.create_business(@valid_attrs)
+      assert business.address == "some address"
+      assert business.description == "some description"
+      assert business.power_index == 42
+      assert business.title == "some title"
+    end
+
+    test "create_business/1 with invalid data returns error changeset" do
+      assert {:error, %Ecto.Changeset{}} = Marketplace.create_business(@invalid_attrs)
+    end
+
+    test "update_business/2 with valid data updates the business" do
+      business = business_fixture()
+      assert {:ok, %Business{} = business} = Marketplace.update_business(business, @update_attrs)
+      assert business.address == "some updated address"
+      assert business.description == "some updated description"
+      assert business.power_index == 43
+      assert business.title == "some updated title"
+    end
+
+    test "update_business/2 with invalid data returns error changeset" do
+      business = business_fixture()
+      assert {:error, %Ecto.Changeset{}} = Marketplace.update_business(business, @invalid_attrs)
+      assert business == Marketplace.get_business!(business.id)
+    end
+
+    test "delete_business/1 deletes the business" do
+      business = business_fixture()
+      assert {:ok, %Business{}} = Marketplace.delete_business(business)
+      assert_raise Ecto.NoResultsError, fn -> Marketplace.get_business!(business.id) end
+    end
+
+    test "change_business/1 returns a business changeset" do
+      business = business_fixture()
+      assert %Ecto.Changeset{} = Marketplace.change_business(business)
+    end
+  end
 end

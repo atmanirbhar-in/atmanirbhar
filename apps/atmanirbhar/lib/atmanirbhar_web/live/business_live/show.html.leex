@@ -1,0 +1,37 @@
+<h1>Show Business</h1>
+
+<%= if @live_action in [:edit] do %>
+  <%= live_modal @socket, AtmanirbharWeb.BusinessLive.FormComponent,
+    id: @business.id,
+    title: @page_title,
+    action: @live_action,
+    business: @business,
+    return_to: Routes.business_show_path(@socket, :show, @business) %>
+<% end %>
+
+<ul>
+
+  <li>
+    <strong>Title:</strong>
+    <%= @business.title %>
+  </li>
+
+  <li>
+    <strong>Description:</strong>
+    <%= @business.description %>
+  </li>
+
+  <li>
+    <strong>Address:</strong>
+    <%= @business.address %>
+  </li>
+
+  <li>
+    <strong>Power index:</strong>
+    <%= @business.power_index %>
+  </li>
+
+</ul>
+
+<span><%= live_patch "Edit", to: Routes.business_show_path(@socket, :edit, @business), class: "button" %></span>
+<span><%= live_redirect "Back", to: Routes.business_index_path(@socket, :index) %></span>

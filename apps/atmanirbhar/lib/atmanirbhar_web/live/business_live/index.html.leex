@@ -1,0 +1,41 @@
+<h1>Listing Businesses</h1>
+
+<%= if @live_action in [:new, :edit] do %>
+  <%= live_modal @socket, AtmanirbharWeb.BusinessLive.FormComponent,
+    id: @business.id || :new,
+    title: @page_title,
+    action: @live_action,
+    business: @business,
+    return_to: Routes.business_index_path(@socket, :index) %>
+<% end %>
+
+<table>
+  <thead>
+    <tr>
+      <th>Title</th>
+      <th>Description</th>
+      <th>Address</th>
+      <th>Power index</th>
+
+      <th></th>
+    </tr>
+  </thead>
+  <tbody id="businesses">
+    <%= for business <- @businesses do %>
+      <tr id="business-<%= business.id %>">
+        <td><%= business.title %></td>
+        <td><%= business.description %></td>
+        <td><%= business.address %></td>
+        <td><%= business.power_index %></td>
+
+        <td>
+          <span><%= live_redirect "Show", to: Routes.business_show_path(@socket, :show, business) %></span>
+          <span><%= live_patch "Edit", to: Routes.business_index_path(@socket, :edit, business) %></span>
+          <span><%= link "Delete", to: "#", phx_click: "delete", phx_value_id: business.id, data: [confirm: "Are you sure?"] %></span>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<span><%= live_patch "New Business", to: Routes.business_index_path(@socket, :new) %></span>
