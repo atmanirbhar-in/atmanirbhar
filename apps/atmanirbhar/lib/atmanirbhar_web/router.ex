@@ -130,6 +130,12 @@ defmodule AtmanirbharWeb.Router do
     live "/marketplace_products/:id", ProductLive.Show, :show
     live "/marketplace_products/:id/show/edit", ProductLive.Show, :edit
 
+    live "/marketplace_products_deals", DealsLive.Index, :index
+    live "/marketplace_products_deals/new", DealsLive.Index, :new
+    live "/marketplace_products_deals/:id/edit", DealsLive.Index, :edit
+    live "/marketplace_products_deals/:id", DealsLive.Show, :show
+    live "/marketplace_products_deals/:id/show/edit", DealsLive.Show, :edit
+
   end
 
   scope "/", AtmanirbharWeb do

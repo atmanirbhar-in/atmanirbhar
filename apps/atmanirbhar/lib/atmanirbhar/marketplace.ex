@@ -512,4 +512,100 @@ defmodule Atmanirbhar.Marketplace do
   def change_product(%Product{} = product, attrs \\ %{}) do
     Product.changeset(product, attrs)
   end
+
+  alias Atmanirbhar.Marketplace.Deals
+
+  @doc """
+  Returns the list of marketplace_products_deals.
+
+  ## Examples
+
+      iex> list_marketplace_products_deals()
+      [%Deals{}, ...]
+
+  """
+  def list_marketplace_products_deals do
+    Repo.all(Deals)
+  end
+
+  @doc """
+  Gets a single deals.
+
+  Raises `Ecto.NoResultsError` if the Deals does not exist.
+
+  ## Examples
+
+      iex> get_deals!(123)
+      %Deals{}
+
+      iex> get_deals!(456)
+      ** (Ecto.NoResultsError)
+
+  """
+  def get_deals!(id), do: Repo.get!(Deals, id)
+
+  @doc """
+  Creates a deals.
+
+  ## Examples
+
+      iex> create_deals(%{field: value})
+      {:ok, %Deals{}}
+
+      iex> create_deals(%{field: bad_value})
+      {:error, %Ecto.Changeset{}}
+
+  """
+  def create_deals(attrs \\ %{}) do
+    %Deals{}
+    |> Deals.changeset(attrs)
+    |> Repo.insert()
+  end
+
+  @doc """
+  Updates a deals.
+
+  ## Examples
+
+      iex> update_deals(deals, %{field: new_value})
+      {:ok, %Deals{}}
+
+      iex> update_deals(deals, %{field: bad_value})
+      {:error, %Ecto.Changeset{}}
+
+  """
+  def update_deals(%Deals{} = deals, attrs) do
+    deals
+    |> Deals.changeset(attrs)
+    |> Repo.update()
+  end
+
+  @doc """
+  Deletes a deals.
+
+  ## Examples
+
+      iex> delete_deals(deals)
+      {:ok, %Deals{}}
+
+      iex> delete_deals(deals)
+      {:error, %Ecto.Changeset{}}
+
+  """
+  def delete_deals(%Deals{} = deals) do
+    Repo.delete(deals)
+  end
+
+  @doc """
+  Returns an `%Ecto.Changeset{}` for tracking deals changes.
+
+  ## Examples
+
+      iex> change_deals(deals)
+      %Ecto.Changeset{data: %Deals{}}
+
+  """
+  def change_deals(%Deals{} = deals, attrs \\ %{}) do
+    Deals.changeset(deals, attrs)
+  end
 end
