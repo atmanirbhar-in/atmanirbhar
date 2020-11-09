@@ -6,21 +6,60 @@
   phx_change: "validate",
   phx_submit: "save" %>
 
-  <%= label f, :slug %>
-  <%= text_input f, :slug %>
-  <%= error_tag f, :slug %>
 
-  <%= label f, :match_slugs %>
-  <%= multiple_select f, :match_slugs, ["Option 1": "option1", "Option 2": "option2"] %>
-  <%= error_tag f, :match_slugs %>
+<div class="form-admin-fieldset">
+  <div class="label-box">
+    <%= label f, :title %>
+  </div>
+  <div class="input-box">
+    <%= text_input f, :title %>
+    <span class="error-msg">
+      <%= error_tag f, :title %>
+    </span>
+  </div>
+</div>
 
-  <%= label f, :nearby_slugs %>
+
+<div class="form-admin-fieldset">
+  <div class="label-box">
+    <%= label f, :slug %>
+  </div>
+  <div class="input-box">
+    <%= text_input f, :slug %>
+    <span class="error-msg">
+      <%= error_tag f, :slug %>
+    </span>
+  </div>
+</div>
+
+<% #TODO add boolean flag is_city? or is_state %>
+
+<div class="form-admin-fieldset">
+  <div class="label-box">
+    <%= label f, :match_slugs %>
+  </div>
+  <div class="input-box">
+    <%= multiple_select f, :match_slugs, ["Option 1": "option1", "Option 2": "option2"] %>
+    <span class="error-msg">
+      <%= error_tag f, :match_slugs %>
+    </span>
+  </div>
+</div>
+
+<div class="form-admin-fieldset">
+  <div class="label-box">
+    <%= label f, :nearby_slugs %>
+  </div>
+  <div class="input-box">
   <%= multiple_select f, :nearby_slugs, ["Option 1": "option1", "Option 2": "option2"] %>
-  <%= error_tag f, :nearby_slugs %>
+    <span class="error-msg">
+      <%= error_tag f, :nearby_slugs %>
+    </span>
+  </div>
+</div>
 
-  <%= label f, :title %>
-  <%= text_input f, :title %>
-  <%= error_tag f, :title %>
 
-  <%= submit "Save", phx_disable_with: "Saving..." %>
+
+
+  <%= submit "Save", phx_disable_with: "Saving...", class: "btn btn-primary p2" %>
 </form>
