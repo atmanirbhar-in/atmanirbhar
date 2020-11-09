@@ -1,0 +1,26 @@
+<h2><%= @title %></h2>
+
+<%= f = form_for @changeset, "#",
+  id: "location-form",
+  phx_target: @myself,
+  phx_change: "validate",
+  phx_submit: "save" %>
+
+  <%= label f, :slug %>
+  <%= text_input f, :slug %>
+  <%= error_tag f, :slug %>
+
+  <%= label f, :match_slugs %>
+  <%= multiple_select f, :match_slugs, ["Option 1": "option1", "Option 2": "option2"] %>
+  <%= error_tag f, :match_slugs %>
+
+  <%= label f, :nearby_slugs %>
+  <%= multiple_select f, :nearby_slugs, ["Option 1": "option1", "Option 2": "option2"] %>
+  <%= error_tag f, :nearby_slugs %>
+
+  <%= label f, :title %>
+  <%= text_input f, :title %>
+  <%= error_tag f, :title %>
+
+  <%= submit "Save", phx_disable_with: "Saving..." %>
+</form>
