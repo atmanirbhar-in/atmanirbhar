@@ -12,6 +12,9 @@ defmodule Atmanirbhar.Catalog.Blueprint do
     timestamps()
   end
 
+  # TODO add pencil diagram url link
+  # mix match ocassion cards
+  # taxonomy sub_id, primary_id
   @doc false
   def changeset(blueprint, attrs) do
     blueprint
