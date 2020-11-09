@@ -11,6 +11,9 @@ defmodule Atmanirbhar.Geo.Location do
     timestamps()
   end
 
+  # TODO add city flag.
+  # When seller tries to set his ad location,
+  # it should NOT be a city, but region.
   @doc false
   def changeset(location, attrs) do
     location
