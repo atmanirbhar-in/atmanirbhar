@@ -331,4 +331,67 @@ defmodule Atmanirbhar.MarketplaceTest do
       assert %Ecto.Changeset{} = Marketplace.change_product(product)
     end
   end
+
+  describe "marketplace_products_deals" do
+    alias Atmanirbhar.Marketplace.Deals
+
+    @valid_attrs %{date: ~D[2010-04-17], price: 42, status: 42}
+    @update_attrs %{date: ~D[2011-05-18], price: 43, status: 43}
+    @invalid_attrs %{date: nil, price: nil, status: nil}
+
+    def deals_fixture(attrs \\ %{}) do
+      {:ok, deals} =
+        attrs
+        |> Enum.into(@valid_attrs)
+        |> Marketplace.create_deals()
+
+      deals
+    end
+
+    test "list_marketplace_products_deals/0 returns all marketplace_products_deals" do
+      deals = deals_fixture()
+      assert Marketplace.list_marketplace_products_deals() == [deals]
+    end
+
+    test "get_deals!/1 returns the deals with given id" do
+      deals = deals_fixture()
+      assert Marketplace.get_deals!(deals.id) == deals
+    end
+
+    test "create_deals/1 with valid data creates a deals" do
+      assert {:ok, %Deals{} = deals} = Marketplace.create_deals(@valid_attrs)
+      assert deals.date == ~D[2010-04-17]
+      assert deals.price == 42
+      assert deals.status == 42
+    end
+
+    test "create_deals/1 with invalid data returns error changeset" do
+      assert {:error, %Ecto.Changeset{}} = Marketplace.create_deals(@invalid_attrs)
+    end
+
+    test "update_deals/2 with valid data updates the deals" do
+      deals = deals_fixture()
+      assert {:ok, %Deals{} = deals} = Marketplace.update_deals(deals, @update_attrs)
+      assert deals.date == ~D[2011-05-18]
+      assert deals.price == 43
+      assert deals.status == 43
+    end
+
+    test "update_deals/2 with invalid data returns error changeset" do
+      deals = deals_fixture()
+      assert {:error, %Ecto.Changeset{}} = Marketplace.update_deals(deals, @invalid_attrs)
+      assert deals == Marketplace.get_deals!(deals.id)
+    end
+
+    test "delete_deals/1 deletes the deals" do
+      deals = deals_fixture()
+      assert {:ok, %Deals{}} = Marketplace.delete_deals(deals)
+      assert_raise Ecto.NoResultsError, fn -> Marketplace.get_deals!(deals.id) end
+    end
+
+    test "change_deals/1 returns a deals changeset" do
+      deals = deals_fixture()
+      assert %Ecto.Changeset{} = Marketplace.change_deals(deals)
+    end
+  end
 end

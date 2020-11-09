@@ -1,0 +1,39 @@
+<h1>Listing Marketplace products deals</h1>
+
+<%= if @live_action in [:new, :edit] do %>
+  <%= live_modal @socket, AtmanirbharWeb.DealsLive.FormComponent,
+    id: @deals.id || :new,
+    title: @page_title,
+    action: @live_action,
+    deals: @deals,
+    return_to: Routes.deals_index_path(@socket, :index) %>
+<% end %>
+
+<table>
+  <thead>
+    <tr>
+      <th>Price</th>
+      <th>Date</th>
+      <th>Status</th>
+
+      <th></th>
+    </tr>
+  </thead>
+  <tbody id="marketplace_products_deals">
+    <%= for deals <- @marketplace_products_deals do %>
+      <tr id="deals-<%= deals.id %>">
+        <td><%= deals.price %></td>
+        <td><%= deals.date %></td>
+        <td><%= deals.status %></td>
+
+        <td>
+          <span><%= live_redirect "Show", to: Routes.deals_show_path(@socket, :show, deals) %></span>
+          <span><%= live_patch "Edit", to: Routes.deals_index_path(@socket, :edit, deals) %></span>
+          <span><%= link "Delete", to: "#", phx_click: "delete", phx_value_id: deals.id, data: [confirm: "Are you sure?"] %></span>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<span><%= live_patch "New Deals", to: Routes.deals_index_path(@socket, :new) %></span>
