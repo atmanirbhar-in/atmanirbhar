@@ -1,0 +1,30 @@
+<h2><%= @title %></h2>
+
+<%= f = form_for @changeset, "#",
+  id: "blueprint-form",
+  phx_target: @myself,
+  phx_change: "validate",
+  phx_submit: "save" %>
+
+  <%= label f, :title %>
+  <%= text_input f, :title %>
+  <%= error_tag f, :title %>
+
+  <%= label f, :blueprint_code %>
+  <%= text_input f, :blueprint_code %>
+  <%= error_tag f, :blueprint_code %>
+
+  <%= label f, :description_hint %>
+  <%= textarea f, :description_hint %>
+  <%= error_tag f, :description_hint %>
+
+  <%= label f, :search_terms %>
+  <%= text_input f, :search_terms %>
+  <%= error_tag f, :search_terms %>
+
+  <%= label f, :taxonomy %>
+  <%= text_input f, :taxonomy %>
+  <%= error_tag f, :taxonomy %>
+
+  <%= submit "Save", phx_disable_with: "Saving..." %>
+</form>

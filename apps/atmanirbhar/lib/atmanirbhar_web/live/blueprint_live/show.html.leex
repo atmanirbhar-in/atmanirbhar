@@ -1,0 +1,42 @@
+<h1>Show Blueprint</h1>
+
+<%= if @live_action in [:edit] do %>
+  <%= live_modal @socket, AtmanirbharWeb.BlueprintLive.FormComponent,
+    id: @blueprint.id,
+    title: @page_title,
+    action: @live_action,
+    blueprint: @blueprint,
+    return_to: Routes.blueprint_show_path(@socket, :show, @blueprint) %>
+<% end %>
+
+<ul>
+
+  <li>
+    <strong>Title:</strong>
+    <%= @blueprint.title %>
+  </li>
+
+  <li>
+    <strong>Blueprint code:</strong>
+    <%= @blueprint.blueprint_code %>
+  </li>
+
+  <li>
+    <strong>Description hint:</strong>
+    <%= @blueprint.description_hint %>
+  </li>
+
+  <li>
+    <strong>Search terms:</strong>
+    <%= @blueprint.search_terms %>
+  </li>
+
+  <li>
+    <strong>Taxonomy:</strong>
+    <%= @blueprint.taxonomy %>
+  </li>
+
+</ul>
+
+<span><%= live_patch "Edit", to: Routes.blueprint_show_path(@socket, :edit, @blueprint), class: "button" %></span>
+<span><%= live_redirect "Back", to: Routes.blueprint_index_path(@socket, :index) %></span>
