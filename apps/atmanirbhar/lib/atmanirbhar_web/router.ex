@@ -103,6 +103,12 @@ defmodule AtmanirbharWeb.Router do
 
     live "/deals/:id", DealLive.Show, :show
     live "/deals/:id/show/edit", DealLive.Show, :edit
+
+    live "/locations", LocationLive.Index, :index
+    live "/locations/new", LocationLive.Index, :new
+    live "/locations/:id/edit", LocationLive.Index, :edit
+    live "/locations/:id", LocationLive.Show, :show
+    live "/locations/:id/show/edit", LocationLive.Show, :edit
   end
 
   scope "/", AtmanirbharWeb do

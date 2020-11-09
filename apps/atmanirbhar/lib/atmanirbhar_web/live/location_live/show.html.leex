@@ -1,0 +1,37 @@
+<h1>Show Location</h1>
+
+<%= if @live_action in [:edit] do %>
+  <%= live_modal @socket, AtmanirbharWeb.LocationLive.FormComponent,
+    id: @location.id,
+    title: @page_title,
+    action: @live_action,
+    location: @location,
+    return_to: Routes.location_show_path(@socket, :show, @location) %>
+<% end %>
+
+<ul>
+
+  <li>
+    <strong>Slug:</strong>
+    <%= @location.slug %>
+  </li>
+
+  <li>
+    <strong>Match slugs:</strong>
+    <%= @location.match_slugs %>
+  </li>
+
+  <li>
+    <strong>Nearby slugs:</strong>
+    <%= @location.nearby_slugs %>
+  </li>
+
+  <li>
+    <strong>Title:</strong>
+    <%= @location.title %>
+  </li>
+
+</ul>
+
+<span><%= live_patch "Edit", to: Routes.location_show_path(@socket, :edit, @location), class: "button" %></span>
+<span><%= live_redirect "Back", to: Routes.location_index_path(@socket, :index) %></span>

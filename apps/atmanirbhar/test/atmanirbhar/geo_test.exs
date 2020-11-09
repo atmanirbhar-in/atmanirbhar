@@ -128,4 +128,69 @@ defmodule Atmanirbhar.GeoTest do
       assert %Ecto.Changeset{} = Geo.change_city(city)
     end
   end
+
+  describe "locations" do
+    alias Atmanirbhar.Geo.Location
+
+    @valid_attrs %{match_slugs: [], nearby_slugs: [], slug: "some slug", title: "some title"}
+    @update_attrs %{match_slugs: [], nearby_slugs: [], slug: "some updated slug", title: "some updated title"}
+    @invalid_attrs %{match_slugs: nil, nearby_slugs: nil, slug: nil, title: nil}
+
+    def location_fixture(attrs \\ %{}) do
+      {:ok, location} =
+        attrs
+        |> Enum.into(@valid_attrs)
+        |> Geo.create_location()
+
+      location
+    end
+
+    test "list_locations/0 returns all locations" do
+      location = location_fixture()
+      assert Geo.list_locations() == [location]
+    end
+
+    test "get_location!/1 returns the location with given id" do
+      location = location_fixture()
+      assert Geo.get_location!(location.id) == location
+    end
+
+    test "create_location/1 with valid data creates a location" do
+      assert {:ok, %Location{} = location} = Geo.create_location(@valid_attrs)
+      assert location.match_slugs == []
+      assert location.nearby_slugs == []
+      assert location.slug == "some slug"
+      assert location.title == "some title"
+    end
+
+    test "create_location/1 with invalid data returns error changeset" do
+      assert {:error, %Ecto.Changeset{}} = Geo.create_location(@invalid_attrs)
+    end
+
+    test "update_location/2 with valid data updates the location" do
+      location = location_fixture()
+      assert {:ok, %Location{} = location} = Geo.update_location(location, @update_attrs)
+      assert location.match_slugs == []
+      assert location.nearby_slugs == []
+      assert location.slug == "some updated slug"
+      assert location.title == "some updated title"
+    end
+
+    test "update_location/2 with invalid data returns error changeset" do
+      location = location_fixture()
+      assert {:error, %Ecto.Changeset{}} = Geo.update_location(location, @invalid_attrs)
+      assert location == Geo.get_location!(location.id)
+    end
+
+    test "delete_location/1 deletes the location" do
+      location = location_fixture()
+      assert {:ok, %Location{}} = Geo.delete_location(location)
+      assert_raise Ecto.NoResultsError, fn -> Geo.get_location!(location.id) end
+    end
+
+    test "change_location/1 returns a location changeset" do
+      location = location_fixture()
+      assert %Ecto.Changeset{} = Geo.change_location(location)
+    end
+  end
 end
