@@ -32,7 +32,19 @@
   </div>
 </div>
 
-<% #TODO add boolean flag is_city? or is_state %>
+<div class="form-admin-fieldset">
+  <div class="label-box">
+    <%= label f, :is_city %>
+  </div>
+  <div class="input-box">
+    <%= options_for_select(["Yes": "true", "No": "false"], "is_city") %>
+
+    <span class="error-msg">
+      <%= error_tag f, :is_city %>
+    </span>
+  </div>
+</div>
+
 
 <div class="form-admin-fieldset">
   <div class="label-box">

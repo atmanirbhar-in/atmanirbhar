@@ -7,6 +7,7 @@ defmodule Atmanirbhar.Geo.Location do
     field :nearby_slugs, {:array, :string}
     field :slug, :string
     field :title, :string
+    field :is_city, :boolean, default: false
 
     timestamps()
   end
@@ -17,8 +18,8 @@ defmodule Atmanirbhar.Geo.Location do
   @doc false
   def changeset(location, attrs) do
     location
-    |> cast(attrs, [:slug, :match_slugs, :nearby_slugs, :title])
-    |> validate_required([:slug, :match_slugs, :nearby_slugs, :title])
+    |> cast(attrs, [:slug, :is_city, :match_slugs, :nearby_slugs, :title])
+    |> validate_required([:slug, :is_city, :match_slugs, :nearby_slugs, :title])
     |> unique_constraint(:slug)
   end
 end
