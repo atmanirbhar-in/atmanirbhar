@@ -1,0 +1,43 @@
+<h1>Listing Catalog blueprints</h1>
+
+<%= if @live_action in [:new, :edit] do %>
+  <%= live_modal @socket, AtmanirbharWeb.BlueprintLive.FormComponent,
+    id: @blueprint.id || :new,
+    title: @page_title,
+    action: @live_action,
+    blueprint: @blueprint,
+    return_to: Routes.blueprint_index_path(@socket, :index) %>
+<% end %>
+
+<table>
+  <thead>
+    <tr>
+      <th>Title</th>
+      <th>Blueprint code</th>
+      <th>Description hint</th>
+      <th>Search terms</th>
+      <th>Taxonomy</th>
+
+      <th></th>
+    </tr>
+  </thead>
+  <tbody id="catalog_blueprints">
+    <%= for blueprint <- @catalog_blueprints do %>
+      <tr id="blueprint-<%= blueprint.id %>">
+        <td><%= blueprint.title %></td>
+        <td><%= blueprint.blueprint_code %></td>
+        <td><%= blueprint.description_hint %></td>
+        <td><%= blueprint.search_terms %></td>
+        <td><%= blueprint.taxonomy %></td>
+
+        <td>
+          <span><%= live_redirect "Show", to: Routes.blueprint_show_path(@socket, :show, blueprint) %></span>
+          <span><%= live_patch "Edit", to: Routes.blueprint_index_path(@socket, :edit, blueprint) %></span>
+          <span><%= link "Delete", to: "#", phx_click: "delete", phx_value_id: blueprint.id, data: [confirm: "Are you sure?"] %></span>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<span><%= live_patch "New Blueprint", to: Routes.blueprint_index_path(@socket, :new) %></span>
