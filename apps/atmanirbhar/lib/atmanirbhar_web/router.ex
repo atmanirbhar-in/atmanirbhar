@@ -122,6 +122,14 @@ defmodule AtmanirbharWeb.Router do
     live "/catalog_blueprints/:id/edit", BlueprintLive.Index, :edit
     live "/catalog_blueprints/:id", BlueprintLive.Show, :show
     live "/catalog_blueprints/:id/show/edit", BlueprintLive.Show, :edit
+
+    live "/marketplace_products", ProductLive.Index, :index
+    live "/marketplace_products/new", ProductLive.Index, :new
+    live "/marketplace_products/:id/edit", ProductLive.Index, :edit
+
+    live "/marketplace_products/:id", ProductLive.Show, :show
+    live "/marketplace_products/:id/show/edit", ProductLive.Show, :edit
+
   end
 
   scope "/", AtmanirbharWeb do
