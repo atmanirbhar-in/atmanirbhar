@@ -1,6 +1,6 @@
 defmodule AtmanirbharWeb.UserDashboardLive.Index do
   use AtmanirbharWeb, :live_view
-  alias Atmanirbhar.Marketplace.{Advertisement, Deal}
+  alias Atmanirbhar.Marketplace.{Advertisement, Deal, Business}
 
   @impl true
   def mount(_params, _session, socket) do
@@ -33,6 +33,11 @@ defmodule AtmanirbharWeb.UserDashboardLive.Index do
   #   |> assign(:advertisement, %Advertisement{})
   # end
 
+  defp apply_action(socket, :new_business, _params) do
+    socket
+    |> assign(:page_title, "List your business")
+    |> assign(:business, %Business{})
+  end
   defp apply_action(socket, :new_advertisement, _params) do
     socket
     |> assign(:page_title, "Add your deal in this region")

@@ -36,6 +36,7 @@ defmodule AtmanirbharWeb.Router do
 
     live "/", PageLive, :index
     live "/new_deal", UserDashboardLive.Index, :new_deal
+    live "/add-my-business", UserDashboardLive.Index, :new_business
     live "/new_advertisement", UserDashboardLive.Index, :new_advertisement
     live "/pincode/:pincode", PageLive, :pincode
   end
