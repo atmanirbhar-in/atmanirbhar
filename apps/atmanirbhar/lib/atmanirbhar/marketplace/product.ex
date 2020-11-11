@@ -2,6 +2,9 @@ defmodule Atmanirbhar.Marketplace.Product do
   use Ecto.Schema
   import Ecto.Changeset
 
+  # product store just product information.
+  # An ad stores full info like delivery details, price, delivery terms.
+  # One ad per location per product
   schema "marketplace_products" do
     field :delivery_details, :string
     field :description, :string
