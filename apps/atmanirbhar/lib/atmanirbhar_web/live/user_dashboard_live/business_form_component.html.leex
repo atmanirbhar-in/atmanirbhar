@@ -74,31 +74,20 @@
 </div>
 
 
-<label class="block mt-4">
+<div class="flex flex-wrap -mx-3 mb-6">
+
+<label class="block mt-4 px-3 w-1/2">
   <span class="text-gray-700">City</span>
   <%= select f, :city_id, @cities ,class: "form-select mt-1 block w-full" %>
 </label>
 
-<label class="block mt-4">
+<label class="block mt-4 px-3 w-1/2">
   <span class="text-gray-700">Area</span>
   <%= select f, :area_id, @areas ,class: "form-select mt-1 block w-full" %>
 </label>
+</div>
 
-
-
-
-
-
-<label class="block mt-4">
-  <span class="text-gray-700">Textarea</span>
-  <textarea class="form-textarea mt-1 block w-full" rows="3" placeholder="Enter some long form content."></textarea>
-</label>
-
-<label class="block">
-  <span class="text-gray-700">Textarea</span>
-  <textarea class=" mt-1 block w-full" rows="3" placeholder="Enter some long form content."></textarea>
-</label>
-
+<%= submit "Save", class: "btn btn-primary" %>
 
 </form>
 </section>
