@@ -34,9 +34,12 @@ defmodule AtmanirbharWeb.UserDashboardLive.Index do
   # end
 
   defp apply_action(socket, :new_business, _params) do
+    cities = Atmanirbhar.Geo.list_cities()
+
     socket
     |> assign(:page_title, "List your business")
     |> assign(:business, %Business{})
+    |> assign(:cities, cities)
   end
   defp apply_action(socket, :new_advertisement, _params) do
     socket
