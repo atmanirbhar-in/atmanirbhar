@@ -12,6 +12,8 @@ defmodule Atmanirbhar.Accounts.User do
     field :avatar, Atmanirbhar.AvatarUploader.Type
 
     timestamps()
+
+    has_many :businesses, Atmanirbhar.Marketplace.Business
   end
 
   @doc """

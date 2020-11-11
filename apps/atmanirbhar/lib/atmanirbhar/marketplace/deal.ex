@@ -15,6 +15,9 @@ defmodule Atmanirbhar.Marketplace.Deal do
     timestamps()
   end
 
+  # A deal can be on combo
+  # deal on multiple quantity.
+  # delivery term
   @doc false
   def changeset(deal, attrs) do
     deal

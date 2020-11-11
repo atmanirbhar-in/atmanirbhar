@@ -6,8 +6,23 @@ defmodule Atmanirbhar.Marketplace do
   import Ecto.Query, warn: false
   alias Atmanirbhar.Repo
 
-  alias Atmanirbhar.Marketplace.Shop
+  alias Atmanirbhar.Marketplace.{Shop, Business}
+  alias Atmanirbhar.Geo.Location
   alias Atmanirbhar.Marketplace.LocationForm
+
+
+  # TODO
+  # write query that finds product Ads, deals
+  # given location
+  # possibly categories
+  # do we need advertisement schema
+  def list_advertisements_for(location) do
+    # query = from location in Location,
+    #   join business in Business,
+    #   user in Accounts.User
+
+  end
+
 
   @doc """
   Returns the list of shops.
