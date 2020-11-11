@@ -3,8 +3,18 @@
 </h1>
 
 <%= live_patch "Add Advertisement", to: Routes.user_dashboard_index_path(@socket, :new_advertisement), class: "text-xl btn btn-primary mr-2" %>
-<%= live_patch "Add Deal", to: Routes.user_dashboard_index_path(@socket, :new_deal), class: "text-xl btn btn-primary" %>
+<%= live_patch "Add Deal", to: Routes.user_dashboard_index_path(@socket, :new_deal), class: "text-xl btn btn-primary mr-2" %>
+<%= live_patch "Add Business", to: Routes.user_dashboard_index_path(@socket, :new_business), class: "text-xl btn btn-primary" %>
 
+<%= if @live_action in [:new_business, :edit_business] do %>
+<%= live_modal @socket, AtmanirbharWeb.UserDashboardLive.BusinessFormComponent,
+    id: :new,
+    title: @page_title,
+    business: @business,
+    action: @live_action,
+    return_to: Routes.user_dashboard_index_path(@socket, :index)
+    %>
+<% end %>
 
 <%= if @live_action in [:new_ad, :edit_ad] do %>
 <%= live_modal @socket, AtmanirbharWeb.AdvertisementLive.FormComponent,
