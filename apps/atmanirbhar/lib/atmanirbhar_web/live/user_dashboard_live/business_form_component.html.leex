@@ -1,4 +1,4 @@
-<section class="container">
+<section class="container bg-white">
   <%= f = form_for @changeset, "#",
       id: "business-form",
       phx_target: @myself,
@@ -8,33 +8,96 @@
       phx_submit: "save"
       %>
 
-  <div class="flex flex-wrap -mx-3 mb-6">
-    <div class="w-full px-3 mb-6 md:mb-0">
-      <%= label f, :name, class: "block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2", for: "name" %>
-      <%= text_input f, :name, class: "appearance-none block w-full bg-gray-200 text-gray-700
-                                       border border-red-500 rounded
-                                       py-3 px-4 mb-3 leading-tight
-                                       focus:outline-none focus:bg-white",
-          placeholder: "Enter your :name" %>
-      <p class="text-red-500 text-xs italic">
-        <%= error_tag f, :name %>
-      </p>
-    </div>
-  </div>
+<label class="block">
+  <span class="text-gray-700">Title</span>
+  <%= text_input f, :title,
+      class: "form-input mt-1 block w-full",
+      placeholder: "Enter Title" %>
+  <p class="text-red-500 text-xs italic">
+    <%= error_tag f, :title %>
+  </p>
+</label>
 
-  <div class="flex flex-wrap -mx-3 mb-6">
-    <div class="w-full px-3 mb-6 md:mb-0">
-      <%= label f, :lname, class: "block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2", for: "lname" %>
-      <%= text_input f, :lname, class: "appearance-none block w-full bg-gray-200 text-gray-700
-                                   border border-red-500 rounded
-                                   py-3 px-4 mb-3 leading-tight
-                                   focus:outline-none focus:bg-white",
-          placeholder: "Enter lname" %>
-      <p class="text-red-500 text-xs italic">
-        <%= error_tag f, :lname %>
-      </p>
-    </div>
+<label class="block mt-4">
+  <span class="text-gray-700">Description</span>
+  <%= text_input f, :description,
+      class: "form-input mt-1 block w-full",
+      placeholder: "Enter Description" %>
+  <p class="text-red-500 text-xs italic">
+    <%= error_tag f, :description %>
+  </p>
+</label>
+
+
+<label class="block mt-4">
+  <span class="text-gray-700">Address of Business</span>
+  <%= text_input f, :address,
+      class: "form-input mt-1 block w-full",
+      placeholder: "Enter Address of Business" %>
+  <p class="text-red-500 text-xs italic">
+    <%= error_tag f, :address %>
+  </p>
+</label>
+
+
+<div class="mt-4">
+  <span class="text-gray-700">Account Type</span>
+  <div class="mt-2">
+    <label class="inline-flex items-center">
+      <input type="radio" class="form-radio" checked name="accountType" value="personal">
+      <span class="ml-2">Personal</span>
+    </label>
+    <label class="inline-flex items-center ml-6">
+      <input type="radio" class="form-radio" name="accountType" value="busines">
+      <span class="ml-2">Business</span>
+    </label>
   </div>
+</div>
+
+
+<% opts = ["admin", "moderater", "visitor"] %>
+<%#
+  # 1 title of options
+  # 2 param of options
+  # 3 form input-field name
+  %>
+<div class="mt-4">
+  <span class="text-gray-700">Account Type</span>
+  <div class="mt-2">
+    <%= for option <- opts do %>
+        <label class="inline-flex items-center mr-6">
+          <%= radio_button(f, :role, option, class: "form-radio") %>
+          <span class="ml-2"><%= option %></span>
+        </label>
+        <% end %>
+  </div>
+</div>
+
+
+<label class="block mt-4">
+  <span class="text-gray-700">City</span>
+  <%= select f, :city_id, @cities ,class: "form-select mt-1 block w-full" %>
+</label>
+
+<label class="block mt-4">
+  <span class="text-gray-700">Area</span>
+  <%= select f, :area_id, @areas ,class: "form-select mt-1 block w-full" %>
+</label>
+
+
+
+
+
+
+<label class="block mt-4">
+  <span class="text-gray-700">Textarea</span>
+  <textarea class="form-textarea mt-1 block w-full" rows="3" placeholder="Enter some long form content."></textarea>
+</label>
+
+<label class="block">
+  <span class="text-gray-700">Textarea</span>
+  <textarea class=" mt-1 block w-full" rows="3" placeholder="Enter some long form content."></textarea>
+</label>
 
 
 </form>

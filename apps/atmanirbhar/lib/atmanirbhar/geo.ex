@@ -121,6 +121,10 @@ defmodule Atmanirbhar.Geo do
     Repo.all(City)
   end
 
+  def list_only_cities do
+    Repo.all(from c in City, select: {c.name, c.id})
+  end
+
   @doc """
   Gets a single city.
 
