@@ -6,6 +6,9 @@
 <%= live_patch "Add Deal", to: Routes.user_dashboard_index_path(@socket, :new_deal), class: "text-xl btn btn-primary mr-2" %>
 <%= live_patch "Add Business", to: Routes.user_dashboard_index_path(@socket, :new_business), class: "text-xl btn btn-primary" %>
 
+<%#= live_patch "import_form.html", changeset: @import_changeset,
+                        action: import(@socket, :city_data) %>
+
 <%= if @live_action in [:new_business, :edit_business] do %>
 <%= live_modal @socket, AtmanirbharWeb.UserDashboardLive.BusinessFormComponent,
     id: :new,

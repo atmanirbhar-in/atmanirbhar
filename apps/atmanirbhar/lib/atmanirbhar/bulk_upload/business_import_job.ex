@@ -4,8 +4,10 @@ defmodule Atmanirbhar.BulkUpload.BusinessImportJob do
 
   embedded_schema do
     field :uploaded_by, :string
-    field :business_name, :string
-    field :product_kind_of, :string
+    field :city_name, :string
+    # field :business_name, :string
+    # field :product_kind_of, :string
+    field :file, :any, virtual: true
   end
 
   @doc false
@@ -14,7 +16,8 @@ defmodule Atmanirbhar.BulkUpload.BusinessImportJob do
   # validations
   def changeset(business_import_job, attrs) do
     business_import_job
-    |> cast(attrs, [:business_name, :product_kind_of])
+    # |> cast(attrs, [:business_name, :product_kind_of])
+    |> cast(attrs, [:city_name, :file])
   end
 
   # moderator name

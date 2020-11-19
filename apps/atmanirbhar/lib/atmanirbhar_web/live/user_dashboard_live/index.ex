@@ -1,11 +1,13 @@
 defmodule AtmanirbharWeb.UserDashboardLive.Index do
   use AtmanirbharWeb, :live_view
   alias Atmanirbhar.Marketplace.{Advertisement, Deal, Business}
+  alias Atmanirbhar.BulkUpload.BusinessImportJob
 
   @impl true
   def mount(_params, _session, socket) do
     {:ok, assign(socket,
-        my_plugins: []
+        my_plugins: [],
+        import_changeset: %BusinessImportJob{}
       )
     }
   end
