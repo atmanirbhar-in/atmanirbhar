@@ -39,6 +39,10 @@ defmodule AtmanirbharWeb.Router do
     live "/add-my-business", UserDashboardLive.Index, :new_business
     live "/new_advertisement", UserDashboardLive.Index, :new_advertisement
     live "/pincode/:pincode", PageLive, :pincode
+
+    # import
+    post "/import", BulkUploadController, :import_city_data
+
   end
 
   # Other scopes may use custom stacks.
