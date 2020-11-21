@@ -23,13 +23,18 @@ defmodule AtmanirbharWeb.BulkUploadController do
          [] ->
            conn
            |> put_flash(:info, "Imported")
-           |> redirect(to: user_dashboard_path(conn, :index))
+           |> redirect(to: Routes.live_home_path(conn, :index))
          errors ->
            errors = parse_errors(errors)  # create this fun
            conn
            |> put_flash(:erorr, errors)
            |> render("import.html")
        end
+  end
+
+  defp parse_errors(errors) do
+    # errors
+    :some_error
   end
 
 end
