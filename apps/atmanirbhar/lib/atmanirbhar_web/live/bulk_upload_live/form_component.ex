@@ -3,6 +3,10 @@ defmodule AtmanirbharWeb.BulkUploadLive.FormComponent do
 
   alias Atmanirbhar.Marketplace
 
+  def mount(socket) do
+    {:ok, allow_upload(socket, :csv, accept: ~w(.csv), max_entries: 2 )}
+  end
+
   @impl true
   def update(%{bulk_upload: bulk_upload} = assigns, socket) do
     changeset = Marketplace.change_bulk_upload(bulk_upload)
