@@ -1,0 +1,42 @@
+<h1>Show Bulk upload</h1>
+
+<%= if @live_action in [:edit] do %>
+  <%= live_modal @socket, AtmanirbharWeb.BulkUploadLive.FormComponent,
+    id: @bulk_upload.id,
+    title: @page_title,
+    action: @live_action,
+    bulk_upload: @bulk_upload,
+    return_to: Routes.bulk_upload_show_path(@socket, :show, @bulk_upload) %>
+<% end %>
+
+<ul>
+
+  <li>
+    <strong>File url:</strong>
+    <%= @bulk_upload.file_url %>
+  </li>
+
+  <li>
+    <strong>City name:</strong>
+    <%= @bulk_upload.city_name %>
+  </li>
+
+  <li>
+    <strong>Location name:</strong>
+    <%= @bulk_upload.location_name %>
+  </li>
+
+  <li>
+    <strong>Content description:</strong>
+    <%= @bulk_upload.content_description %>
+  </li>
+
+  <li>
+    <strong>Processesed flag:</strong>
+    <%= @bulk_upload.processesed_flag %>
+  </li>
+
+</ul>
+
+<span><%= live_patch "Edit", to: Routes.bulk_upload_show_path(@socket, :edit, @bulk_upload), class: "button" %></span>
+<span><%= live_redirect "Back", to: Routes.bulk_upload_index_path(@socket, :index) %></span>

@@ -38,10 +38,11 @@ defmodule AtmanirbharWeb.Router do
     live "/new_deal", UserDashboardLive.Index, :new_deal
     live "/add-my-business", UserDashboardLive.Index, :new_business
     live "/new_advertisement", UserDashboardLive.Index, :new_advertisement
+    live "/bulk-upload", UserDashboardLive.Index, :bulk_upload
     live "/pincode/:pincode", PageLive, :pincode
 
     # import
-    post "/import", BulkUploadController, :import_city_data
+    # post "/import", BulkUploadController, :import_city_data
 
   end
 
@@ -141,6 +142,12 @@ defmodule AtmanirbharWeb.Router do
     live "/marketplace_products_deals/:id", DealsLive.Show, :show
     live "/marketplace_products_deals/:id/show/edit", DealsLive.Show, :edit
 
+    live "/marketplace_bulk_uploads", BulkUploadLive.Index, :index
+    live "/marketplace_bulk_uploads/new", BulkUploadLive.Index, :new
+    live "/marketplace_bulk_uploads/:id/edit", BulkUploadLive.Index, :edit
+
+    live "/marketplace_bulk_uploads/:id", BulkUploadLive.Show, :show
+    live "/marketplace_bulk_uploads/:id/show/edit", BulkUploadLive.Show, :edit
   end
 
   scope "/", AtmanirbharWeb do

@@ -394,4 +394,71 @@ defmodule Atmanirbhar.MarketplaceTest do
       assert %Ecto.Changeset{} = Marketplace.change_deals(deals)
     end
   end
+
+  describe "marketplace_bulk_uploads" do
+    alias Atmanirbhar.Marketplace.BulkUpload
+
+    @valid_attrs %{city_name: "some city_name", content_description: "some content_description", file_url: "some file_url", location_name: "some location_name", processesed_flag: true}
+    @update_attrs %{city_name: "some updated city_name", content_description: "some updated content_description", file_url: "some updated file_url", location_name: "some updated location_name", processesed_flag: false}
+    @invalid_attrs %{city_name: nil, content_description: nil, file_url: nil, location_name: nil, processesed_flag: nil}
+
+    def bulk_upload_fixture(attrs \\ %{}) do
+      {:ok, bulk_upload} =
+        attrs
+        |> Enum.into(@valid_attrs)
+        |> Marketplace.create_bulk_upload()
+
+      bulk_upload
+    end
+
+    test "list_marketplace_bulk_uploads/0 returns all marketplace_bulk_uploads" do
+      bulk_upload = bulk_upload_fixture()
+      assert Marketplace.list_marketplace_bulk_uploads() == [bulk_upload]
+    end
+
+    test "get_bulk_upload!/1 returns the bulk_upload with given id" do
+      bulk_upload = bulk_upload_fixture()
+      assert Marketplace.get_bulk_upload!(bulk_upload.id) == bulk_upload
+    end
+
+    test "create_bulk_upload/1 with valid data creates a bulk_upload" do
+      assert {:ok, %BulkUpload{} = bulk_upload} = Marketplace.create_bulk_upload(@valid_attrs)
+      assert bulk_upload.city_name == "some city_name"
+      assert bulk_upload.content_description == "some content_description"
+      assert bulk_upload.file_url == "some file_url"
+      assert bulk_upload.location_name == "some location_name"
+      assert bulk_upload.processesed_flag == true
+    end
+
+    test "create_bulk_upload/1 with invalid data returns error changeset" do
+      assert {:error, %Ecto.Changeset{}} = Marketplace.create_bulk_upload(@invalid_attrs)
+    end
+
+    test "update_bulk_upload/2 with valid data updates the bulk_upload" do
+      bulk_upload = bulk_upload_fixture()
+      assert {:ok, %BulkUpload{} = bulk_upload} = Marketplace.update_bulk_upload(bulk_upload, @update_attrs)
+      assert bulk_upload.city_name == "some updated city_name"
+      assert bulk_upload.content_description == "some updated content_description"
+      assert bulk_upload.file_url == "some updated file_url"
+      assert bulk_upload.location_name == "some updated location_name"
+      assert bulk_upload.processesed_flag == false
+    end
+
+    test "update_bulk_upload/2 with invalid data returns error changeset" do
+      bulk_upload = bulk_upload_fixture()
+      assert {:error, %Ecto.Changeset{}} = Marketplace.update_bulk_upload(bulk_upload, @invalid_attrs)
+      assert bulk_upload == Marketplace.get_bulk_upload!(bulk_upload.id)
+    end
+
+    test "delete_bulk_upload/1 deletes the bulk_upload" do
+      bulk_upload = bulk_upload_fixture()
+      assert {:ok, %BulkUpload{}} = Marketplace.delete_bulk_upload(bulk_upload)
+      assert_raise Ecto.NoResultsError, fn -> Marketplace.get_bulk_upload!(bulk_upload.id) end
+    end
+
+    test "change_bulk_upload/1 returns a bulk_upload changeset" do
+      bulk_upload = bulk_upload_fixture()
+      assert %Ecto.Changeset{} = Marketplace.change_bulk_upload(bulk_upload)
+    end
+  end
 end

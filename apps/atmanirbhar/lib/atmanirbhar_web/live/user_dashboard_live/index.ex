@@ -1,6 +1,6 @@
 defmodule AtmanirbharWeb.UserDashboardLive.Index do
   use AtmanirbharWeb, :live_view
-  alias Atmanirbhar.Marketplace.{Advertisement, Deal, Business}
+  alias Atmanirbhar.Marketplace.{Advertisement, Deal, Business, BulkUpload}
   alias Atmanirbhar.BulkUpload.BusinessImportJob
 
   @impl true
@@ -29,11 +29,11 @@ defmodule AtmanirbharWeb.UserDashboardLive.Index do
     # |> assign(:advertisement, Marketplace.get_advertisement!(id))
   end
 
-  # defp apply_action(socket, :new_ad, _params) do
-  #   socket
-  #   |> assign(:page_title, "New Advertisement")
-  #   |> assign(:advertisement, %Advertisement{})
-  # end
+  defp apply_action(socket, :bulk_upload, _params) do
+    socket
+    |> assign(:page_title, "Bulk upload file")
+    |> assign(:bulk_upload, %BulkUpload{})
+  end
 
   defp apply_action(socket, :new_business, _params) do
     cities = Atmanirbhar.Geo.list_cities()
