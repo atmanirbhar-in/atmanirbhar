@@ -1,0 +1,43 @@
+<h1>Listing Marketplace bulk uploads</h1>
+
+<%= if @live_action in [:new, :edit] do %>
+  <%= live_modal @socket, AtmanirbharWeb.BulkUploadLive.FormComponent,
+    id: @bulk_upload.id || :new,
+    title: @page_title,
+    action: @live_action,
+    bulk_upload: @bulk_upload,
+    return_to: Routes.bulk_upload_index_path(@socket, :index) %>
+<% end %>
+
+<table>
+  <thead>
+    <tr>
+      <th>File url</th>
+      <th>City name</th>
+      <th>Location name</th>
+      <th>Content description</th>
+      <th>Processesed flag</th>
+
+      <th></th>
+    </tr>
+  </thead>
+  <tbody id="marketplace_bulk_uploads">
+    <%= for bulk_upload <- @marketplace_bulk_uploads do %>
+      <tr id="bulk_upload-<%= bulk_upload.id %>">
+        <td><%= bulk_upload.file_url %></td>
+        <td><%= bulk_upload.city_name %></td>
+        <td><%= bulk_upload.location_name %></td>
+        <td><%= bulk_upload.content_description %></td>
+        <td><%= bulk_upload.processesed_flag %></td>
+
+        <td>
+          <span><%= live_redirect "Show", to: Routes.bulk_upload_show_path(@socket, :show, bulk_upload) %></span>
+          <span><%= live_patch "Edit", to: Routes.bulk_upload_index_path(@socket, :edit, bulk_upload) %></span>
+          <span><%= link "Delete", to: "#", phx_click: "delete", phx_value_id: bulk_upload.id, data: [confirm: "Are you sure?"] %></span>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<span><%= live_patch "New Bulk upload", to: Routes.bulk_upload_index_path(@socket, :new) %></span>

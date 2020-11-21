@@ -623,4 +623,100 @@ defmodule Atmanirbhar.Marketplace do
   def change_deals(%Deals{} = deals, attrs \\ %{}) do
     Deals.changeset(deals, attrs)
   end
+
+  alias Atmanirbhar.Marketplace.BulkUpload
+
+  @doc """
+  Returns the list of marketplace_bulk_uploads.
+
+  ## Examples
+
+      iex> list_marketplace_bulk_uploads()
+      [%BulkUpload{}, ...]
+
+  """
+  def list_marketplace_bulk_uploads do
+    Repo.all(BulkUpload)
+  end
+
+  @doc """
+  Gets a single bulk_upload.
+
+  Raises `Ecto.NoResultsError` if the Bulk upload does not exist.
+
+  ## Examples
+
+      iex> get_bulk_upload!(123)
+      %BulkUpload{}
+
+      iex> get_bulk_upload!(456)
+      ** (Ecto.NoResultsError)
+
+  """
+  def get_bulk_upload!(id), do: Repo.get!(BulkUpload, id)
+
+  @doc """
+  Creates a bulk_upload.
+
+  ## Examples
+
+      iex> create_bulk_upload(%{field: value})
+      {:ok, %BulkUpload{}}
+
+      iex> create_bulk_upload(%{field: bad_value})
+      {:error, %Ecto.Changeset{}}
+
+  """
+  def create_bulk_upload(attrs \\ %{}) do
+    %BulkUpload{}
+    |> BulkUpload.changeset(attrs)
+    |> Repo.insert()
+  end
+
+  @doc """
+  Updates a bulk_upload.
+
+  ## Examples
+
+      iex> update_bulk_upload(bulk_upload, %{field: new_value})
+      {:ok, %BulkUpload{}}
+
+      iex> update_bulk_upload(bulk_upload, %{field: bad_value})
+      {:error, %Ecto.Changeset{}}
+
+  """
+  def update_bulk_upload(%BulkUpload{} = bulk_upload, attrs) do
+    bulk_upload
+    |> BulkUpload.changeset(attrs)
+    |> Repo.update()
+  end
+
+  @doc """
+  Deletes a bulk_upload.
+
+  ## Examples
+
+      iex> delete_bulk_upload(bulk_upload)
+      {:ok, %BulkUpload{}}
+
+      iex> delete_bulk_upload(bulk_upload)
+      {:error, %Ecto.Changeset{}}
+
+  """
+  def delete_bulk_upload(%BulkUpload{} = bulk_upload) do
+    Repo.delete(bulk_upload)
+  end
+
+  @doc """
+  Returns an `%Ecto.Changeset{}` for tracking bulk_upload changes.
+
+  ## Examples
+
+      iex> change_bulk_upload(bulk_upload)
+      %Ecto.Changeset{data: %BulkUpload{}}
+
+  """
+  def change_bulk_upload(%BulkUpload{} = bulk_upload, attrs \\ %{}) do
+    BulkUpload.changeset(bulk_upload, attrs)
+  end
 end
