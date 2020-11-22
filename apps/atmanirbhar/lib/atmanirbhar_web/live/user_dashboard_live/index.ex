@@ -29,7 +29,7 @@ defmodule AtmanirbharWeb.UserDashboardLive.Index do
     # |> assign(:advertisement, Marketplace.get_advertisement!(id))
   end
 
-  defp apply_action(socket, :bulk_upload, _params) do
+  defp apply_action(socket, :new_bulk_upload, _params) do
     socket
     |> assign(:page_title, "Bulk upload file")
     |> assign(:bulk_upload, %BulkUpload{})

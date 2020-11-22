@@ -4,7 +4,7 @@ defmodule AtmanirbharWeb.BulkUploadLive.FormComponent do
   alias Atmanirbhar.Marketplace
 
   def mount(socket) do
-    {:ok, allow_upload(socket, :photo, accept: ~w(.csv .png .jpeg .jpg), max_entries: 2 )}
+    {:ok, allow_upload(socket, :csv, accept: ~w(.csv), max_entries: 2 )}
   end
 
   @impl true
@@ -25,6 +25,10 @@ defmodule AtmanirbharWeb.BulkUploadLive.FormComponent do
       |> Map.put(:action, :validate)
 
     {:noreply, assign(socket, :changeset, changeset)}
+  end
+
+  def handle_event("cancel-entry", %{"ref" => ref}, socket) do
+    {:noreply, cancel_upload(socket, :csv, ref)}
   end
 
   def handle_event("save", %{"bulk_upload" => bulk_upload_params}, socket) do
