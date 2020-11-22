@@ -83,8 +83,8 @@ defmodule AtmanirbharWeb.BulkUploadLive.FormComponent do
 
   def consume_csvs(socket, %BulkUpload{} = bulk_upload) do
     consume_uploaded_entries(socket, :csv, fn meta, entry ->
-      dest = Routes.static_path(socket, "/uploads/#{entry.uuid}.#{ext(entry)}")
-      # dest = Path.join("priv/static/uploads", "#{entry.uuid}.#{ext(entry)}")
+      dest = Path.join("priv/static/uploads", "#{entry.uuid}.#{ext(entry)}")
+
       File.cp!(meta.path, dest)
     end)
     {:ok, bulk_upload}
