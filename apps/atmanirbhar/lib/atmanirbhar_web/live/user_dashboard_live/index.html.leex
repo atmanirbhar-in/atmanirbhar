@@ -22,12 +22,13 @@
 
 
 <%= if @live_action in [:new_bulk_upload] do %>
-  <%= live_modal @socket, AtmanirbharWeb.BulkUploadLive.FormComponent,
+<%= live_modal @socket, AtmanirbharWeb.BulkUploadLive.FormComponent,
     id: @bulk_upload.id || :new,
     title: @page_title,
     action: @live_action,
     bulk_upload: @bulk_upload,
-    return_to: Routes.bulk_upload_index_path(@socket, :index) %>
+    return_to: Routes.user_dashboard_index_path(@socket, :index)
+    %>
 <% end %>
 
 
