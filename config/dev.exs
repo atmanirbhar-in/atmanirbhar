@@ -58,7 +58,7 @@ config :atmanirbhar, AtmanirbharWeb.Endpoint,
 config :atmanirbhar, AtmanirbharWeb.Endpoint,
   live_reload: [
     patterns: [
-      ~r"priv/static/.*(js|css|png|jpeg|jpg|gif|svg)$",
+      ~r"priv/static/[^uploads].*(js|css|png|jpeg|jpg|gif|svg)$",
       ~r"priv/gettext/.*(po)$",
       ~r"lib/atmanirbhar_web/(live|views)/.*(ex)$",
       ~r"lib/atmanirbhar_web/templates/.*(eex)$"
