@@ -2,13 +2,11 @@
   User Dashboard
 </h1>
 
-<%= live_patch "Add Advertisement", to: Routes.user_dashboard_index_path(@socket, :new_advertisement), class: "text-xl btn btn-primary mr-2" %>
-<%= live_patch "Add Deal", to: Routes.user_dashboard_index_path(@socket, :new_deal), class: "text-xl btn btn-primary mr-2" %>
-<%= live_patch "Add Business", to: Routes.user_dashboard_index_path(@socket, :new_business), class: "text-xl btn btn-primary mr-2" %>
-<%= live_patch "Bulk Upload", to: Routes.user_dashboard_index_path(@socket, :new_bulk_upload), class: "text-xl btn btn-primary mr-2" %>
+<%= live_patch "Add Advertisement", to: Routes.user_dashboard_index_path(@socket, :new_advertisement), class: "text-lg btn btn-primary mr-2" %>
+<%= live_patch "Add Deal", to: Routes.user_dashboard_index_path(@socket, :new_deal), class: "text-lg btn btn-primary mr-2" %>
+<%= live_patch "Add Business", to: Routes.user_dashboard_index_path(@socket, :new_business), class: "text-lg btn btn-primary mr-2" %>
+<%= live_patch "Bulk Upload", to: Routes.user_dashboard_index_path(@socket, :new_bulk_upload), class: "text-lg btn btn-secondary mr-2" %>
 
-<%#= live_patch "import_form.html", changeset: @import_changeset,
-                        action: import(@socket, :city_data) %>
 
 <%= if @live_action in [:new_business, :edit_business] do %>
 <%= live_modal @socket, AtmanirbharWeb.UserDashboardLive.BusinessFormComponent,
@@ -62,3 +60,31 @@
     return_to: Routes.page_path(@socket, :index) %>
 <% end %>
 
+<table class="table-auto table mt-4">
+  <thead>
+    <tr>
+      <th class="mx-2">CSV / Excel sheets</th>
+      <th class="px-2">City</th>
+      <th class="px-2">City / Region</th>
+      <th class="px-2">Content description</th>
+      <th class="px-2">Data Imported?</th>
+    </tr>
+  </thead>
+  <tbody id="marketplace_bulk_uploads">
+    <%= for bulk_upload <- @marketplace_bulk_uploads do %>
+      <tr id="bulk_upload-<%= bulk_upload.id %>">
+        <td class="px-2">
+          <%= for csv <- bulk_upload.csv_urls do %>
+              <%= link csv, to: Routes.static_path(@socket, csv) %>
+              <% end %>
+
+        </td>
+        <td class="px-2"><%= bulk_upload.city_name %></td>
+        <td class="px-2"><%= bulk_upload.location_name %></td>
+        <td class="px-2"><%= bulk_upload.content_description %></td>
+        <td class="px-2"><%= bulk_upload.processesed_flag %></td>
+
+      </tr>
+    <% end %>
+  </tbody>
+</table>
