@@ -26,7 +26,7 @@
       <tr id="bulk_upload-<%= bulk_upload.id %>">
         <td>
           <%= for csv <- bulk_upload.csv_urls do %>
-              <%= link csv, to: Routes.static_path(@socket, csv), download %>
+              <%= link csv, to: Routes.static_path(@socket, csv) %>
               <% end %>
 
         </td>
