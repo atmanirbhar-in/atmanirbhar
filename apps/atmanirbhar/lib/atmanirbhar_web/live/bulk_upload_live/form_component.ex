@@ -41,7 +41,7 @@ defmodule AtmanirbharWeb.BulkUploadLive.FormComponent do
 
   defp save_bulk_upload(socket, :edit, bulk_upload_params) do
     bulk_upload = put_csv_urls(socket, socket.assigns.bulk_upload)
-    case Marketplace.update_bulk_upload(bulk_upload, bulk_upload_params) do
+    case Marketplace.update_bulk_upload(bulk_upload, bulk_upload_params, &consume_csvs(socket, &1)) do
       {:ok, _bulk_upload} ->
         {:noreply,
          socket
@@ -57,7 +57,7 @@ defmodule AtmanirbharWeb.BulkUploadLive.FormComponent do
   defp save_bulk_upload(socket, :new_bulk_upload, bulk_upload_params), do: save_bulk_upload(socket, :new, bulk_upload_params)
   defp save_bulk_upload(socket, :new, bulk_upload_params) do
     bulk_upload = put_csv_urls(socket, socket.assigns.bulk_upload)
-    case Marketplace.create_bulk_upload(bulk_upload, bulk_upload_params) do
+    case Marketplace.create_bulk_upload(bulk_upload, bulk_upload_params, &consume_csvs(socket, &1)) do
       {:ok, _bulk_upload} ->
         {:noreply,
          socket
@@ -79,6 +79,15 @@ defmodule AtmanirbharWeb.BulkUploadLive.FormComponent do
       Routes.static_path(socket, "/uploads/#{entry.uuid}.#{ext(entry)}")
     end
     %BulkUpload{bulk_upload | csv_urls: urls}
+  end
+
+  def consume_csvs(socket, %BulkUpload{} = bulk_upload) do
+    consume_uploaded_entries(socket, :csv, fn meta, entry ->
+      dest = Routes.static_path(socket, "/uploads/#{entry.uuid}.#{ext(entry)}")
+      # dest = Path.join("priv/static/uploads", "#{entry.uuid}.#{ext(entry)}")
+      File.cp!(meta.path, dest)
+    end)
+    {:ok, bulk_upload}
   end
 
 end
