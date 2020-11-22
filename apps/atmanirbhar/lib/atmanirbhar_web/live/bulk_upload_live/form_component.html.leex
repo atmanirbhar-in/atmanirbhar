@@ -7,23 +7,27 @@
   phx_submit: "save" %>
 
 <label class="">
-  <%= live_file_input @uploads.photo %>
+  <%= live_file_input @uploads.csv %>
   <br/>
-  <%= for entry <- @uploads.photo.entries do %>
-     <div class="row mt-2">
-       <div class="colUMN">
+  <%= for entry <- @uploads.csv.entries do %>
+     <div class="flex">
+       <div class="p-2">
          <%= get_upload_filename(entry) %>
        </div>
-       <div class="colUMN">
+       <div class="p-2">
          <progress max="100" value="<%= entry.progress %>" />
        </div>
-       <div class="column">
-         cancel
+       <div class="p-2column">
+         <a href="#" phx-click="cancel-entry" phx-value-ref="<%= entry.ref %>"
+            phx-target="<%= @myself %>"
+            >
+           cancel
+         </a>
        </div>
      </div>
      <% end %>
 
-     <%= for {_ref, msg} <- @uploads.photo.errors do %>
+     <%= for {_ref, msg} <- @uploads.csv.errors do %>
          <p class="text-red-500 text-xs italic">
            <%= Phoenix.Naming.humanize(msg) %>
          </p>

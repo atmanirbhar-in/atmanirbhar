@@ -38,7 +38,7 @@ defmodule AtmanirbharWeb.Router do
     live "/new_deal", UserDashboardLive.Index, :new_deal
     live "/add-my-business", UserDashboardLive.Index, :new_business
     live "/new_advertisement", UserDashboardLive.Index, :new_advertisement
-    live "/bulk-upload", UserDashboardLive.Index, :bulk_upload
+    live "/bulk-upload", UserDashboardLive.Index, :new_bulk_upload
     live "/pincode/:pincode", PageLive, :pincode
 
     # import
