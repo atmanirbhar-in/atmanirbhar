@@ -667,10 +667,18 @@ defmodule Atmanirbhar.Marketplace do
       {:error, %Ecto.Changeset{}}
 
   """
-  def create_bulk_upload(bulk_upload, attrs \\ %{}) do
+  def create_bulk_upload(bulk_upload, attrs \\ %{}, after_save \\ &{:ok, &1}) do
     bulk_upload
     |> BulkUpload.changeset(attrs)
     |> Repo.insert()
+    |> after_save_bulk_upload(after_save)
+  end
+
+  defp after_save_bulk_upload({:ok, bulk_upload}, func) do
+    {:ok, _post} = func.(bulk_upload)
+  end
+  defp after_save_bulk_upload(error, _func) do
+    error
   end
 
   @doc """
@@ -685,10 +693,11 @@ defmodule Atmanirbhar.Marketplace do
       {:error, %Ecto.Changeset{}}
 
   """
-  def update_bulk_upload(%BulkUpload{} = bulk_upload, attrs) do
+  def update_bulk_upload(%BulkUpload{} = bulk_upload, attrs, after_save \\ &{:ok, &1}) do
     bulk_upload
     |> BulkUpload.changeset(attrs)
     |> Repo.update()
+    |> after_save_bulk_upload(after_save)
   end
 
   @doc """
