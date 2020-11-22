@@ -667,8 +667,8 @@ defmodule Atmanirbhar.Marketplace do
       {:error, %Ecto.Changeset{}}
 
   """
-  def create_bulk_upload(attrs \\ %{}) do
-    %BulkUpload{}
+  def create_bulk_upload(bulk_upload, attrs \\ %{}) do
+    bulk_upload
     |> BulkUpload.changeset(attrs)
     |> Repo.insert()
   end

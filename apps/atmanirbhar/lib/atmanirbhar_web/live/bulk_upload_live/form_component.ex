@@ -2,6 +2,7 @@ defmodule AtmanirbharWeb.BulkUploadLive.FormComponent do
   use AtmanirbharWeb, :live_component
 
   alias Atmanirbhar.Marketplace
+  alias Atmanirbhar.Marketplace.BulkUpload
 
   def mount(socket) do
     {:ok, allow_upload(socket, :csv, accept: ~w(.csv), max_entries: 2 )}
@@ -34,9 +35,13 @@ defmodule AtmanirbharWeb.BulkUploadLive.FormComponent do
   def handle_event("save", %{"bulk_upload" => bulk_upload_params}, socket) do
     save_bulk_upload(socket, socket.assigns.action, bulk_upload_params)
   end
+  def handle_event("save_bulk_upload", %{"bulk_upload" => bulk_upload_params}, socket) do
+    save_bulk_upload(socket, socket.assigns.action, bulk_upload_params)
+  end
 
   defp save_bulk_upload(socket, :edit, bulk_upload_params) do
-    case Marketplace.update_bulk_upload(socket.assigns.bulk_upload, bulk_upload_params) do
+    bulk_upload = put_csv_urls(socket, socket.assigns.bulk_upload)
+    case Marketplace.update_bulk_upload(bulk_upload, bulk_upload_params) do
       {:ok, _bulk_upload} ->
         {:noreply,
          socket
@@ -48,8 +53,11 @@ defmodule AtmanirbharWeb.BulkUploadLive.FormComponent do
     end
   end
 
+  # defp save_deal(socket, :new_deal, deal_params), do: save_deal(socket, :new, Map.put_new(deal_params, "is_approved", true) )
+  defp save_bulk_upload(socket, :new_bulk_upload, bulk_upload_params), do: save_bulk_upload(socket, :new, bulk_upload_params)
   defp save_bulk_upload(socket, :new, bulk_upload_params) do
-    case Marketplace.create_bulk_upload(bulk_upload_params) do
+    bulk_upload = put_csv_urls(socket, socket.assigns.bulk_upload)
+    case Marketplace.create_bulk_upload(bulk_upload, bulk_upload_params) do
       {:ok, _bulk_upload} ->
         {:noreply,
          socket
@@ -60,4 +68,17 @@ defmodule AtmanirbharWeb.BulkUploadLive.FormComponent do
         {:noreply, assign(socket, changeset: changeset)}
     end
   end
+
+  defp ext(entry) do
+    [ext | _] = MIME.extensions(entry.client_type)
+  end
+
+  defp put_csv_urls(socket, %BulkUpload{} = bulk_upload) do
+    {completed, []} = uploaded_entries(socket, :csv)
+    urls = for entry <- completed do
+      Routes.static_path(socket, "/uploads/#{entry.uuid}.#{ext(entry)}")
+    end
+    %BulkUpload{bulk_upload | csv_urls: urls}
+  end
+
 end
