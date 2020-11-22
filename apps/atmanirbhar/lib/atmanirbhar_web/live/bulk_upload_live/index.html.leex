@@ -12,7 +12,7 @@
 <table>
   <thead>
     <tr>
-      <th>File url</th>
+      <th>CSV urls</th>
       <th>City name</th>
       <th>Location name</th>
       <th>Content description</th>
@@ -24,7 +24,12 @@
   <tbody id="marketplace_bulk_uploads">
     <%= for bulk_upload <- @marketplace_bulk_uploads do %>
       <tr id="bulk_upload-<%= bulk_upload.id %>">
-        <td><%= bulk_upload.file_url %></td>
+        <td>
+          <%= for csv <- bulk_upload.csv_urls do %>
+              <%= link csv, to: Routes.static_path(@socket, csv), download %>
+              <% end %>
+
+        </td>
         <td><%= bulk_upload.city_name %></td>
         <td><%= bulk_upload.location_name %></td>
         <td><%= bulk_upload.content_description %></td>
