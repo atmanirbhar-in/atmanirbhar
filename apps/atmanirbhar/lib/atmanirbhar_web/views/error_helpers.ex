@@ -17,6 +17,10 @@ defmodule AtmanirbharWeb.ErrorHelpers do
     end)
   end
 
+  def get_upload_filename(%Phoenix.LiveView.UploadEntry{client_name: filename} = entry) do
+    filename
+  end
+
   @doc """
   Translates an error message using gettext.
   """

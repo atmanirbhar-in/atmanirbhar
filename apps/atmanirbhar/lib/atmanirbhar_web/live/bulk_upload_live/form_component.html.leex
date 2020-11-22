@@ -12,7 +12,7 @@
   <%= for entry <- @uploads.photo.entries do %>
      <div class="row mt-2">
        <div class="colUMN">
-         <%= "entry" %>
+         <%= get_upload_filename(entry) %>
        </div>
        <div class="colUMN">
          <progress max="100" value="<%= entry.progress %>" />
