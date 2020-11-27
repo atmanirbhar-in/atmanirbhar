@@ -1,6 +1,7 @@
 defmodule Atmanirbhar.Catalog.TaxonomyImporter do
 
   @file_name "taxonomy-with-ids.en-US.csv"
+  @empty_cell ""
 
   def say_hello do
     file_path = Path.join("apps/atmanirbhar/priv/repo/", @file_name)
@@ -23,13 +24,15 @@ defmodule Atmanirbhar.Catalog.TaxonomyImporter do
   defp process(%{
         uniq: uniq,
         cat0: cat0,
-        cat1: "",
-        cat2: "",
-        cat3: "",
-        cat4: "",
-        cat5: "",
-        cat6: ""
+        cat1: @empty_cell,
+        cat2: @empty_cell,
+        cat3: @empty_cell,
+        cat4: @empty_cell,
+        cat5: @empty_cell,
+        cat6: @empty_cell
                }) do
+    # find or update record with uniq
+    # parent_id = nil
     IO.puts "------"
     IO.puts cat0
   end
@@ -45,6 +48,8 @@ defmodule Atmanirbhar.Catalog.TaxonomyImporter do
         cat5: "",
         cat6: ""
                }) do
+    # find or update record with uniq
+    # parent_id = id of cat0
     IO.puts Enum.join([cat0, cat1], " -> ")
   end
 
@@ -59,6 +64,8 @@ defmodule Atmanirbhar.Catalog.TaxonomyImporter do
         cat5: "",
         cat6: ""
                }) do
+    # find or update record with uniq
+    # parent_id = id of cat1
     IO.puts Enum.join([cat0, cat1, cat2], " -> ")
   end
 
@@ -73,6 +80,10 @@ defmodule Atmanirbhar.Catalog.TaxonomyImporter do
         cat5: "",
         cat6: ""
                }) do
+    # find or update record with uniq
+    # parent_id = id of cat2
+    # name = cat3
+    # full name = joined_array
     IO.puts Enum.join([cat0, cat1, cat2, cat3], " -> ")
   end
 
