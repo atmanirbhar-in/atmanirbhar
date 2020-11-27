@@ -1,6 +1,7 @@
 defmodule Atmanirbhar.Catalog.TaxonomyImporter do
   import Ecto.Query, warn: false
   alias Atmanirbhar.Repo
+  alias Atmanirbhar.Catalog
   alias Atmanirbhar.Catalog.Taxonomy
 
   @file_name "taxonomy-with-ids.en-US.csv"
@@ -34,12 +35,6 @@ defmodule Atmanirbhar.Catalog.TaxonomyImporter do
         cat5: @empty_cell,
         cat6: @empty_cell
                }) do
-    # find or update record with uniq
-    # parent_id = nil
-
-
-    # IO.puts "------"
-    # IO.puts cat0
     create_record(uniq, cat0, cat0, "")
   end
 
@@ -54,8 +49,6 @@ defmodule Atmanirbhar.Catalog.TaxonomyImporter do
         cat5: "",
         cat6: ""
                }) do
-      # find or update record with uniq
-      # parent_id = id of cat0
       full_name = Enum.join([cat0, cat1], " -> ")
       create_record(uniq, cat1, full_name, cat0)
     end
@@ -71,8 +64,6 @@ defmodule Atmanirbhar.Catalog.TaxonomyImporter do
         cat5: "",
         cat6: ""
                }) do
-    # find or update record with uniq
-    # parent_id = id of cat1
     full_name = Enum.join([cat0, cat1, cat2], " -> ")
     create_record(uniq, cat2, full_name, cat1)
   end
@@ -88,10 +79,6 @@ defmodule Atmanirbhar.Catalog.TaxonomyImporter do
         cat5: "",
         cat6: ""
                }) do
-    # find or update record with uniq
-    # parent_id = id of cat2
-    # name = cat3
-    # full name = joined_array
     full_name = Enum.join([cat0, cat1, cat2, cat3], " -> ")
     create_record(uniq, cat3, full_name, cat2)
   end
@@ -140,9 +127,9 @@ defmodule Atmanirbhar.Catalog.TaxonomyImporter do
   end
 
   def create_record(uniq, name, fullname, parent_name) do
-    parent_uniq = Catalog.get_taxonomy_by_name(parent_name)
+    parent_uniq = Catalog.get_taxonomy_by_name!(parent_name)
 
-    changeset = Atmanirbhar.Catalog.change_taxonomy(
+    changeset = Catalog.change_taxonomy(
       %Taxonomy{
         uniq: uniq,
         name: name,
@@ -160,8 +147,8 @@ defmodule Atmanirbhar.Catalog.TaxonomyImporter do
       |> Repo.insert_or_update
 
     case result do
-      {:ok, struct}       -> IO.puts "created" # Inserted or updated with success
-      {:error, changeset} -> IO.puts "failed" # Something went wrong
+      {:ok, _struct}       -> IO.puts "created" # Inserted or updated with success
+      {:error, _changeset} -> IO.puts "failed" # Something went wrong
     end
   end
 
