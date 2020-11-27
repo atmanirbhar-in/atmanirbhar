@@ -4,7 +4,8 @@ defmodule Mix.Tasks.ImportCategories do
   @requirements ["app.start"]
   @shortdoc "upload categories csv and import them. update existing"
   def run(_) do
-    Atmanirbhar.Catalog.TaxonomyImporter.say_hello()
+    Mix.Task.run "app.start"
+    Atmanirbhar.Catalog.TaxonomyImporter.import()
   end
 
 end

@@ -3,16 +3,18 @@ defmodule Atmanirbhar.Catalog.TaxonomyImporter do
   alias Atmanirbhar.Repo
   alias Atmanirbhar.Catalog
   alias Atmanirbhar.Catalog.Taxonomy
+  # alias NimbleCSV
+  # alias NimbleCSV.RFC4180
 
   @file_name "taxonomy-with-ids.en-US.csv"
   @empty_cell ""
 
-  def say_hello do
-    file_path = Path.join("apps/atmanirbhar/priv/repo/", @file_name)
+  def import do
+    file_path = Path.join("priv/repo/", @file_name)
 
     file_path
     |> File.stream!
-    |> NimbleCSV.RFC4180.parse_stream()
+    |> NimbleCSV.RFC4180.parse_stream([])
     |> Stream.map(fn set_of_records ->
       Enum.zip([:uniq, :cat0, :cat1, :cat2, :cat3, :cat4, :cat5, :cat6],
         set_of_records
@@ -129,21 +131,18 @@ defmodule Atmanirbhar.Catalog.TaxonomyImporter do
   def create_record(uniq, name, fullname, parent_name) do
     parent_uniq = Catalog.get_taxonomy_by_name!(parent_name)
 
-    changeset = Catalog.change_taxonomy(
-      %Taxonomy{
-        uniq: uniq,
-        name: name,
-        full_name: fullname,
-        parent_uniq: parent_uniq
-      }
-    )
+    changes = %{ uniq: uniq,
+                 name: name,
+                 full_name: fullname,
+                 parent_uniq: parent_uniq
+               }
 
     result =
       case Repo.get_by(Taxonomy, uniq: uniq) do
         nil  -> %Taxonomy{}   # not found, we build one
         taxonomy -> taxonomy    # exists, let's use it
       end
-      |> Taxonomy.changeset(changeset)
+      |> Taxonomy.changeset(changes)
       |> Repo.insert_or_update
 
     case result do

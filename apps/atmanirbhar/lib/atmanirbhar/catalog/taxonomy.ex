@@ -16,7 +16,7 @@ defmodule Atmanirbhar.Catalog.Taxonomy do
   def changeset(taxonomy, attrs) do
     taxonomy
     |> cast(attrs, [:name, :full_name, :uniq, :parent_uniq, :is_visible])
-    |> validate_required([:name, :full_name, :uniq, :parent_uniq, :is_visible])
+    |> validate_required([:name, :full_name, :uniq, :is_visible])
     |> unique_constraint(:name)
     |> unique_constraint(:uniq)
   end
