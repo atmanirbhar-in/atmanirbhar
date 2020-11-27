@@ -17,7 +17,9 @@ defmodule AtmanirbharUmbrella.MixProject do
   #
   # Run "mix help deps" for examples and options.
   defp deps do
-    []
+    [
+      {:nimble_csv, "~> 1.0"}
+    ]
   end
 
   defp aliases do
