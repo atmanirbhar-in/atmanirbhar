@@ -38,8 +38,9 @@ defmodule Atmanirbhar.Catalog.TaxonomyImporter do
     # parent_id = nil
 
 
-    IO.puts "------"
-    IO.puts cat0
+    # IO.puts "------"
+    # IO.puts cat0
+    create_record(uniq, cat0, cat0, "")
   end
 
   # upto cat 2
@@ -53,10 +54,11 @@ defmodule Atmanirbhar.Catalog.TaxonomyImporter do
         cat5: "",
         cat6: ""
                }) do
-    # find or update record with uniq
-    # parent_id = id of cat0
-    IO.puts Enum.join([cat0, cat1], " -> ")
-  end
+      # find or update record with uniq
+      # parent_id = id of cat0
+      full_name = Enum.join([cat0, cat1], " -> ")
+      create_record(uniq, cat1, full_name, cat0)
+    end
 
   # upto cat 2
   defp process(%{
@@ -71,7 +73,8 @@ defmodule Atmanirbhar.Catalog.TaxonomyImporter do
                }) do
     # find or update record with uniq
     # parent_id = id of cat1
-    IO.puts Enum.join([cat0, cat1, cat2], " -> ")
+    full_name = Enum.join([cat0, cat1, cat2], " -> ")
+    create_record(uniq, cat2, full_name, cat1)
   end
 
   # upto cat 3
@@ -89,7 +92,8 @@ defmodule Atmanirbhar.Catalog.TaxonomyImporter do
     # parent_id = id of cat2
     # name = cat3
     # full name = joined_array
-    IO.puts Enum.join([cat0, cat1, cat2, cat3], " -> ")
+    full_name = Enum.join([cat0, cat1, cat2, cat3], " -> ")
+    create_record(uniq, cat3, full_name, cat2)
   end
 
 
@@ -136,7 +140,8 @@ defmodule Atmanirbhar.Catalog.TaxonomyImporter do
   end
 
   def create_record(uniq, name, fullname, parent_name) do
-    parent_uniq = Catalog.find(parent_name)
+    parent_uniq = Catalog.get_taxonomy_by_name(parent_name)
+
     changeset = Atmanirbhar.Catalog.change_taxonomy(
       %Taxonomy{
         uniq: uniq,
@@ -146,7 +151,18 @@ defmodule Atmanirbhar.Catalog.TaxonomyImporter do
       }
     )
 
-    Repo.insert_or_update changeset
+    result =
+      case Repo.get_by(Taxonomy, uniq: uniq) do
+        nil  -> %Taxonomy{}   # not found, we build one
+        taxonomy -> taxonomy    # exists, let's use it
+      end
+      |> Taxonomy.changeset(changeset)
+      |> Repo.insert_or_update
+
+    case result do
+      {:ok, struct}       -> IO.puts "created" # Inserted or updated with success
+      {:error, changeset} -> IO.puts "failed" # Something went wrong
+    end
   end
 
 end
