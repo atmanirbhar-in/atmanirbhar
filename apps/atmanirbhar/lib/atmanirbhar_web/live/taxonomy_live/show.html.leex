@@ -1,0 +1,42 @@
+<h1>Show Taxonomy</h1>
+
+<%= if @live_action in [:edit] do %>
+  <%= live_modal @socket, AtmanirbharWeb.TaxonomyLive.FormComponent,
+    id: @taxonomy.id,
+    title: @page_title,
+    action: @live_action,
+    taxonomy: @taxonomy,
+    return_to: Routes.taxonomy_show_path(@socket, :show, @taxonomy) %>
+<% end %>
+
+<ul>
+
+  <li>
+    <strong>Name:</strong>
+    <%= @taxonomy.name %>
+  </li>
+
+  <li>
+    <strong>Full name:</strong>
+    <%= @taxonomy.full_name %>
+  </li>
+
+  <li>
+    <strong>Uniq:</strong>
+    <%= @taxonomy.uniq %>
+  </li>
+
+  <li>
+    <strong>Parent uniq:</strong>
+    <%= @taxonomy.parent_uniq %>
+  </li>
+
+  <li>
+    <strong>Is visible:</strong>
+    <%= @taxonomy.is_visible %>
+  </li>
+
+</ul>
+
+<span><%= live_patch "Edit", to: Routes.taxonomy_show_path(@socket, :edit, @taxonomy), class: "button" %></span>
+<span><%= live_redirect "Back", to: Routes.taxonomy_index_path(@socket, :index) %></span>

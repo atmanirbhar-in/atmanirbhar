@@ -1,32 +1,83 @@
 <section class="container-full mx-auto my-2">
 
-  <%= f = form_for @pincode_changeset, "#",
-      id: "pincode-form",
-      phx_change: "validate-location-form",
-      class: "flex",
-      phx_submit: "set-pincode" %>
-
-  <div class="flex">
-    <%= label f, :pincode, class: "p-2 font-semibold text-sm" %>
-    <div class="flex">
-      <%= text_input f, :pincode, class: "text-gray-600 font-semibold text-xs
-                                          w-32 md:w-40 h-full p-1 md:p-2
-                                          border border-solid border-purple-900
-                                          phx-hook-subscribe-to-session
-                                          outline-none"
-          %>
-      <%= submit "Submit", phx_disable_with: "Submitting...", class: "btn btn-primary" %>
+  <div class="flex w-full">
+    <div class="w-2/5">
+      <p>
+        <%= @reader_count %> people watching in this region
+      </p>
     </div>
-    <%= error_tag f, :pincode %>
+
+    <div class="w-3/5" >
+    </div>
   </div>
 
 </form>
 
-  <p>
-    <%= @reader_count %> people watching in this pincode
-  </p>
 
 </section>
+
+<section class="w-full">
+  <div class="border border-solid flex">
+    <div class="w-1/2 p-4">
+      <h1 class="p-1 text-2xl text-gray-900">
+        Create virtual stall of your business.
+      </h1>
+      <h2 class="text-lg font-light text-gray-800">Let more Audience in your region find you.</h2>
+    </div>
+    <div class="w-1/2">
+    <%= img_tag(Routes.static_path(@socket, "/images/city-map.png"), class: "h-auto w-full") %>
+    </div>
+  </div>
+</section>
+
+
+
+<section class="container mx-auto">
+  <div class="flex flex-wrap content-around">
+
+    <%= for item <- @deals do %>
+        <div class="w-full md:w-1/2 md:max-w-md xl:w-1/3 h-40 md:h-48 p-3 md:p-3 lg:p-3">
+          <div class="max-w-sm md:max-w-md h-full
+                      md:w-full
+                      ">
+            <div class="rounded shadow-lg bg-blue-100 p-4 w-full h-full flex">
+              <div class="w-1/2">
+              <%= img_tag(Routes.static_path(@socket, "/images/default/chef-cartoon.png"), class: "w-1/2 h-40 md:h-48") %>
+              </div>
+            <div class="w-1/2">
+              <p class="text-lg md:text-xl text-gray-800">
+                <%#= item.name %> Stall xyz
+              </p>
+              <p class="text-normal md:text-lg text-gray-600">
+                <%#= item.description %> Product xyz
+              </p>
+              <div class="flex flex-flow-reverse w-full">
+                <button class="btn p-2 w-32 flex">Visit Stall</button>
+              </div>
+            </div>
+            </div>
+          </div>
+        </div>
+        <% end %>
+
+        <div class="w-full md:w-1/2 md:max-w-md xl:w-1/3 h-40 md:h-48 p-3 md:p-3 lg:p-3">
+          <div class="max-w-sm md:max-w-md h-full
+                      md:w-full
+                      flex flex-col justify-around
+                      rounded shadow-lg bg-white p-4 text-center">
+            <p class="text-4xl md:text-3xl text-gray-600 font-semibold">
+              +
+            </p>
+            <p class="text-normal md:text-lg text-gray-500">
+              List your stall here
+            </p>
+          </div>
+        </div>
+  </div>
+
+</section>
+
+
 
   <section class="container-full mx-auto">
   <div class="flex flex-wrap w-full">
@@ -139,39 +190,4 @@
 
 </section>
 
-<section class="container mx-auto">
-  <div class="flex flex-wrap content-around">
-
-        <div class="w-full md:w-1/2 md:max-w-md xl:w-1/3 h-40 md:h-48 p-3 md:p-3 lg:p-3">
-          <div class="max-w-sm md:max-w-md h-full
-                      md:w-full
-                      flex flex-col justify-around
-                      rounded shadow-lg bg-white p-4 text-center">
-            <p class="text-4xl md:text-3xl text-gray-600 font-semibold">
-              +
-            </p>
-            <p class="text-normal md:text-lg text-gray-500">
-              List your business here
-            </p>
-          </div>
-        </div>
-    <%= for shop <- @shops do %>
-        <div class="w-full md:w-1/2 md:max-w-md xl:w-1/3 h-40 md:h-48 p-3 md:p-3 lg:p-3">
-          <div class="max-w-sm md:max-w-md h-full
-                      md:w-full
-                      ">
-            <div class="rounded shadow-lg bg-blue-100 p-4 w-full h-full flex flex-col">
-              <p class="text-lg md:text-xl text-gray-800">
-                <%= shop.name %>
-              </p>
-              <p class="text-normal md:text-lg text-gray-600">
-                <%= shop.description %>
-              </p>
-            </div>
-          </div>
-        </div>
-        <% end %>
-  </div>
-
-</section>
 

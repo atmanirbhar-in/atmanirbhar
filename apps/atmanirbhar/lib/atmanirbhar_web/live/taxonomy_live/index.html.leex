@@ -1,0 +1,43 @@
+<h1>Listing Catalog taxonomies</h1>
+
+<%= if @live_action in [:new, :edit] do %>
+  <%= live_modal @socket, AtmanirbharWeb.TaxonomyLive.FormComponent,
+    id: @taxonomy.id || :new,
+    title: @page_title,
+    action: @live_action,
+    taxonomy: @taxonomy,
+    return_to: Routes.taxonomy_index_path(@socket, :index) %>
+<% end %>
+
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Full name</th>
+      <th>Uniq</th>
+      <th>Parent uniq</th>
+      <th>Is visible</th>
+
+      <th></th>
+    </tr>
+  </thead>
+  <tbody id="catalog_taxonomies">
+    <%= for taxonomy <- @catalog_taxonomies do %>
+      <tr id="taxonomy-<%= taxonomy.id %>">
+        <td><%= taxonomy.name %></td>
+        <td><%= taxonomy.full_name %></td>
+        <td><%= taxonomy.uniq %></td>
+        <td><%= taxonomy.parent_uniq %></td>
+        <td><%= taxonomy.is_visible %></td>
+
+        <td>
+          <span><%= live_redirect "Show", to: Routes.taxonomy_show_path(@socket, :show, taxonomy) %></span>
+          <span><%= live_patch "Edit", to: Routes.taxonomy_index_path(@socket, :edit, taxonomy) %></span>
+          <span><%= link "Delete", to: "#", phx_click: "delete", phx_value_id: taxonomy.id, data: [confirm: "Are you sure?"] %></span>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<span><%= live_patch "New Taxonomy", to: Routes.taxonomy_index_path(@socket, :new) %></span>

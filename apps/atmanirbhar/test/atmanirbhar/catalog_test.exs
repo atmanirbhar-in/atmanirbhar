@@ -69,4 +69,71 @@ defmodule Atmanirbhar.CatalogTest do
       assert %Ecto.Changeset{} = Catalog.change_blueprint(blueprint)
     end
   end
+
+  describe "catalog_taxonomies" do
+    alias Atmanirbhar.Catalog.Taxonomy
+
+    @valid_attrs %{full_name: "some full_name", is_visible: true, name: "some name", parent_uniq: 42, uniq: 42}
+    @update_attrs %{full_name: "some updated full_name", is_visible: false, name: "some updated name", parent_uniq: 43, uniq: 43}
+    @invalid_attrs %{full_name: nil, is_visible: nil, name: nil, parent_uniq: nil, uniq: nil}
+
+    def taxonomy_fixture(attrs \\ %{}) do
+      {:ok, taxonomy} =
+        attrs
+        |> Enum.into(@valid_attrs)
+        |> Catalog.create_taxonomy()
+
+      taxonomy
+    end
+
+    test "list_catalog_taxonomies/0 returns all catalog_taxonomies" do
+      taxonomy = taxonomy_fixture()
+      assert Catalog.list_catalog_taxonomies() == [taxonomy]
+    end
+
+    test "get_taxonomy!/1 returns the taxonomy with given id" do
+      taxonomy = taxonomy_fixture()
+      assert Catalog.get_taxonomy!(taxonomy.id) == taxonomy
+    end
+
+    test "create_taxonomy/1 with valid data creates a taxonomy" do
+      assert {:ok, %Taxonomy{} = taxonomy} = Catalog.create_taxonomy(@valid_attrs)
+      assert taxonomy.full_name == "some full_name"
+      assert taxonomy.is_visible == true
+      assert taxonomy.name == "some name"
+      assert taxonomy.parent_uniq == 42
+      assert taxonomy.uniq == 42
+    end
+
+    test "create_taxonomy/1 with invalid data returns error changeset" do
+      assert {:error, %Ecto.Changeset{}} = Catalog.create_taxonomy(@invalid_attrs)
+    end
+
+    test "update_taxonomy/2 with valid data updates the taxonomy" do
+      taxonomy = taxonomy_fixture()
+      assert {:ok, %Taxonomy{} = taxonomy} = Catalog.update_taxonomy(taxonomy, @update_attrs)
+      assert taxonomy.full_name == "some updated full_name"
+      assert taxonomy.is_visible == false
+      assert taxonomy.name == "some updated name"
+      assert taxonomy.parent_uniq == 43
+      assert taxonomy.uniq == 43
+    end
+
+    test "update_taxonomy/2 with invalid data returns error changeset" do
+      taxonomy = taxonomy_fixture()
+      assert {:error, %Ecto.Changeset{}} = Catalog.update_taxonomy(taxonomy, @invalid_attrs)
+      assert taxonomy == Catalog.get_taxonomy!(taxonomy.id)
+    end
+
+    test "delete_taxonomy/1 deletes the taxonomy" do
+      taxonomy = taxonomy_fixture()
+      assert {:ok, %Taxonomy{}} = Catalog.delete_taxonomy(taxonomy)
+      assert_raise Ecto.NoResultsError, fn -> Catalog.get_taxonomy!(taxonomy.id) end
+    end
+
+    test "change_taxonomy/1 returns a taxonomy changeset" do
+      taxonomy = taxonomy_fixture()
+      assert %Ecto.Changeset{} = Catalog.change_taxonomy(taxonomy)
+    end
+  end
 end

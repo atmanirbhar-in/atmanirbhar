@@ -234,9 +234,11 @@ defmodule Atmanirbhar.Marketplace do
     Repo.all(from d in Deal, order_by: [desc: d.inserted_at])
   end
   def list_deals_for_pincode(pincode) do
-    Repo.all(from d in Deal,
+    query = from d in Deal,
       where: d.pincode == ^pincode,
-      order_by: [desc: d.inserted_at])
+      order_by: [desc: d.inserted_at]
+
+    Repo.all query, skip_org_id: true
   end
 
   @doc """

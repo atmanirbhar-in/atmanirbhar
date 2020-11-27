@@ -45,3 +45,55 @@ main {
 .form-admin-fieldset > .input-box > input, .form-admin-fieldset > .input-box > textarea {
     @apply p-2 outline-none border border-gray-900 w-full
 }
+
+
+.wrap {
+  display: grid;
+  grid-auto-flow: row dense;
+  grid-template-rows: 3rem max-content 3rem;
+  filter: brightness(0.8);
+}
+.wrap::before, .wrap::after {
+  z-index: -1;
+  height: 1rem;
+  border-radius: 1rem;
+  content: "";
+}
+.wrap::before {
+  box-shadow: 0 1px #fc7444;
+  background: linear-gradient(#fc3b3b, #e60023);
+}
+.wrap::after {
+  background: #ecebe9;
+  mask-composite: exclude;
+}
+.wrap:focus-within {
+  filter: none;
+}
+
+.audience-slider {
+    position: relative;
+    margin: 0 auto 20px;
+    height: 35px;
+    text-align: center;
+}
+
+.audience-slider input {
+    pointer-events: none;
+    position: absolute;
+    left: 0; top: 15px;
+    width: 100%;
+    outline: none;
+    height: 18px;
+    margin: 0;
+    padding: 0;
+    border-radius: 8px;
+}
+
+.audience-slider input::-webkit-slider-thumb {
+    pointer-events: all; position: relative; z-index: 1; outline: 0;
+    -webkit-appearance: none; height: 24px; width: 24px;
+    border-radius: 12px;
+    background-color: purple;
+    border: 2px solid black;
+}
