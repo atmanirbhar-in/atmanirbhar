@@ -133,6 +133,8 @@ defmodule Atmanirbhar.Catalog do
   """
   def get_taxonomy!(id), do: Repo.get!(Taxonomy, id)
 
+  def get_taxonomy_by_uniq!(uniq_id), do: Repo.get!(Taxonomy, id)
+
   @doc """
   Creates a taxonomy.
 

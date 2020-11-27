@@ -1,4 +1,7 @@
 defmodule Atmanirbhar.Catalog.TaxonomyImporter do
+  import Ecto.Query, warn: false
+  alias Atmanirbhar.Repo
+  alias Atmanirbhar.Catalog.Taxonomy
 
   @file_name "taxonomy-with-ids.en-US.csv"
   @empty_cell ""
@@ -33,6 +36,8 @@ defmodule Atmanirbhar.Catalog.TaxonomyImporter do
                }) do
     # find or update record with uniq
     # parent_id = nil
+
+
     IO.puts "------"
     IO.puts cat0
   end
@@ -128,6 +133,20 @@ defmodule Atmanirbhar.Catalog.TaxonomyImporter do
         cat6: cat6
                }) do
     IO.puts Enum.join([cat0, cat1, cat2, cat3, cat4, cat5, cat6], " -> ")
+  end
+
+  def create_record(uniq, name, fullname, parent_name) do
+    parent_uniq = Catalog.find(parent_name)
+    changeset = Atmanirbhar.Catalog.change_taxonomy(
+      %Taxonomy{
+        uniq: uniq,
+        name: name,
+        full_name: fullname,
+        parent_uniq: parent_uniq
+      }
+    )
+
+    Repo.insert_or_update changeset
   end
 
 end
