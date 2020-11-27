@@ -84,18 +84,8 @@ defmodule AtmanirbharWeb.Router do
     put "/users/reset_password/:token", UserResetPasswordController, :update
   end
 
-  scope "/", AtmanirbharWeb do
+  scope "/admin", AtmanirbharWeb do
     pipe_through [:browser, :require_authenticated_user]
-
-    get "/users/settings", UserSettingsController, :edit
-    put "/users/settings/update_password", UserSettingsController, :update_password
-    put "/users/settings/update_email", UserSettingsController, :update_email
-    get "/users/settings/confirm_email/:token", UserSettingsController, :confirm_email
-    put "/users/settings/update_avatar", UserSettingsController, :update_avatar
-
-
-    live "/dashboard", UserDashboardLive.Index, :index
-    live "/dashboard/new_advertisement", UserDashboardLive.Index, :new_ad
 
     live "/advertisements", AdvertisementLive.Index, :index
     live "/advertisements/new", AdvertisementLive.Index, :new
@@ -148,16 +138,7 @@ defmodule AtmanirbharWeb.Router do
 
     live "/marketplace_bulk_uploads/:id", BulkUploadLive.Show, :show
     live "/marketplace_bulk_uploads/:id/show/edit", BulkUploadLive.Show, :edit
-  end
 
-  scope "/", AtmanirbharWeb do
-    pipe_through [:browser]
-
-
-    delete "/users/logout", UserSessionController, :delete
-    get "/users/confirm", UserConfirmationController, :new
-    post "/users/confirm", UserConfirmationController, :create
-    get "/users/confirm/:token", UserConfirmationController, :confirm
 
     live "/pincodes", PincodeLive.Index, :index
     live "/pincodes/new", PincodeLive.Index, :new
@@ -186,6 +167,38 @@ defmodule AtmanirbharWeb.Router do
 
     live "/raw_materials/:id", RawMaterialLive.Show, :show
     live "/raw_materials/:id/show/edit", RawMaterialLive.Show, :edit
+
+    live "/catalog_taxonomies", TaxonomyLive.Index, :index
+    live "/catalog_taxonomies/new", TaxonomyLive.Index, :new
+    live "/catalog_taxonomies/:id/edit", TaxonomyLive.Index, :edit
+
+    live "/catalog_taxonomies/:id", TaxonomyLive.Show, :show
+    live "/catalog_taxonomies/:id/show/edit", TaxonomyLive.Show, :edit
+  end
+
+  scope "/", AtmanirbharWeb do
+    pipe_through [:browser, :require_authenticated_user]
+
+    get "/users/settings", UserSettingsController, :edit
+    put "/users/settings/update_password", UserSettingsController, :update_password
+    put "/users/settings/update_email", UserSettingsController, :update_email
+    get "/users/settings/confirm_email/:token", UserSettingsController, :confirm_email
+    put "/users/settings/update_avatar", UserSettingsController, :update_avatar
+
+
+    live "/dashboard", UserDashboardLive.Index, :index
+    live "/dashboard/new_advertisement", UserDashboardLive.Index, :new_ad
+
+  end
+
+  scope "/", AtmanirbharWeb do
+    pipe_through [:browser]
+
+
+    delete "/users/logout", UserSessionController, :delete
+    get "/users/confirm", UserConfirmationController, :new
+    post "/users/confirm", UserConfirmationController, :create
+    get "/users/confirm/:token", UserConfirmationController, :confirm
 
 
 
