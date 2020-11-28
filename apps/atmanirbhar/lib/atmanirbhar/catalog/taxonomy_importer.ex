@@ -129,12 +129,18 @@ defmodule Atmanirbhar.Catalog.TaxonomyImporter do
   end
 
   def create_record(uniq, name, fullname, parent_name) do
-    parent_uniq = Catalog.get_taxonomy_by_name!(parent_name)
+    parent_taxonomy = Catalog.get_taxonomy_by_name!(parent_name)
+    # %Taxonomy{uniq: parent_uniq }
+    IO.puts uniq
+    parent_uniq = case parent_taxonomy do
+                    nil -> nil
+                    _ -> Map.get(parent_taxonomy, :uniq)
+                  end
 
-    changes = %{ uniq: uniq,
-                 name: name,
-                 full_name: fullname,
-                 parent_uniq: parent_uniq
+    changes = %{uniq: uniq,
+                name: name,
+                full_name: fullname,
+                parent_uniq: parent_uniq
                }
 
     result =
