@@ -8,6 +8,11 @@ defmodule AtmanirbharWeb.PageLive do
   @impl true
   def mount(params, session, socket) do
 
+    IO.puts inspect(socket)
+    IO.puts "host in socket? -----------------"
+
+    Atmanirbhar.Repo.put_org_id(123)
+
     pincode = params["pincode"] || 12345
     location_form = %LocationForm{pincode: pincode}
     pincode_changeset = Marketplace.change_location_form(location_form)
@@ -28,8 +33,10 @@ defmodule AtmanirbharWeb.PageLive do
     )
 
     deals = Atmanirbhar.Marketplace.list_deals_for_pincode(pincode)
-    shops = Atmanirbhar.Marketplace.list_shops()
-    advertisements = Atmanirbhar.Marketplace.list_advertisements()
+    # shops = Atmanirbhar.Marketplace.list_shops()
+    shops = []
+    # advertisements = Atmanirbhar.Marketplace.list_advertisements()
+    advertisements = []
 
     {:ok, assign(socket, query: "",
         results: %{},
@@ -47,7 +54,10 @@ defmodule AtmanirbharWeb.PageLive do
     {:noreply, assign(socket, results: search(query), query: query)}
   end
 
-  def handle_params(params, _url, socket) do
+  def handle_params(params, url, socket) do
+    host_name =  URI.parse(url).host
+    Atmanirbhar.Repo.put_org_id(host_name)
+    # IO.puts "^^^^^^^^^^^^^^^^^^"
     {:noreply, apply_action(socket, socket.assigns.live_action, params)}
   end
 
