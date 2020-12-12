@@ -6,25 +6,31 @@
       class: "flex",
       phx_submit: "set-pincode" %>
 
-  <div class="flex">
-    <%= label f, :pincode, class: "p-2 font-semibold text-sm" %>
-    <div class="flex">
-      <%= text_input f, :pincode, class: "text-gray-600 font-semibold text-xs
-                                          w-32 md:w-40 h-full p-1 md:p-2
-                                          border border-solid border-purple-900
-                                          phx-hook-subscribe-to-session
-                                          outline-none"
-          %>
-      <%= submit "Submit", phx_disable_with: "Submitting...", class: "btn btn-primary" %>
+  <div class="flex w-full">
+    <div class="w-2/5">
+      <%= label f, :pincode, class: "p-2 font-semibold text-sm" %>
+      <div class="flex flex-col">
+        <%= text_input f, :pincode, class: "text-gray-600 font-semibold text-xs
+                                            w-32 md:w-40 h-full p-1 md:p-2
+                                            border border-solid border-purple-900
+                                            phx-hook-subscribe-to-session
+                                            outline-none"
+            %>
+        <%= submit "Submit", phx_disable_with: "Submitting...", class: "btn btn-primary w-32" %>
+      </div>
+      <%= error_tag f, :pincode %>
+      <p>
+        <%= @reader_count %> people watching in this region
+      </p>
     </div>
-    <%= error_tag f, :pincode %>
+
+    <div class="w-3/5" >
+      <%= live_component @socket, AtmanirbharWeb.AudienceSliderComponent, id: "home-slider" %>
+    </div>
   </div>
 
 </form>
 
-  <p>
-    <%= @reader_count %> people watching in this pincode
-  </p>
 
 </section>
 
