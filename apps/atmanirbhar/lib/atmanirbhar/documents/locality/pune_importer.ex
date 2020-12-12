@@ -44,22 +44,22 @@ defmodule Atmanirbhar.Documents.Locality.PuneImporter do
   #   # import_record
   # end
 
-  def import_record(%{
-        state: @state_name,
-        district_name: @city_name,
-        sub_dist_name: sdn,
-        village_name: village_name,
-        locality_detail1: @no_sub_district_name,
-        locality_detail2: locality_detail2,
-        locality_detail3: locality_detail3,
-        office_name: office_name,
-        pincode: pincode
-                    }) do
-    IO.puts "village is is #{village_name}"
-    #
-    # This is a taluka
-    # set villagename / subdistname
-  end
+  # def import_record(%{
+  #       state: @state_name,
+  #       district_name: @city_name,
+  #       sub_dist_name: sdn,
+  #       village_name: village_name,
+  #       locality_detail1: @no_sub_district_name,
+  #       locality_detail2: locality_detail2,
+  #       locality_detail3: locality_detail3,
+  #       office_name: office_name,
+  #       pincode: pincode
+  #                   }) do
+  #   IO.puts "village is is #{village_name}"
+  #   #
+  #   # This is a taluka
+  #   # set villagename / subdistname
+  # end
 
   def import_record(%{
         state: @state_name,
@@ -72,6 +72,7 @@ defmodule Atmanirbhar.Documents.Locality.PuneImporter do
         office_name: office_name,
         pincode: pincode
                     }) do
+    # mostly road names
     # IO.puts "loc det 001 - #{locality_detail3} - #{office_name}"
     # import_record
   end
@@ -117,7 +118,7 @@ defmodule Atmanirbhar.Documents.Locality.PuneImporter do
         office_name: office_name,
         pincode: pincode
                     }) do
-    IO.puts "loc det 100 - #{locality_detail1} - #{office_name}"
+    # IO.puts "loc det 100 - #{locality_detail1} - #{office_name}"
     # import_record
   end
 
@@ -165,7 +166,7 @@ defmodule Atmanirbhar.Documents.Locality.PuneImporter do
         office_name: office_name,
         pincode: pincode
                     }) do
-    IO.puts "loc det 111 - #{locality_detail1} - #{locality_detail2} - #{locality_detail3} - #{office_name}"
+    # IO.puts "loc det 111 - #{locality_detail1} - #{locality_detail2} - #{locality_detail3} - #{office_name}"
     # import_record
     # IO.puts "loc det 2 - #{locality_detail1} - #{office_name}"
   end
