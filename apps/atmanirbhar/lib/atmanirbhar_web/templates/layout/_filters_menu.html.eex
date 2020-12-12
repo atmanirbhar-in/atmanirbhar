@@ -14,9 +14,17 @@ outline-none"
 <%# = submit "S", phx_disable_with: "Submitting...", class: "btn btn-transparent w-12" %>
 </div>
 <%= error_tag f, :pincode %>
+<div class="flex flex-col ml-4">
+    <div>
+        <input name="" type="checkbox" name="gender_filter" value="get_male"/> Male
+    </div>
+    <div>
+        <input name="" type="checkbox" name="gender_filter" value="get_female"/> Female
+    </div>
+</div>
 <div class="ml-4">
     <datalist id="tickmarks" class="flex text-sm font-light">
-        <option value="0">
+        <option value="0" class="block">
             <%= img_tag(Routes.static_path(@conn, "/images/audience/school.png"), class: "h-20 w-20 md:w-24 md:h-24") %>
         </option>
         <option value="10" label="toddler">Toddler</option>
@@ -31,8 +39,8 @@ outline-none"
         <option value="100">Home and Kitchen</option>
     </datalist>
     <div class="audience-slider">
-        <input id="max" type="range" name="max" min="0" max="100" step="10" value="40" class="range-slider w-full" list="tickmarks">
-        <input id="max" type="range" name="max" min="0" max="100" step="10" value="70" class="range-slider w-full" list="tickmarks">
+        <input id="max" type="range" name="max" min="0" max="100" step="2" value="15" class="range-slider w-full" list="tickmarks">
+        <input id="max" type="range" name="max" min="0" max="100" step="2" value="30" class="range-slider w-full" list="tickmarks">
     </div>
 </div>
 
