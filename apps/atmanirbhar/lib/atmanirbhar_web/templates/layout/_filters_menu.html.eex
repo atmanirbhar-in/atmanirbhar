@@ -11,7 +11,31 @@ border border-solid border-purple-900
 phx-hook-subscribe-to-session
 outline-none"
 %>
-<%= submit "Submit", phx_disable_with: "Submitting...", class: "btn btn-transparent w-12" %>
+<%# = submit "S", phx_disable_with: "Submitting...", class: "btn btn-transparent w-12" %>
 </div>
 <%= error_tag f, :pincode %>
+<div class="ml-4">
+    <datalist id="tickmarks" class="flex text-sm font-light">
+        <option value="0">
+            <%= img_tag(Routes.static_path(@conn, "/images/audience/school.png"), class: "h-20 w-20 md:w-24 md:h-24") %>
+        </option>
+        <option value="10" label="toddler">Toddler</option>
+        <option value="20">Pre School</option>
+        <option value="30">School Going</option>
+        <option value="40" label="college"></option>
+        <option value="50"></option>
+        <option value="60"></option>
+        <option value="70"></option>
+        <option value="80">Pets, Cat, Dogs</option>
+        <option value="90">Plants & Garden</option>
+        <option value="100">Home and Kitchen</option>
+    </datalist>
+    <div class="audience-slider">
+        <input id="max" type="range" name="max" min="0" max="100" step="10" value="40" class="range-slider w-full" list="tickmarks">
+        <input id="max" type="range" name="max" min="0" max="100" step="10" value="70" class="range-slider w-full" list="tickmarks">
+    </div>
+</div>
+
 </form>
+
+

@@ -38,15 +38,28 @@ defmodule AtmanirbharWeb.PageLive do
     # advertisements = Atmanirbhar.Marketplace.list_advertisements()
     advertisements = []
 
-    {:ok, assign(socket, query: "",
-        results: %{},
-        location_form: location_form,
-        pincode_changeset: pincode_changeset,
-        shops: shops,
-        deals: deals,
-        reader_count: initial_count,
-        advertisements: advertisements
-      )}
+    socket = socket
+    |> assign(:page_title, "Packages")
+    |> assign(location_form: location_form)
+    |> assign(pincode_changeset: pincode_changeset)
+    |> assign(reader_count: initial_count)
+    |> assign(deals: deals)
+    |> assign(advertisements: advertisements)
+    |> assign(shops: shops)
+
+    {:ok, socket}
+
+    # assign(socket, %{
+    #       query: "",
+    #       results: %{},
+    #       location_form: location_form,
+    #       pincode_changeset: pincode_changeset,
+    #       shops: shops,
+    #       deals: deals,
+    #       reader_count: initial_count,
+    #       advertisements: advertisements
+    #        }
+    # )
   end
 
   @impl true
