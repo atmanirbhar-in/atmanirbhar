@@ -14,12 +14,14 @@ outline-none"
 <%# = submit "S", phx_disable_with: "Submitting...", class: "btn btn-transparent w-12" %>
 </div>
 <%= error_tag f, :pincode %>
-<div class="flex flex-col ml-4">
+
+
+<div class="flex flex-col ml-4 text-sm">
     <div>
-        <input name="" type="checkbox" name="gender_filter" value="get_male"/> Male
+        <input name="" type="checkbox" name="gender_filter" class="form-checkbox" value="get_male"/> Male
     </div>
     <div>
-        <input name="" type="checkbox" name="gender_filter" value="get_female"/> Female
+        <input name="" type="checkbox" name="gender_filter" class="form-checkbox" value="get_female"/> Female
     </div>
 </div>
 <div class="ml-4">
@@ -28,15 +30,15 @@ outline-none"
             <%= img_tag(Routes.static_path(@conn, "/images/audience/school.png"), class: "h-20 w-20 md:w-24 md:h-24") %>
         </option>
         <option value="10" label="toddler">Toddler</option>
-        <option value="20">Pre School</option>
-        <option value="30">School Going</option>
+        <option value="20"></option>
+        <option value="30"></option>
         <option value="40" label="college"></option>
-        <option value="50"></option>
+        <option value="50">Parent</option>
         <option value="60"></option>
         <option value="70"></option>
-        <option value="80">Pets, Cat, Dogs</option>
+        <option value="80">Pets</option>
         <option value="90">Plants & Garden</option>
-        <option value="100">Home and Kitchen</option>
+        <option value="100">Home & Kitchen</option>
     </datalist>
     <div class="audience-slider">
         <input id="max" type="range" name="max" min="0" max="100" step="2" value="15" class="range-slider w-full" list="tickmarks">
