@@ -1,0 +1,17 @@
+<%= f = form_for @pincode_changeset, "#",
+  id: "pincode-form",
+  phx_change: "validate-location-form",
+  class: "flex",
+  phx_submit: "set-pincode" %>
+
+<div class="flex ml-4">
+<%= text_input f, :pincode, class: "text-gray-600 font-semibold text-xs
+w-32 md:w-40 h-full p-1 md:p-2
+border border-solid border-purple-900
+phx-hook-subscribe-to-session
+outline-none"
+%>
+<%= submit "Submit", phx_disable_with: "Submitting...", class: "btn btn-transparent w-12" %>
+</div>
+<%= error_tag f, :pincode %>
+</form>
