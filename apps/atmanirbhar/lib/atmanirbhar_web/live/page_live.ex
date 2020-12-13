@@ -6,12 +6,13 @@ defmodule AtmanirbharWeb.PageLive do
   alias Atmanirbhar.Presence
 
   @impl true
+  # def mount(params, %{"locale" => locale}, socket) do
   def mount(params, session, socket) do
 
-    IO.puts inspect(socket)
-    IO.puts "host in socket? -----------------"
+    # IO.puts inspect(socket)
+    # IO.puts "host in socket? -----------------"
 
-    Atmanirbhar.Repo.put_org_id(123)
+    # Atmanirbhar.Repo.put_org_id(123)
 
     pincode = params["pincode"] || 12345
     location_form = %LocationForm{pincode: pincode}
@@ -60,6 +61,7 @@ defmodule AtmanirbharWeb.PageLive do
     #       advertisements: advertisements
     #        }
     # )
+
   end
 
   @impl true
