@@ -6,9 +6,9 @@ defmodule Atmanirbhar.Marketplace do
   import Ecto.Query, warn: false
   alias Atmanirbhar.Repo
 
-  alias Atmanirbhar.Marketplace.{Shop, Business}
+  alias Atmanirbhar.Marketplace.{Shop, Business, Stall}
   alias Atmanirbhar.Geo.Location
-  alias Atmanirbhar.Marketplace.LocationForm
+  alias Atmanirbhar.Marketplace.{LocationForm, StallFiltersForm}
 
 
   # TODO
@@ -35,6 +35,15 @@ defmodule Atmanirbhar.Marketplace do
   """
   def list_shops do
     Repo.all(Shop)
+  end
+  def list_stalls_with_filters(form_params) do
+    # %{
+    #   show_male: show_male,
+    #   show_female: show_female
+    # } = form_params
+
+    StallFiltersForm.query_for(form_params)
+    |> Repo.all
   end
 
   @doc """
@@ -120,6 +129,10 @@ defmodule Atmanirbhar.Marketplace do
 
   def change_location_form(%LocationForm{} = location_form, attrs \\ %{}) do
     LocationForm.changeset(location_form, attrs)
+  end
+
+  def change_stall_filters_form(%StallFiltersForm{} = stall_filters_form, attrs \\ %{}) do
+    StallFiltersForm.changeset(stall_filters_form, attrs)
   end
 
   alias Atmanirbhar.Marketplace.Advertisement
@@ -729,5 +742,101 @@ defmodule Atmanirbhar.Marketplace do
   """
   def change_bulk_upload(%BulkUpload{} = bulk_upload, attrs \\ %{}) do
     BulkUpload.changeset(bulk_upload, attrs)
+  end
+
+  alias Atmanirbhar.Marketplace.Stall
+
+  @doc """
+  Returns the list of marketplace_stalls.
+
+  ## Examples
+
+      iex> list_marketplace_stalls()
+      [%Stall{}, ...]
+
+  """
+  def list_marketplace_stalls do
+    Repo.all(Stall)
+  end
+
+  @doc """
+  Gets a single stall.
+
+  Raises `Ecto.NoResultsError` if the Stall does not exist.
+
+  ## Examples
+
+      iex> get_stall!(123)
+      %Stall{}
+
+      iex> get_stall!(456)
+      ** (Ecto.NoResultsError)
+
+  """
+  def get_stall!(id), do: Repo.get!(Stall, id)
+
+  @doc """
+  Creates a stall.
+
+  ## Examples
+
+      iex> create_stall(%{field: value})
+      {:ok, %Stall{}}
+
+      iex> create_stall(%{field: bad_value})
+      {:error, %Ecto.Changeset{}}
+
+  """
+  def create_stall(attrs \\ %{}) do
+    %Stall{}
+    |> Stall.changeset(attrs)
+    |> Repo.insert()
+  end
+
+  @doc """
+  Updates a stall.
+
+  ## Examples
+
+      iex> update_stall(stall, %{field: new_value})
+      {:ok, %Stall{}}
+
+      iex> update_stall(stall, %{field: bad_value})
+      {:error, %Ecto.Changeset{}}
+
+  """
+  def update_stall(%Stall{} = stall, attrs) do
+    stall
+    |> Stall.changeset(attrs)
+    |> Repo.update()
+  end
+
+  @doc """
+  Deletes a stall.
+
+  ## Examples
+
+      iex> delete_stall(stall)
+      {:ok, %Stall{}}
+
+      iex> delete_stall(stall)
+      {:error, %Ecto.Changeset{}}
+
+  """
+  def delete_stall(%Stall{} = stall) do
+    Repo.delete(stall)
+  end
+
+  @doc """
+  Returns an `%Ecto.Changeset{}` for tracking stall changes.
+
+  ## Examples
+
+      iex> change_stall(stall)
+      %Ecto.Changeset{data: %Stall{}}
+
+  """
+  def change_stall(%Stall{} = stall, attrs \\ %{}) do
+    Stall.changeset(stall, attrs)
   end
 end

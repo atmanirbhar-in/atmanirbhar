@@ -461,4 +461,75 @@ defmodule Atmanirbhar.MarketplaceTest do
       assert %Ecto.Changeset{} = Marketplace.change_bulk_upload(bulk_upload)
     end
   end
+
+  describe "marketplace_stalls" do
+    alias Atmanirbhar.Marketplace.Stall
+
+    @valid_attrs %{audience_average: 42, description: "some description", for_female: true, for_male: true, is_active: true, poster_image_url: "some poster_image_url", title: "some title"}
+    @update_attrs %{audience_average: 43, description: "some updated description", for_female: false, for_male: false, is_active: false, poster_image_url: "some updated poster_image_url", title: "some updated title"}
+    @invalid_attrs %{audience_average: nil, description: nil, for_female: nil, for_male: nil, is_active: nil, poster_image_url: nil, title: nil}
+
+    def stall_fixture(attrs \\ %{}) do
+      {:ok, stall} =
+        attrs
+        |> Enum.into(@valid_attrs)
+        |> Marketplace.create_stall()
+
+      stall
+    end
+
+    test "list_marketplace_stalls/0 returns all marketplace_stalls" do
+      stall = stall_fixture()
+      assert Marketplace.list_marketplace_stalls() == [stall]
+    end
+
+    test "get_stall!/1 returns the stall with given id" do
+      stall = stall_fixture()
+      assert Marketplace.get_stall!(stall.id) == stall
+    end
+
+    test "create_stall/1 with valid data creates a stall" do
+      assert {:ok, %Stall{} = stall} = Marketplace.create_stall(@valid_attrs)
+      assert stall.audience_average == 42
+      assert stall.description == "some description"
+      assert stall.for_female == true
+      assert stall.for_male == true
+      assert stall.is_active == true
+      assert stall.poster_image_url == "some poster_image_url"
+      assert stall.title == "some title"
+    end
+
+    test "create_stall/1 with invalid data returns error changeset" do
+      assert {:error, %Ecto.Changeset{}} = Marketplace.create_stall(@invalid_attrs)
+    end
+
+    test "update_stall/2 with valid data updates the stall" do
+      stall = stall_fixture()
+      assert {:ok, %Stall{} = stall} = Marketplace.update_stall(stall, @update_attrs)
+      assert stall.audience_average == 43
+      assert stall.description == "some updated description"
+      assert stall.for_female == false
+      assert stall.for_male == false
+      assert stall.is_active == false
+      assert stall.poster_image_url == "some updated poster_image_url"
+      assert stall.title == "some updated title"
+    end
+
+    test "update_stall/2 with invalid data returns error changeset" do
+      stall = stall_fixture()
+      assert {:error, %Ecto.Changeset{}} = Marketplace.update_stall(stall, @invalid_attrs)
+      assert stall == Marketplace.get_stall!(stall.id)
+    end
+
+    test "delete_stall/1 deletes the stall" do
+      stall = stall_fixture()
+      assert {:ok, %Stall{}} = Marketplace.delete_stall(stall)
+      assert_raise Ecto.NoResultsError, fn -> Marketplace.get_stall!(stall.id) end
+    end
+
+    test "change_stall/1 returns a stall changeset" do
+      stall = stall_fixture()
+      assert %Ecto.Changeset{} = Marketplace.change_stall(stall)
+    end
+  end
 end

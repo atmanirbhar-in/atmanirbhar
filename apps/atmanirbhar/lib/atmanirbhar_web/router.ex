@@ -35,6 +35,7 @@ defmodule AtmanirbharWeb.Router do
     pipe_through :browser
 
     live "/", PageLive, :index
+    live "/stall", PageStallLive, :index
     live "/new_deal", UserDashboardLive.Index, :new_deal
     live "/add-my-business", UserDashboardLive.Index, :new_business
     live "/new_advertisement", UserDashboardLive.Index, :new_advertisement
@@ -140,6 +141,7 @@ defmodule AtmanirbharWeb.Router do
     live "/marketplace_bulk_uploads/:id/show/edit", BulkUploadLive.Show, :edit
 
 
+
     live "/pincodes", PincodeLive.Index, :index
     live "/pincodes/new", PincodeLive.Index, :new
     live "/pincodes/:id/edit", PincodeLive.Index, :edit
@@ -188,6 +190,13 @@ defmodule AtmanirbharWeb.Router do
 
     live "/dashboard", UserDashboardLive.Index, :index
     live "/dashboard/new_advertisement", UserDashboardLive.Index, :new_ad
+
+    live "/marketplace_stalls", StallLive.Index, :index
+    live "/marketplace_stalls/new", StallLive.Index, :new
+    live "/marketplace_stalls/:id/edit", StallLive.Index, :edit
+
+    live "/marketplace_stalls/:id", StallLive.Show, :show
+    live "/marketplace_stalls/:id/show/edit", StallLive.Show, :edit
 
   end
 

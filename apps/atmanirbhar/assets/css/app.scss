@@ -90,12 +90,12 @@ main {
     border-radius: 8px;
 }
 
-.audience-slider input::-webkit-slider-thumb {
-    pointer-events: all; position: relative; z-index: 1; outline: 0;
-    -webkit-appearance: none; height: 24px; width: 24px;
-    border-radius: 12px;
-    background-color: purple;
-    border: 2px solid black;
+
+input[type=range]::-webkit-slider-thumb {
+	  pointer-events: all;
+	  width: 24px;
+	  height: 24px;
+	  -webkit-appearance: none;
 }
 
 #audience-list {
@@ -106,33 +106,52 @@ main {
 #audience-list option {
     position: relative;
     background: white;
-    top: 18px;
 }
 
+#op0{
+    content:url("/images/audience/nursery.png");
+    height: 28px;
+}
 #op1{
     content:url("/images/audience/nursery.png");
-    height: 8px;
+    height: 28px;
 }
 #op2{
     content:url("/images/audience/toddler.png");
-    height: 4px;
-    width: 18px;
+    height: 18px;
 }
 
 #op3{
     content:url("/images/audience/preschool.png");
-    height: 8px;
+    height: 28px;
 }
 #op4{
     content:url("/images/audience/school.png");
-    height: 8px;
+    height: 28px;
 }
 #op5{
     content:url("/images/audience/school-going.png");
-    height: 8px;
+    height: 28px;
 }
 
 #op6{
     content:url("/images/audience/college.png");
-    height: 8px;
+    height: 18px;
+}
+
+#op7{
+    content:url("/images/audience/college.png");
+    height: 18px;
+}
+#op8{
+    content:url("/images/audience/college.png");
+    height: 18px;
+}
+#op9{
+    content:url("/images/audience/college.png");
+    height: 18px;
+}
+#op10{
+    content:url("/images/audience/college.png");
+    height: 18px;
 }
