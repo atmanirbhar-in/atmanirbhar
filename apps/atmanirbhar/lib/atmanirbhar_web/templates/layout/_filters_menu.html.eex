@@ -24,25 +24,25 @@ outline-none"
         <input name="" type="checkbox" name="gender_filter" class="form-checkbox" value="get_female"/> Female
     </div>
 </div>
-<div class="ml-4">
-    <datalist id="tickmarks" class="flex text-sm font-light">
-        <option value="0" class="block">
-            <%= img_tag(Routes.static_path(@conn, "/images/audience/school.png"), class: "h-20 w-20 md:w-24 md:h-24") %>
+<div class="ml-4 w-64">
+    <datalist id="audience-list">
+        <option value="0">
+            <%= img_tag(Routes.static_path(@conn, "/images/audience/school.png"), class: "h-5 w-5") %>
         </option>
-        <option value="10" label="toddler">Toddler</option>
-        <option value="20"></option>
-        <option value="30"></option>
-        <option value="40" label="college"></option>
-        <option value="50">Parent</option>
-        <option value="60"></option>
-        <option value="70"></option>
-        <option value="80">Pets</option>
-        <option value="90">Plants & Garden</option>
-        <option value="100">Home & Kitchen</option>
+        <option value="10" id="op1"></option>
+        <option value="20" id="op2"></option>
+        <option value="30" id="op3"></option>
+        <option value="40" id="op4">c</option>
+        <option value="50" id="op5"></option>
+        <option value="60" id="op6"></option>
+        <option value="70" id="op7"></option>
+        <option value="80">P</option>
+        <option value="90">Pg</option>
+        <option value="100">Hn</option>
     </datalist>
-    <div class="audience-slider">
-        <input id="max" type="range" name="max" min="0" max="100" step="2" value="15" class="range-slider w-full" list="tickmarks">
-        <input id="max" type="range" name="max" min="0" max="100" step="2" value="30" class="range-slider w-full" list="tickmarks">
+    <div class="audience-slider w-full">
+        <input id="max" type="range" name="max" min="0" max="100" step="2" value="15" class="range-slider w-full" list="audience-list" class="w-full">
+        <input id="max" type="range" name="max" min="0" max="100" step="2" value="30" class="range-slider w-full" list="audience-list" class="w-full">
     </div>
 </div>
 
