@@ -35,6 +35,7 @@ defmodule AtmanirbharWeb.Router do
     pipe_through :browser
 
     live "/", PageLive, :index
+    live "/stall", PageStallLive, :index
     live "/new_deal", UserDashboardLive.Index, :new_deal
     live "/add-my-business", UserDashboardLive.Index, :new_business
     live "/new_advertisement", UserDashboardLive.Index, :new_advertisement
