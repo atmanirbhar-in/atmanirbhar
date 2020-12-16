@@ -60,6 +60,6 @@ defmodule AtmanirbharWeb.PageStallLive do
   defp apply_action(socket, :pincode, params) do
     pincode = params["pincode"] |> String.to_integer
     socket
-    |> assign(:pincode, pincode)
+    |> assign(:page_title, pincode)
   end
 end

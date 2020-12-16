@@ -68,3 +68,4 @@ window.liveSocket = liveSocket
 
 
 import "alpinejs"
+

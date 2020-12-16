@@ -1,21 +1,3 @@
-<section class="container-full mx-auto my-2">
-
-  <div class="flex w-full">
-    <div class="w-2/5">
-      <p>
-        <%= @reader_count %> people watching in this region
-      </p>
-    </div>
-
-    <div class="w-3/5" >
-    </div>
-  </div>
-
-</form>
-
-
-</section>
-
 <section class="w-full">
   <div class="border border-solid flex">
     <div class="w-1/2 p-4">
@@ -29,6 +11,109 @@
     </div>
   </div>
 </section>
+
+<section class="container-full mx-auto my-2">
+
+  <div class="flex w-full">
+    <div class="w-1/5">
+      <p>
+        <%= @reader_count %> people watching in this region
+      </p>
+    </div>
+
+    <div class="flex w-1/5 flex-col">
+      <div>
+        <input name="" type="checkbox" name="gender_filter" class="form-checkbox" value="get_male" label="Male" /> Male
+      </div>
+      <div>
+        <input name="" type="checkbox" name="gender_filter" class="form-checkbox" value="get_female"/> Female
+      </div>
+    </div>
+
+    <div class="w-3/5 flex">
+      <div class="flex flex-col ml-4 text-sm w-full">
+
+
+        <datalist id="audience-list">
+          <option value="0"></option>
+          <option value="10" id="op1"></option>
+          <option value="20" id="op2"></option>
+          <option value="30" id="op3"></option>
+          <option value="40" id="op4">c</option>
+          <option value="50" id="op5"></option>
+          <option value="60" id="op6"></option>
+          <option value="70" id="op7"></option>
+          <option value="80">P</option>
+          <option value="90">Pg</option>
+          <option value="100">Hn</option>
+        </datalist>
+        <div x-data="range()" x-init="mintrigger(); maxtrigger()" class="relative max-w-xl w-full mt-6">
+          <div class="relative max-w-xl w-full ">
+            <input
+              type="range"
+              step="100"
+            x-bind:min="min" x-bind:max="max"
+            x-on:input="mintrigger"
+            x-model="minprice"
+            class="absolute pointer-events-none appearance-none z-20 h-2 w-full opacity-0 cursor-pointer"
+        >
+        <input
+            type="range"
+            step="100"
+            x-bind:min="min" x-bind:max="max"
+            x-on:input="maxtrigger"
+            x-model="maxprice"
+            class="absolute pointer-events-none appearance-none z-20 h-2 w-full opacity-0 cursor-pointer"
+        >
+    </div>
+    <div class="relative z-10 h-2">
+
+        <div class="absolute z-10 left-0 right-0 bottom-0 top-0 rounded-md bg-gray-400"></div>
+        <div class="absolute z-20 top-0 bottom-0 rounded-md bg-green-300" x-bind:style="'right:'+maxthumb+'%; left:'+minthumb+'%'"></div>
+        <div class="absolute z-30 w-6 h-6 top-0 left-0 bg-green-300 rounded-full -mt-2 -ml-1" x-bind:style="'left: '+minthumb+'%'"></div>
+        <div class="absolute z-30 w-6 h-6 top-0 right-0 bg-green-300 rounded-full -mt-2 -mr-3" x-bind:style="'right: '+maxthumb+'%'"></div>
+    </div>
+    <!-- <div class="flex justify-between items-center py-5">
+         <div>
+         <input type="text" maxlength="5" x-on:input="mintrigger" x-model="minprice" class="px-3 py-2 border border-gray-200 rounded w-24 text-center">
+         </div>
+         <div>
+         <input type="text" maxlength="5" x-on:input="maxtrigger" x-model="maxprice" class="px-3 py-2 border border-gray-200 rounded w-24 text-center">
+         </div>
+         </div> -->
+    <script>
+
+     function range() {
+         return {
+             minprice: 1000, 
+             maxprice: 7000,
+             min: 100, 
+             max: 10000,
+             minthumb: 0,
+             maxthumb: 0, 
+             mintrigger() {
+                 this.minprice = Math.min(this.minprice, this.maxprice - 500);
+                 this.minthumb = ((this.minprice - this.min) / (this.max - this.min)) * 100;
+             },
+             maxtrigger() {
+                 this.maxprice = Math.max(this.maxprice, this.minprice + 500); 
+                 this.maxthumb = 100 - (((this.maxprice - this.min) / (this.max - this.min)) * 100);
+             }, 
+         }
+     }
+
+
+    </script>
+</div>
+</div>
+
+  </div>
+
+</form>
+
+
+</section>
+
 
 <section class="text-gray-700 body-font">
   <div class="container px-5 py-24 mx-auto">

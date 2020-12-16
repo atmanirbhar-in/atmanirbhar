@@ -16,35 +16,6 @@ outline-none"
 <%= error_tag f, :pincode %>
 
 
-<div class="flex flex-col ml-4 text-sm">
-    <div>
-        <input name="" type="checkbox" name="gender_filter" class="form-checkbox" value="get_male"/> Male
-    </div>
-    <div>
-        <input name="" type="checkbox" name="gender_filter" class="form-checkbox" value="get_female"/> Female
-    </div>
-</div>
-<div class="ml-4 w-64">
-    <datalist id="audience-list">
-        <option value="0">
-            <%= img_tag(Routes.static_path(@conn, "/images/audience/school.png"), class: "h-5 w-5") %>
-        </option>
-        <option value="10" id="op1"></option>
-        <option value="20" id="op2"></option>
-        <option value="30" id="op3"></option>
-        <option value="40" id="op4">c</option>
-        <option value="50" id="op5"></option>
-        <option value="60" id="op6"></option>
-        <option value="70" id="op7"></option>
-        <option value="80">P</option>
-        <option value="90">Pg</option>
-        <option value="100">Hn</option>
-    </datalist>
-    <div class="audience-slider w-full">
-        <input id="max" type="range" name="max" min="0" max="100" step="2" value="15" class="range-slider w-full" list="audience-list" class="w-full">
-        <input id="max" type="range" name="max" min="0" max="100" step="2" value="30" class="range-slider w-full" list="audience-list" class="w-full">
-    </div>
-</div>
 
 </form>
 
