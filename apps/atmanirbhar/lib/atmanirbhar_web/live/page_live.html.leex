@@ -1,4 +1,4 @@
-<section class="w-full">
+<section class="w-full py-4">
   <div class="border border-solid flex">
     <div class="w-1/2 p-4">
       <h1 class="p-1 text-2xl text-gray-900">
@@ -23,10 +23,10 @@
 
     <div class="flex w-1/5 flex-col">
       <div>
-        <input name="" type="checkbox" name="gender_filter" class="form-checkbox" value="get_male" label="Male" /> Male
+        <input name="" type="checkbox" name="gender_filter" class="form-checkbox" value="get_male" label="Male" checked="" /> Male
       </div>
       <div>
-        <input name="" type="checkbox" name="gender_filter" class="form-checkbox" value="get_female"/> Female
+        <input name="" type="checkbox" name="gender_filter" class="form-checkbox" value="get_female" checked="" /> Female
       </div>
     </div>
 
@@ -43,9 +43,9 @@
           <option value="50" id="op5"></option>
           <option value="60" id="op6"></option>
           <option value="70" id="op7"></option>
-          <option value="80">P</option>
-          <option value="90">Pg</option>
-          <option value="100">Hn</option>
+          <option value="80" id="op8"></option>
+          <option value="90" id="op-9"></option>
+          <option value="100" id="op-10"></option>
         </datalist>
         <div x-data="range()" x-init="mintrigger(); maxtrigger()" class="relative max-w-xl w-full mt-6">
           <div class="relative max-w-xl w-full ">
@@ -104,18 +104,16 @@
 
 
     </script>
-</div>
-</div>
-
-  </div>
-
+        </div>
+      </div>
+    </div>
 </form>
 
 
 </section>
 
 
-<section class="text-gray-700 body-font">
+<section class="text-gray-700 body-font border-t-2 border-solid mt-5">
   <div class="container px-5 py-24 mx-auto">
     <div class="flex flex-wrap -m-4">
       <div class="p-4 md:w-1/3">
@@ -294,164 +292,5 @@
   </div>
 </section>
 
-
-
-<section class="container mx-auto">
-  <div class="flex flex-wrap content-around">
-
-    <%= for item <- @deals do %>
-        <div class="w-full md:w-1/2 md:max-w-md xl:w-1/3 h-40 md:h-48 p-3 md:p-3 lg:p-3">
-          <div class="max-w-sm md:max-w-md h-full
-                      md:w-full
-                      ">
-            <div class="rounded shadow-lg bg-blue-100 p-4 w-full h-full flex">
-              <div class="w-1/2">
-              <%= img_tag(Routes.static_path(@socket, "/images/default/chef-cartoon.png"), class: "w-1/2 h-40 md:h-48") %>
-              </div>
-            <div class="w-1/2">
-              <p class="text-lg md:text-xl text-gray-800">
-                <%#= item.name %> Stall xyz
-              </p>
-              <p class="text-normal md:text-lg text-gray-600">
-                <%#= item.description %> Product xyz
-              </p>
-              <div class="flex flex-flow-reverse w-full">
-                <button class="btn p-2 w-32 flex">Visit Stall</button>
-              </div>
-            </div>
-            </div>
-          </div>
-        </div>
-        <% end %>
-
-        <div class="w-full md:w-1/2 md:max-w-md xl:w-1/3 h-40 md:h-48 p-3 md:p-3 lg:p-3">
-          <div class="max-w-sm md:max-w-md h-full
-                      md:w-full
-                      flex flex-col justify-around
-                      rounded shadow-lg bg-white p-4 text-center">
-            <p class="text-4xl md:text-3xl text-gray-600 font-semibold">
-              +
-            </p>
-            <p class="text-normal md:text-lg text-gray-500">
-              List your stall here
-            </p>
-          </div>
-        </div>
-  </div>
-
-</section>
-
-
-
-  <section class="container-full mx-auto">
-  <div class="flex flex-wrap w-full">
-
-    <div class="w-1/2 md:w-1/3 lg:w-1/4 xl:w-1/5 p-1 mb-1 lg:mb-6">
-      <%= live_patch to: Routes.user_dashboard_index_path(@socket, :new_deal), class: "text-xl" do %>
-      <div class="h-full max-h-48 w-full md:w-56 md:h-56
-                  rounded shadow-lg bg-white p-1
-                  flex flex-col justify-between
-                  text-center
-                  ">
-        <div>
-        </div>
-        <p class="text-4xl md:text-3xl text-gray-600 font-semibold">
-          +
-        </p>
-        <div class="w-full flex flex-col justify-around px-1">
-          <div class="flex flex-col text-sm md:text-lg text-gray-600 mb-2">
-            Post your Deal here
-          </div>
-          <div class="px-1 md:px-2 pt-1 py-1 flex">
-            <span class="inline-block bg-gray-200 rounded-full px-2 md:px-2 py-1 text-xs font-semibold text-gray-700 mr-1 mb-1">#free</span>
-            <span class="inline-block bg-gray-200 rounded-full px-2 md:px-2 py-1 text-xs font-semibold text-gray-700 mr-1 mb-1">#growbusiness</span>
-          </div>
-        </div>
-      </div>
-      <% end %>
-    </div>
-
-
-    <%= for item <- @deals do %>
-        <div class="w-1/2 md:w-1/3 lg:w-1/4 xl:w-1/5 p-1 mb-1 lg:mb-6">
-          <div class="h-full max-h-48 w-full md:w-56 md:h-56
-                      rounded shadow-lg bg-white p-1
-                      bg-yellow-200
-                      flex flex-col justify-between
-                      ">
-            <div class="w-full flex">
-              <div class="w-1/2 flex">
-                <%= img_tag(Routes.static_path(@socket, "/images/default/chef-cartoon.png"), class: "h-20 w-20 md:w-24 md:h-24") %>
-              </div>
-              <div class="w-1/2 flex">
-                <p class="text-sm text-gray-800 font-semibold">
-                  <%= item.price %> INR
-                </p>
-              </div>
-            </div>
-            <div class="w-full flex flex-col justify-around px-1">
-              <div class="flex flex-col text-sm md:text-lg text-left text-gray-800 mb-2">
-                <%= item.name %>
-              </div>
-              <div class="px-1 md:px-2 pt-1 py-1 flex">
-                <span class="inline-block bg-gray-200 rounded-full px-2 md:px-2 py-1 text-xs font-semibold text-gray-700 mr-1 mb-1">#travel</span>
-                <span class="inline-block bg-gray-200 rounded-full px-2 md:px-2 py-1 text-xs font-semibold text-gray-700 mr-1 mb-1">#winter</span>
-              </div>
-            </div>
-          </div>
-        </div>
-        <% end %>
-
-  </div>
-</section>
-
-<section class="container-full mx-auto">
-
-
-
-  <div class="flex flex-wrap content-around">
-
-    <div class="w-full md:w-1/2 lg:w-1/3 xl:w-1/4 p-1 md:p-2 lg:p-4 max-w-md text-center">
-      <%= live_patch to: Routes.user_dashboard_index_path(@socket, :new_advertisement), class: "text-xl" do %>
-      <div class="rounded shadow-lg bg-white p-1 w-full
-                  flex flex-col
-                  h-40 md:h-48
-                  justify-around">
-        <p class="text-4xl md:text-3xl text-gray-600 font-semibold">
-          +
-        </p>
-        <p class="text-lg md:text-xl text-gray-600">
-          Place your advertisement here
-        </p>
-      </div>
-      <% end %>
-    </div>
-
-    <%= for item <- @advertisements do %>
-        <div class="w-full md:w-1/2 lg:w-1/3 xl:w-1/4
-                    h-40 md:h-48 p-1 md:p-2 lg:p-3 mb-4 md:mb-6">
-          <div class="rounded shadow-lg bg-green-100 p-1
-                      max-w-md md:w-full flex">
-            <%= img_tag(Routes.static_path(@socket, "/images/default/chef-cartoon.png"), class: "w-1/2 h-40 md:h-48") %>
-            <div class="w-1/2 flex flex-col justify-around px-1">
-              <div class="flex flex-col text-base md:text-lg text-left mb-2">
-                <%= item.name %>
-              </div>
-              <p class="text-sm md:text-sm text-gray-800 font-semibold">
-                <%= item.price %> INR
-              </p>
-              <div class="px-1 md:px-2 pt-1 py-1 flex">
-                <span class="inline-block bg-gray-200 rounded-full px-2 md:px-2 py-1 text-xs font-semibold text-gray-700 mr-1 mb-1">#travel</span>
-                <span class="inline-block bg-gray-200 rounded-full px-2 md:px-2 py-1 text-xs font-semibold text-gray-700 mr-1 mb-1">#winter</span>
-              </div>
-            </div>
-          </div>
-        </div>
-        <% end %>
-
-
-  </div>
-
-</section>
 
 
