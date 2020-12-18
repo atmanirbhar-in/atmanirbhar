@@ -2,7 +2,7 @@ defmodule AtmanirbharWeb.PageLive do
   use AtmanirbharWeb, :live_view
 
   alias Atmanirbhar.Marketplace
-  alias Atmanirbhar.Marketplace.{Advertisement, Deal, LocationForm}
+  alias Atmanirbhar.Marketplace.{Advertisement, Deal, LocationForm, StallFiltersForm}
   alias Atmanirbhar.Presence
 
   @impl true
@@ -17,6 +17,9 @@ defmodule AtmanirbharWeb.PageLive do
     pincode = params["pincode"] || 12345
     location_form = %LocationForm{pincode: pincode}
     pincode_changeset = Marketplace.change_location_form(location_form)
+
+    stall_filters_form = %StallFiltersForm{}
+    stall_filters_changeset = Marketplace.change_stall_filters_form(stall_filters_form)
 
     if connected?(socket) do
       Marketplace.subscribe(pincode)
@@ -43,6 +46,8 @@ defmodule AtmanirbharWeb.PageLive do
     |> assign(:page_title, "Packages")
     |> assign(location_form: location_form)
     |> assign(pincode_changeset: pincode_changeset)
+    |> assign(stall_filters_form: stall_filters_form)
+    |> assign(stall_filters_changeset: stall_filters_changeset)
     |> assign(reader_count: initial_count)
     |> assign(deals: deals)
     |> assign(advertisements: advertisements)

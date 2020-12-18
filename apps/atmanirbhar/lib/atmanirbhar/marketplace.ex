@@ -8,7 +8,7 @@ defmodule Atmanirbhar.Marketplace do
 
   alias Atmanirbhar.Marketplace.{Shop, Business}
   alias Atmanirbhar.Geo.Location
-  alias Atmanirbhar.Marketplace.LocationForm
+  alias Atmanirbhar.Marketplace.{LocationForm, StallFiltersForm}
 
 
   # TODO
@@ -120,6 +120,10 @@ defmodule Atmanirbhar.Marketplace do
 
   def change_location_form(%LocationForm{} = location_form, attrs \\ %{}) do
     LocationForm.changeset(location_form, attrs)
+  end
+
+  def change_stall_filters_form(%StallFiltersForm{} = stall_filters_form, attrs \\ %{}) do
+    StallFiltersForm.changeset(stall_filters_form, attrs)
   end
 
   alias Atmanirbhar.Marketplace.Advertisement

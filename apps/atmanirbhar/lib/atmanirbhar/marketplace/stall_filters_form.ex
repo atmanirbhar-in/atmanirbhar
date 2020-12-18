@@ -10,12 +10,12 @@ defmodule Atmanirbhar.Marketplace.StallFiltersForm do
     field :audience_max, :integer
   end
 
-  # @doc false
-  # def changeset(location_form, attrs) do
-  #   location_form
-  #   |> cast(attrs, [:pincode])
-  #   |> validate_required([:pincode])
-  #   |> validate_length(:pincode, is: 6)
-  # end
+  @doc false
+  def changeset(stall_filters_form, attrs) do
+    stall_filters_form
+    |> cast(attrs, [:show_male, :show_female, :audience_max, :audience_min])
+    # |> validate_required([:pincode])
+    # |> validate_length(:pincode, is: 6)
+  end
 
 end
