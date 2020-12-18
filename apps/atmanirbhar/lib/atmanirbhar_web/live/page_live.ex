@@ -100,6 +100,16 @@ defmodule AtmanirbharWeb.PageLive do
 
 
   @impl true
+  def handle_event("change-filters", params, socket) do
+    IO.puts "--------------"
+    IO.puts "change filter params"
+    # IO.puts inspect(form_params)
+    # %{"pincode" => pincode} = form_params
+    {:noreply, socket}
+  end
+
+
+  @impl true
   # fetch marketplace data for new pincode
   def handle_event("updated_session_data", ["pincode", new_pincode], socket) do
     # if connected?(socket), do: Marketplace.subscribe
