@@ -18,6 +18,6 @@ defmodule Atmanirbhar.Marketplace.Stall do
   def changeset(stall, attrs) do
     stall
     |> cast(attrs, [:title, :description, :audience_average, :for_male, :for_female, :poster_image_url, :is_active])
-    |> validate_required([:title, :description, :audience_average, :for_male, :for_female, :poster_image_url, :is_active])
+    |> validate_required([:title, :description, :audience_average, :for_male, :for_female, :is_active])
   end
 end

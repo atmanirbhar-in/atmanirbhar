@@ -160,8 +160,11 @@ defmodule AtmanirbharWeb.PageLive do
     |> assign(:pincode, pincode)
   end
   defp apply_action(socket, :index, _params) do
+    stalls = Marketplace.list_marketplace_stalls()
+
     socket
     |> assign(:page_title, "Micro businesses in this region")
+    |> assign(:stalls, stalls)
   end
 
   defp apply_action(socket, :new_deal, _params) do

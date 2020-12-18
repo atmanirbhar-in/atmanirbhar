@@ -1,10 +1,11 @@
 <h2><%= @title %></h2>
 
 <%= f = form_for @changeset, "#",
-  id: "stall-form",
-  phx_target: @myself,
-  phx_change: "validate",
-  phx_submit: "save" %>
+    id: "stall-form",
+    phx_target: @myself,
+    phx_change: "validate",
+    class: "bg-white",
+    phx_submit: "save" %>
 
   <%= label f, :title %>
   <%= text_input f, :title %>
