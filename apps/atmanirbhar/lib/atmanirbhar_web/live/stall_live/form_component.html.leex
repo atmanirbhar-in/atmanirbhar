@@ -1,0 +1,38 @@
+<h2><%= @title %></h2>
+
+<%= f = form_for @changeset, "#",
+  id: "stall-form",
+  phx_target: @myself,
+  phx_change: "validate",
+  phx_submit: "save" %>
+
+  <%= label f, :title %>
+  <%= text_input f, :title %>
+  <%= error_tag f, :title %>
+
+  <%= label f, :description %>
+  <%= textarea f, :description %>
+  <%= error_tag f, :description %>
+
+  <%= label f, :audience_average %>
+  <%= number_input f, :audience_average %>
+  <%= error_tag f, :audience_average %>
+
+  <%= label f, :for_male %>
+  <%= checkbox f, :for_male %>
+  <%= error_tag f, :for_male %>
+
+  <%= label f, :for_female %>
+  <%= checkbox f, :for_female %>
+  <%= error_tag f, :for_female %>
+
+  <%= label f, :poster_image_url %>
+  <%= text_input f, :poster_image_url %>
+  <%= error_tag f, :poster_image_url %>
+
+  <%= label f, :is_active %>
+  <%= checkbox f, :is_active %>
+  <%= error_tag f, :is_active %>
+
+  <%= submit "Save", phx_disable_with: "Saving..." %>
+</form>

@@ -17,19 +17,19 @@ defmodule Atmanirbhar.Repo do
     [org_id: get_org_id()]
   end
 
-  def prepare_query(operation, query, opts) do
-    IO.puts "opts has org id?"
-    IO.puts inspect(opts)
-    cond do
-      opts[:skip_org_id] -> {query, opts}
+  # def prepare_query(operation, query, opts) do
+  #   IO.puts "opts has org id?"
+  #   IO.puts inspect(opts)
+  #   cond do
+  #     opts[:skip_org_id] -> {query, opts}
 
-      org_id = opts[:org_id] ->
-        {Ecto.Query.where(query, org_id: ^org_id), opts}
+  #     org_id = opts[:org_id] ->
+  #       {Ecto.Query.where(query, org_id: ^org_id), opts}
 
-      true ->
-        raise "expected org_id or skip_org_id to be set"
-    end
-  end
+  #     true ->
+  #       raise "expected org_id or skip_org_id to be set"
+  #   end
+  # end
 
 
 end

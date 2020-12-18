@@ -1,0 +1,52 @@
+<h1>Show Stall</h1>
+
+<%= if @live_action in [:edit] do %>
+  <%= live_modal @socket, AtmanirbharWeb.StallLive.FormComponent,
+    id: @stall.id,
+    title: @page_title,
+    action: @live_action,
+    stall: @stall,
+    return_to: Routes.stall_show_path(@socket, :show, @stall) %>
+<% end %>
+
+<ul>
+
+  <li>
+    <strong>Title:</strong>
+    <%= @stall.title %>
+  </li>
+
+  <li>
+    <strong>Description:</strong>
+    <%= @stall.description %>
+  </li>
+
+  <li>
+    <strong>Audience average:</strong>
+    <%= @stall.audience_average %>
+  </li>
+
+  <li>
+    <strong>For male:</strong>
+    <%= @stall.for_male %>
+  </li>
+
+  <li>
+    <strong>For female:</strong>
+    <%= @stall.for_female %>
+  </li>
+
+  <li>
+    <strong>Poster image url:</strong>
+    <%= @stall.poster_image_url %>
+  </li>
+
+  <li>
+    <strong>Is active:</strong>
+    <%= @stall.is_active %>
+  </li>
+
+</ul>
+
+<span><%= live_patch "Edit", to: Routes.stall_show_path(@socket, :edit, @stall), class: "button" %></span>
+<span><%= live_redirect "Back", to: Routes.stall_index_path(@socket, :index) %></span>

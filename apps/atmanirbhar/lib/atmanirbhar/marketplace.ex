@@ -730,4 +730,100 @@ defmodule Atmanirbhar.Marketplace do
   def change_bulk_upload(%BulkUpload{} = bulk_upload, attrs \\ %{}) do
     BulkUpload.changeset(bulk_upload, attrs)
   end
+
+  alias Atmanirbhar.Marketplace.Stall
+
+  @doc """
+  Returns the list of marketplace_stalls.
+
+  ## Examples
+
+      iex> list_marketplace_stalls()
+      [%Stall{}, ...]
+
+  """
+  def list_marketplace_stalls do
+    Repo.all(Stall)
+  end
+
+  @doc """
+  Gets a single stall.
+
+  Raises `Ecto.NoResultsError` if the Stall does not exist.
+
+  ## Examples
+
+      iex> get_stall!(123)
+      %Stall{}
+
+      iex> get_stall!(456)
+      ** (Ecto.NoResultsError)
+
+  """
+  def get_stall!(id), do: Repo.get!(Stall, id)
+
+  @doc """
+  Creates a stall.
+
+  ## Examples
+
+      iex> create_stall(%{field: value})
+      {:ok, %Stall{}}
+
+      iex> create_stall(%{field: bad_value})
+      {:error, %Ecto.Changeset{}}
+
+  """
+  def create_stall(attrs \\ %{}) do
+    %Stall{}
+    |> Stall.changeset(attrs)
+    |> Repo.insert()
+  end
+
+  @doc """
+  Updates a stall.
+
+  ## Examples
+
+      iex> update_stall(stall, %{field: new_value})
+      {:ok, %Stall{}}
+
+      iex> update_stall(stall, %{field: bad_value})
+      {:error, %Ecto.Changeset{}}
+
+  """
+  def update_stall(%Stall{} = stall, attrs) do
+    stall
+    |> Stall.changeset(attrs)
+    |> Repo.update()
+  end
+
+  @doc """
+  Deletes a stall.
+
+  ## Examples
+
+      iex> delete_stall(stall)
+      {:ok, %Stall{}}
+
+      iex> delete_stall(stall)
+      {:error, %Ecto.Changeset{}}
+
+  """
+  def delete_stall(%Stall{} = stall) do
+    Repo.delete(stall)
+  end
+
+  @doc """
+  Returns an `%Ecto.Changeset{}` for tracking stall changes.
+
+  ## Examples
+
+      iex> change_stall(stall)
+      %Ecto.Changeset{data: %Stall{}}
+
+  """
+  def change_stall(%Stall{} = stall, attrs \\ %{}) do
+    Stall.changeset(stall, attrs)
+  end
 end

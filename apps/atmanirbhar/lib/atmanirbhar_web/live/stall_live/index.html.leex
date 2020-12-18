@@ -1,0 +1,47 @@
+<h1>Listing Marketplace stalls</h1>
+
+<%= if @live_action in [:new, :edit] do %>
+  <%= live_modal @socket, AtmanirbharWeb.StallLive.FormComponent,
+    id: @stall.id || :new,
+    title: @page_title,
+    action: @live_action,
+    stall: @stall,
+    return_to: Routes.stall_index_path(@socket, :index) %>
+<% end %>
+
+<table>
+  <thead>
+    <tr>
+      <th>Title</th>
+      <th>Description</th>
+      <th>Audience average</th>
+      <th>For male</th>
+      <th>For female</th>
+      <th>Poster image url</th>
+      <th>Is active</th>
+
+      <th></th>
+    </tr>
+  </thead>
+  <tbody id="marketplace_stalls">
+    <%= for stall <- @marketplace_stalls do %>
+      <tr id="stall-<%= stall.id %>">
+        <td><%= stall.title %></td>
+        <td><%= stall.description %></td>
+        <td><%= stall.audience_average %></td>
+        <td><%= stall.for_male %></td>
+        <td><%= stall.for_female %></td>
+        <td><%= stall.poster_image_url %></td>
+        <td><%= stall.is_active %></td>
+
+        <td>
+          <span><%= live_redirect "Show", to: Routes.stall_show_path(@socket, :show, stall) %></span>
+          <span><%= live_patch "Edit", to: Routes.stall_index_path(@socket, :edit, stall) %></span>
+          <span><%= link "Delete", to: "#", phx_click: "delete", phx_value_id: stall.id, data: [confirm: "Are you sure?"] %></span>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<span><%= live_patch "New Stall", to: Routes.stall_index_path(@socket, :new) %></span>
