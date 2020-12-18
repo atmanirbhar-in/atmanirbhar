@@ -13,30 +13,25 @@ defmodule AtmanirbharWeb.PageStallLive do
     # IO.puts "host in socket? -----------------"
 
     # Atmanirbhar.Repo.put_org_id(123)
+    pincode = params["pincode"] || 12345
+    location_form = %LocationForm{pincode: pincode}
+    pincode_changeset = Marketplace.change_location_form(location_form)
 
+    pictures = [
+      "/toys/toys1.jpg",
+      "/toys/toys2.jpg",
+      "/toys/toys3.jpg",
+      "/toys/toys4.jpg",
+      "/toys/toys5.jpg",
+      "/toys/toys6.jpg",
+               ]
 
     socket = socket
     |> assign(:page_title, "View Stall")
-    # |> assign(location_form: location_form)
-    # |> assign(pincode_changeset: pincode_changeset)
-    # |> assign(reader_count: initial_count)
-    # |> assign(deals: deals)
-    # |> assign(advertisements: advertisements)
-    # |> assign(shops: shops)
+    |> assign(:pictures, pictures)
+    |> assign(pincode_changeset: pincode_changeset)
 
     {:ok, socket}
-
-    # assign(socket, %{
-    #       query: "",
-    #       results: %{},
-    #       location_form: location_form,
-    #       pincode_changeset: pincode_changeset,
-    #       shops: shops,
-    #       deals: deals,
-    #       reader_count: initial_count,
-    #       advertisements: advertisements
-    #        }
-    # )
 
   end
 
@@ -54,8 +49,16 @@ defmodule AtmanirbharWeb.PageStallLive do
   end
 
   defp apply_action(socket, :index, _params) do
+
+    pictures = [
+      "/toys/toys2.jpg",
+      "/toys/toys8.jpg",
+      "/toys/toys7.jpg",
+    ]
+
     socket
     |> assign(:page_title, "stall - ")
+    |> assign(:pictures, pictures)
   end
   defp apply_action(socket, :pincode, params) do
     pincode = params["pincode"] |> String.to_integer
