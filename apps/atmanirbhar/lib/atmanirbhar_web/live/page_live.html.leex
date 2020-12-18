@@ -19,15 +19,54 @@
   <%= f = form_for @stall_filters_changeset, "#",
       id: "stall-filters-form",
       phx_change: "change-stall-filters",
-      class: "flex",
+      class: "flex w-full",
       phx_submit: "set-pincode" %>
   <div class="flex ml-4">
-    <%= checkbox f, :show_male, class: "form-checkbox", label: "M" %>
+
+    <label for="gender_male">Male</label>
+    <%= checkbox f, :show_male, class: "form-checkbox" %>
     <label for="gender_female">female</label>
-    <%= checkbox f, :show_female, class: "form-checkbox" %>
+    <%= checkbox f, :show_female, class: "form-checkbox mb-10 mr-10" %>
     <%# = submit "S", phx_disable_with: "Submitting...", class: "btn btn-transparent w-12" %>
+
+    <br/>
+    <br/>
+    <br/>
+    <br/>
+    <br/>
+    <br/>
+
+
+    <div class="relative max-w-xl w-full mt-10">
+      <input
+        type="range"
+        datalist="audience-list"
+        step="100"
+        x-bind:min="min" x-bind:max="max"
+        x-on:input="mintrigger"
+        x-model="minprice"
+        class="absolute pointer-events-none appearance-none z-20 h-2 w-full opacity-0 cursor-pointer"
+        >
+      <input
+        type="range"
+        step="100"
+        datalist="audience-list"
+        x-bind:min="min" x-bind:max="max"
+        x-on:input="maxtrigger"
+        x-model="maxprice"
+        class="absolute pointer-events-none appearance-none z-20 h-2 w-full opacity-0 cursor-pointer"
+        >
+    </div>
+    <div class="relative z-10 h-2">
+
+        <div class="absolute z-10 left-0 right-0 bottom-0 top-0 rounded-md bg-gray-400"></div>
+        <div class="absolute z-20 top-0 bottom-0 rounded-md bg-green-300" x-bind:style="'right:'+maxthumb+'%; left:'+minthumb+'%'"></div>
+        <div class="absolute z-30 w-6 h-6 top-0 left-0 bg-green-300 rounded-full -mt-2 -ml-1" x-bind:style="'left: '+minthumb+'%'"></div>
+        <div class="absolute z-30 w-6 h-6 top-0 right-0 bg-green-300 rounded-full -mt-2 -mr-3" x-bind:style="'right: '+maxthumb+'%'"></div>
+    </div>
   </div>
-  <%# = error_tag f, :pincode %>
+</form>
+<%# = error_tag f, :pincode %>
 
 
   <div class="flex w-full flex-col lg:flex-row">

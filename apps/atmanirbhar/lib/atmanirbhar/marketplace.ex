@@ -6,7 +6,7 @@ defmodule Atmanirbhar.Marketplace do
   import Ecto.Query, warn: false
   alias Atmanirbhar.Repo
 
-  alias Atmanirbhar.Marketplace.{Shop, Business}
+  alias Atmanirbhar.Marketplace.{Shop, Business, Stall}
   alias Atmanirbhar.Geo.Location
   alias Atmanirbhar.Marketplace.{LocationForm, StallFiltersForm}
 
@@ -35,6 +35,21 @@ defmodule Atmanirbhar.Marketplace do
   """
   def list_shops do
     Repo.all(Shop)
+  end
+  def list_stalls_with_filters(form_params) do
+    %{
+      show_male: show_male,
+      show_female: show_female
+    } = form_params
+
+    # TODO refine query for OR
+    query = from s in Stall,
+      where: s.for_male == ^show_male and
+      s.for_female == ^show_female,
+      order_by: [desc: s.inserted_at]
+    Repo.all query
+
+    # Repo.all(Stall)
   end
 
   @doc """

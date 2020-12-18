@@ -105,13 +105,34 @@ defmodule AtmanirbharWeb.PageLive do
 
 
   @impl true
-  def handle_event("change-stall-filters", params, socket) do
-    IO.puts "--------------"
-    IO.puts "change filter params"
+  def handle_event("change-stall-filters", %{"stall_filters_form" => form_params}, socket) do
+    %{"show_male" => show_male,
+      "show_female" => show_female
+    } = form_params
+    stalls = Atmanirbhar.Marketplace.list_stalls_with_filters(%{
+          show_male: to_bool(show_male),
+          show_female: to_bool(show_female)
+                                                              })
+    # IO.puts "--------------"
+    # IO.puts "change filter params"
     # IO.puts inspect(form_params)
     # %{"pincode" => pincode} = form_params
+    # stall_filters_changeset = %StallFiltersForm{form_params}
+    stall_filters_form = %StallFiltersForm{
+      show_male: to_bool(show_male),
+      show_female: to_bool(show_female)
+    }
+    stall_filters_changeset = Marketplace.change_stall_filters_form(stall_filters_form)
+
+    socket = socket
+    |> assign(:stalls, stalls)
+    |> assign(stall_filters_changeset: stall_filters_changeset)
+
     {:noreply, socket}
   end
+
+  defp to_bool("true"), do: true
+  defp to_bool("false"), do: false
 
 
   @impl true
