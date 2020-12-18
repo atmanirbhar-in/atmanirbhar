@@ -42,14 +42,8 @@ defmodule Atmanirbhar.Marketplace do
       show_female: show_female
     } = form_params
 
-    # TODO refine query for OR
-    query = from s in Stall,
-      where: s.for_male == ^show_male and
-      s.for_female == ^show_female,
-      order_by: [desc: s.inserted_at]
-    Repo.all query
-
-    # Repo.all(Stall)
+    StallFiltersForm.query_for(form_params)
+    |> Repo.all
   end
 
   @doc """
