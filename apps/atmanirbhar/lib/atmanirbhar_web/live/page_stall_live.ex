@@ -50,15 +50,38 @@ defmodule AtmanirbharWeb.PageStallLive do
 
   defp apply_action(socket, :index, _params) do
 
-    pictures = [
+    pictures_toys = [
       "/toys/toys2.jpg",
       "/toys/toys8.jpg",
       "/toys/toys7.jpg",
     ]
+    pictures_cars = [
+      "/toys2/cars2.jpg",
+      "/toys2/cars3.jpg",
+      "/toys2/cars4.jpg",
+    ]
+    products = [
+      %{
+        title: "prod 1",
+        description: "mario mario mario mario mario queen queen queen",
+        pictures: pictures_toys
+      },
+      %{
+        title: "prod 2",
+        description: "cars cars cars cars cars",
+        pictures: pictures_cars
+      }
+    ]
+    stall_title = "My Toys store"
+    stall_description = "Various Toys for kids.
+    They will love them. Cleaned properly, Take home 2 toys at a time.
+    I am dentist by profession but this is my passion"
 
     socket
     |> assign(:page_title, "stall - ")
-    |> assign(:pictures, pictures)
+    |> assign(:stall_title, stall_title)
+    |> assign(:stall_description, stall_description)
+    |> assign(:products, products)
   end
   defp apply_action(socket, :pincode, params) do
     pincode = params["pincode"] |> String.to_integer
