@@ -90,32 +90,32 @@
         <div class="absolute z-30 w-6 h-6 top-0 left-0 bg-green-300 rounded-full -mt-2 -ml-1" x-bind:style="'left: '+minthumb+'%'"></div>
         <div class="absolute z-30 w-6 h-6 top-0 right-0 bg-green-300 rounded-full -mt-2 -mr-3" x-bind:style="'right: '+maxthumb+'%'"></div>
     </div>
-    <!-- <div class="flex justify-between items-center py-5">
+    <div class="flex justify-between items-center py-5">
          <div>
          <input type="text" maxlength="5" x-on:input="mintrigger" x-model="minprice" class="px-3 py-2 border border-gray-200 rounded w-24 text-center">
          </div>
          <div>
          <input type="text" maxlength="5" x-on:input="maxtrigger" x-model="maxprice" class="px-3 py-2 border border-gray-200 rounded w-24 text-center">
          </div>
-         </div> -->
+         </div>
     <script>
 
      function range() {
          return {
-             minprice: 1000,
-             maxprice: 7000,
-             min: 100,
-             max: 10000,
+             minprice: 5,
+             maxprice: 40,
+             min: 5,
+             max: 100,
              minthumb: 0,
              maxthumb: 0,
              mintrigger() {
-                 this.minprice = Math.min(this.minprice, this.maxprice - 500);
+                 this.minprice = Math.min(this.minprice, this.maxprice - 20);
                  this.minthumb = ((this.minprice - this.min) / (this.max - this.min)) * 100;
              },
              maxtrigger() {
-                 this.maxprice = Math.max(this.maxprice, this.minprice + 500); 
+                 this.maxprice = Math.max(this.maxprice, this.minprice + 20);
                  this.maxthumb = 100 - (((this.maxprice - this.min) / (this.max - this.min)) * 100);
-             }, 
+             },
          }
      }
 
