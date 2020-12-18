@@ -16,6 +16,20 @@
 
 <section class="container-full mx-auto my-2">
 
+  <%= f = form_for @stall_filters_changeset, "#",
+      id: "stall-filters-form",
+      phx_change: "change-stall-filters",
+      class: "flex",
+      phx_submit: "set-pincode" %>
+  <div class="flex ml-4">
+    <%= checkbox f, :show_male, class: "form-checkbox", label: "M" %>
+    <label for="gender_female">female</label>
+    <%= checkbox f, :show_female, class: "form-checkbox" %>
+    <%# = submit "S", phx_disable_with: "Submitting...", class: "btn btn-transparent w-12" %>
+  </div>
+  <%# = error_tag f, :pincode %>
+
+
   <div class="flex w-full flex-col lg:flex-row">
     <div class="flex w-full mb-4 md:w-1/5 md:flex-col justify-around">
       <div class="flex items-center">

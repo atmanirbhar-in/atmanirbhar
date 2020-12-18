@@ -105,7 +105,7 @@ defmodule AtmanirbharWeb.PageLive do
 
 
   @impl true
-  def handle_event("change-filters", params, socket) do
+  def handle_event("change-stall-filters", params, socket) do
     IO.puts "--------------"
     IO.puts "change filter params"
     # IO.puts inspect(form_params)
