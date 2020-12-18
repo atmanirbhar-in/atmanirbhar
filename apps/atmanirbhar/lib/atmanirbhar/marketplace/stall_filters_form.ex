@@ -33,6 +33,7 @@ defmodule Atmanirbhar.Marketplace.StallFiltersForm do
   end
   def query_for(%{show_male: _show_male, show_female: _show_female, audience_min: audience_min, audience_max: audience_max} = form_params) do
     from s in Stall,
+      where: s.audience_average >= ^audience_min and s.audience_average <= ^audience_max,
       order_by: [desc: s.inserted_at]
   end
 
