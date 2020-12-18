@@ -106,6 +106,8 @@ defmodule AtmanirbharWeb.PageLive do
 
   @impl true
   def handle_event("change-stall-filters", %{"stall_filters_form" => form_params}, socket) do
+    IO.puts inspect(form_params)
+    IO.puts "slider values"
     %{"show_male" => show_male,
       "show_female" => show_female
     } = form_params

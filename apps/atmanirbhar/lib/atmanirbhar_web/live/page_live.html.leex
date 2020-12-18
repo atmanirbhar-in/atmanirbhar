@@ -61,21 +61,25 @@
         <div x-data="range()" x-init="mintrigger(); maxtrigger()" class="relative max-w-xl w-full mt-6">
           <div class="relative max-w-xl w-full ">
             <input
+              name="stall_filters_form[minimum_audience]"
               type="range"
               datalist="audience-list"
-              step="100"
+              step="5"
             x-bind:min="min" x-bind:max="max"
             x-on:input="mintrigger"
-            x-model="minprice"
+              x-model="minprice"
+              phx-debounce="300"
             class="absolute pointer-events-none appearance-none z-20 h-2 w-full opacity-0 cursor-pointer"
         >
-        <input
-            type="range"
-            step="100"
+            <input
+              name="stall_filters_form[maximum_audience]"
+              type="range"
+              step="5"
               datalist="audience-list"
-            x-bind:min="min" x-bind:max="max"
-            x-on:input="maxtrigger"
-            x-model="maxprice"
+              x-bind:min="min" x-bind:max="max"
+              x-on:input="maxtrigger"
+              x-model="maxprice"
+              phx-debounce="300"
             class="absolute pointer-events-none appearance-none z-20 h-2 w-full opacity-0 cursor-pointer"
         >
     </div>
@@ -98,12 +102,12 @@
 
      function range() {
          return {
-             minprice: 1000, 
+             minprice: 1000,
              maxprice: 7000,
-             min: 100, 
+             min: 100,
              max: 10000,
              minthumb: 0,
-             maxthumb: 0, 
+             maxthumb: 0,
              mintrigger() {
                  this.minprice = Math.min(this.minprice, this.maxprice - 500);
                  this.minthumb = ((this.minprice - this.min) / (this.max - this.min)) * 100;
