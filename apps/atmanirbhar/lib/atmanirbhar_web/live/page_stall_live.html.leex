@@ -1,13 +1,18 @@
 <section class="text-gray-700 body-font">
   <div class="container px-5 py-24 mx-auto flex flex-wrap flex-col" x-data="{ image: 'image1'}">
     <div class="flex">
-      <%= img_tag(Routes.static_path(@socket, "/images/stalls/toys/toys2.jpg"), class: "h-56 max-w-auto p-1 object-cover object-center") %>
+      <%= for {toy, index} <- Enum.with_index(@pictures, 1) do %>
+          <% img_path = Routes.static_path(@socket, "/images/stalls#{toy}") %>
+          <img src="<%= img_path %>" class="h-56 max-w-auto p-1 object-cover object-center image-#{index}"
+               x-show="image === 'image<%= index %>'"
+               />
+          <% end %>
     </div>
     <div class="flex">
       <%= for {toy, index} <- Enum.with_index(@pictures, 1) do %>
           <% img_path = Routes.static_path(@socket, "/images/stalls#{toy}") %>
           <img src="<%= img_path %>" class="h-20 max-w-56 p-1 object-cover object-center image-#{index}"
-               @click.prevent="{'image' = 'image<%= index %>'}"
+               @click.prevent="{image = 'image<%= index %>'}"
                />
           <% end %>
     </div>
