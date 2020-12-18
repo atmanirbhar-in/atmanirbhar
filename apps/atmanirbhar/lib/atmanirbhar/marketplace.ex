@@ -37,10 +37,10 @@ defmodule Atmanirbhar.Marketplace do
     Repo.all(Shop)
   end
   def list_stalls_with_filters(form_params) do
-    %{
-      show_male: show_male,
-      show_female: show_female
-    } = form_params
+    # %{
+    #   show_male: show_male,
+    #   show_female: show_female
+    # } = form_params
 
     StallFiltersForm.query_for(form_params)
     |> Repo.all

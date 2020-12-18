@@ -109,21 +109,17 @@ defmodule AtmanirbharWeb.PageLive do
     IO.puts inspect(form_params)
     IO.puts "slider values"
     %{"show_male" => show_male,
-      "show_female" => show_female
+      "show_female" => show_female,
+      "maximum_audience" => max_audience,
+      "minimum_audience" => min_audience
     } = form_params
-    stalls = Atmanirbhar.Marketplace.list_stalls_with_filters(%{
-          show_male: to_bool(show_male),
-          show_female: to_bool(show_female)
-                                                              })
-    # IO.puts "--------------"
-    # IO.puts "change filter params"
-    # IO.puts inspect(form_params)
-    # %{"pincode" => pincode} = form_params
-    # stall_filters_changeset = %StallFiltersForm{form_params}
     stall_filters_form = %StallFiltersForm{
       show_male: to_bool(show_male),
-      show_female: to_bool(show_female)
+      show_female: to_bool(show_female),
+      audience_min: parse_num(min_audience),
+      audience_max: parse_num(max_audience)
     }
+    stalls = Atmanirbhar.Marketplace.list_stalls_with_filters(stall_filters_form)
     stall_filters_changeset = Marketplace.change_stall_filters_form(stall_filters_form)
 
     socket = socket
@@ -135,6 +131,10 @@ defmodule AtmanirbharWeb.PageLive do
 
   defp to_bool("true"), do: true
   defp to_bool("false"), do: false
+  defp parse_num(string) do
+    {number, _} = Integer.parse(string)
+    number
+  end
 
 
   @impl true
