@@ -72,6 +72,26 @@ defmodule AtmanirbharWeb.PageStallLive do
         pictures: pictures_cars
       }
     ]
+    timeline_items = [
+      %{
+        title: "title 1",
+        image_url: "",
+        published_on: "",
+        description: "Sed diam.Praesent fermentum tempor tellus.  Aliquam posuere. "
+      },
+      %{
+        title: "title 2",
+        image_url: "",
+        published_on: "",
+        description: "Fusce commodo. Etiam laoreet quam sed arcu.  Donec pretium posuere tellus.  Curabitur vulputate vestibulum lorem.    "
+      },
+      %{
+        title: "title 3",
+        image_url: "",
+        published_on: "",
+        description: " Curabitur vulputate vestibulum lorem.  Lorem ipsum dolor sit amet, consectetuer adipiscing elit.  Etiam vel neque nec dui dignissim bibendum. "
+      }
+    ]
     stall_title = "My Toys store"
     stall_description = "Various Toys for kids.
     They will love them. Cleaned properly, Take home 2 toys at a time.
@@ -79,9 +99,12 @@ defmodule AtmanirbharWeb.PageStallLive do
 
     socket
     |> assign(:page_title, "stall - ")
+    |> assign(:stall_posters, pictures_toys)
     |> assign(:stall_title, stall_title)
+    |> assign(:stall_address, "Amanora, Pune")
     |> assign(:stall_description, stall_description)
     |> assign(:products, products)
+    |> assign(:timeline_items, timeline_items)
   end
   defp apply_action(socket, :pincode, params) do
     pincode = params["pincode"] |> String.to_integer
