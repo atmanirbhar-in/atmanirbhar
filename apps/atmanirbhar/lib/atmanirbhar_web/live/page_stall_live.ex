@@ -69,16 +69,19 @@ defmodule AtmanirbharWeb.PageStallLive do
     products = [
       %{
         title: "prod 1",
+        blueprint: "Toys",
         description: "mario mario mario mario mario queen queen queen",
         pictures: pictures_toys
       },
       %{
         title: "prod 2",
+        blueprint: "Toys",
         description: "cars cars cars cars cars",
         pictures: pictures_cars
       },
       %{
         title: "Indoor Games",
+        blueprint: "Toys",
         description: "monopoly, chess, caroom",
         pictures: pictures_monopoly
       }
@@ -86,25 +89,25 @@ defmodule AtmanirbharWeb.PageStallLive do
     timeline_items = [
       %{
         title: "title 1",
-        image_url: "",
+        image_url: "/kids/kids1.jpg",
         published_on: "",
         description: "Sed diam.Praesent fermentum tempor tellus.  Aliquam posuere. "
       },
       %{
         title: "title 2",
-        image_url: "",
+        image_url: "/kids/kids2.jpg",
         published_on: "",
         description: "Fusce commodo. Etiam laoreet quam sed arcu.  Donec pretium posuere tellus.  Curabitur vulputate vestibulum lorem.    "
       },
       %{
         title: "title 3",
-        image_url: "",
+        image_url: "/kids/kids3.jpg",
         published_on: "",
         description: " Curabitur vulputate vestibulum lorem.  Lorem ipsum dolor sit amet, consectetuer adipiscing elit.  Etiam vel neque nec dui dignissim bibendum. "
       },
       %{
         title: "title 4",
-        image_url: "",
+        image_url: "/kids/kids4.jpg",
         published_on: "",
         description: " Curabitur vulputate vestibulum lorem.  Lorem ipsum dolor sit amet, consectetuer adipiscing elit.  Etiam vel neque nec dui dignissim bibendum. "
       }
