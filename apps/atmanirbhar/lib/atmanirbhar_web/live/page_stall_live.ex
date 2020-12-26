@@ -60,6 +60,12 @@ defmodule AtmanirbharWeb.PageStallLive do
       "/toys2/cars3.jpg",
       "/toys2/cars4.jpg",
     ]
+    pictures_monopoly = [
+      "/monopoly/monopoly1.jpg",
+      "/monopoly/monopoly2.jpg",
+      "/monopoly/monopoly3.jpg",
+      "/monopoly/monopoly4.jpg",
+    ]
     products = [
       %{
         title: "prod 1",
@@ -70,6 +76,11 @@ defmodule AtmanirbharWeb.PageStallLive do
         title: "prod 2",
         description: "cars cars cars cars cars",
         pictures: pictures_cars
+      },
+      %{
+        title: "Indoor Games",
+        description: "monopoly, chess, caroom",
+        pictures: pictures_monopoly
       }
     ]
     timeline_items = [
@@ -87,6 +98,12 @@ defmodule AtmanirbharWeb.PageStallLive do
       },
       %{
         title: "title 3",
+        image_url: "",
+        published_on: "",
+        description: " Curabitur vulputate vestibulum lorem.  Lorem ipsum dolor sit amet, consectetuer adipiscing elit.  Etiam vel neque nec dui dignissim bibendum. "
+      },
+      %{
+        title: "title 4",
         image_url: "",
         published_on: "",
         description: " Curabitur vulputate vestibulum lorem.  Lorem ipsum dolor sit amet, consectetuer adipiscing elit.  Etiam vel neque nec dui dignissim bibendum. "
