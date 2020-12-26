@@ -1,0 +1,59 @@
+<section class="bg-gray-100">
+  <h2 class="p-4 flex text-2xl font-semibold text-center">
+    View Stall
+  </h2>
+
+  <div class="mt-4">
+    <span class="text-gray-700">All Products</span>
+    <div class="p-4 border border-2 flex bg-white">
+      <%= for element <- @products do %>
+          <div class="p-2 border border-gray-400 mr-2" draggable="true"
+               phx-hook="Card"
+               phx-target="<%= @myself %>"
+               id="card-<%= element.id %>" data_card_type="<%= element.type %>" >
+            <img alt="" src="https://via.placeholder.com/60/fFF/808080?Text=Product" class="w-24 h-24"/>
+            <%= element.title %>
+          </div>
+          <% end %>
+    </div>
+  </div>
+
+  <div class="mt-4 flex flex-col border-2 border-gray-700 bg-white"
+       phx-hook="Stall"
+       phx-target="<%= @myself %>"
+       id="stall-<%= @stall.id %>">
+      <div class="">
+        <span class="text-gray-700">Products in this Stall</span>
+        <div class="flex p-4">
+          <%= for element <- Map.get(@gallery_items_groups, 1, []) do %>
+              <div class="p-2 border border-gray-400 mr-2" id="stall-card-<%= element.id %>">
+                <div class="flex flex-row-reverse">
+                  <button phx-click="remove-card-from-stall"
+                          phx-value-card="card-<%= element.id %>"
+                          phx-target="<%= @myself %>"
+                          class="rounded-full h-4 w-4 flex items-center justify-center
+                                 bg-red-500 font-bold text-white">
+                    x
+                  </button>
+                </div>
+                <img alt="" src="https://via.placeholder.com/60/fFF/808080?Text=Product" class="w-24 h-24"/>
+                <%= element.title %>
+              </div>
+              <% end %>
+        </div>
+      </div>
+
+      <div class="border-t">
+        <span class="text-gray-700">Customer Pictures</span>
+        <div class="flex p-4">
+          <%= for element <- Map.get(@gallery_items_groups, 2, []) do %>
+              <div class="p-2 border border-gray-400">
+              <%= element.title %>
+              <img alt="" src="https://via.placeholder.com/60/fFF/808080?Text=Product" class="w-24 h-24"/>
+              </div>
+            <% end %>
+        </div>
+      </div>
+    </div>
+
+</section>

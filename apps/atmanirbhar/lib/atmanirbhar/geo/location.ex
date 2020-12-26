@@ -7,7 +7,7 @@ defmodule Atmanirbhar.Geo.Location do
     field :nearby_slugs, {:array, :string}
     field :slug, :string
     field :title, :string
-    field :is_city, :boolean, default: false
+    # field :is_city, :boolean, default: false
 
     timestamps()
   end

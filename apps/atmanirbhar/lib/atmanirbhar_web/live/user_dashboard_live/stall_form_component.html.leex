@@ -1,0 +1,195 @@
+<section class="bg-gray-100">
+  <h2 class="p-4 flex text-2xl font-semibold text-center">
+    <%= @title %>
+  </h2>
+
+
+  <%= f = form_for @changeset, "#",
+      id: "stall-form",
+      phx_target: @myself,
+      phx_change: "validate",
+      class: "px-5 py-5 w-full flex flex-col",
+      phx_submit: "save_stall" %>
+
+  <div class="flex w-full">
+
+  <div class="flex flex-col w-full md:w-1/2 p-4">
+    <label class="block">
+      <span class="text-gray-700">Name of the stall</span>
+      <%= text_input f, :title,
+          class: "form-input mt-1 block w-full",
+          placeholder: "Enter Name of the stall" %>
+      <p class="text-red-500 text-xs italic">
+        <%= error_tag f, :title %>
+      </p>
+    </label>
+
+
+    <label class="block mt-4">
+      <span class="text-gray-700">Stall Description</span>
+      <%= textarea f, :description,
+          class: "form-textarea mt-1 block w-full",
+          placeholder: "Enter Stall Description", rows: "6"  %>
+      <p class="text-red-500 text-xs italic">
+        <%= error_tag f, :description %>
+      </p>
+    </label>
+
+    <label class="block" for="">
+      <span class="text-gray-700">Tags</span>
+    </label>
+
+  </div>
+
+  <div class="flex flex-col w-full md:w-1/2 p-4">
+
+    <label class="block">
+      <span class="text-gray-700">City</span>
+      <%= select f, :location_id, @locations ,class: "form-select" %>
+      <p class="text-red-500 text-xs italic">
+        <%= error_tag f, :location_id %>
+      </p>
+    </label>
+
+    <label class="block">
+      <span class="text-gray-700">Location</span>
+      <%= select f, :location_id, @locations ,class: "form-select" %>
+      <p class="text-red-500 text-xs italic">
+        <%= error_tag f, :location_id %>
+      </p>
+    </label>
+
+
+    <label class="block">
+      <span class="text-gray-700">Target Audience</span>
+      <%= range_input f, :audience_average,
+          class: "dashboard-audience-slider mt-1 block w-full",
+          placeholder: "Enter Target Audience" %>
+      <p class="text-red-500 text-xs italic">
+        <%= error_tag f, :audience_average %>
+      </p>
+    </label>
+
+    <% options = ["only Male", "only Female", "both Male and Female, Neutral"] %>
+    <div class="mt-4">
+      <span class="text-gray-700">Gender</span>
+      <div class="mt-2">
+        <%= for option <- options do %>
+            <label class="inline-flex items-center mr-6">
+              <%= radio_button(f, :for_male, option, class: "form-radio") %>
+              <span class="ml-2"><%= option %></span>
+            </label>
+            <% end %>
+      </div>
+      <div>
+        <%= label f, :for_male %>
+        <%= checkbox f, :for_male %>
+        <%= error_tag f, :for_male %>
+
+        <%= label f, :for_female %>
+        <%= checkbox f, :for_female %>
+        <%= error_tag f, :for_female %>
+      </div>
+    </div>
+  </div>
+
+
+  </div>
+
+
+
+  <label class="block mt-4">
+    <span class="text-gray-700">Stall Poster</span>
+    <%#= file_input f, :poster_image_url, multipart: true %>
+    <p class="text-red-500 text-xs italic">
+      <%= error_tag f, :poster_image_url %>
+    </p>
+  </label>
+
+  <div class="mt-4">
+    <span class="text-gray-700">All Products in Catalog</span>
+    <div class="p-4 border border-2 flex bg-white">
+      <%= for element <- @all_products do %>
+          <div class="p-2 border border-gray-400 mr-2" draggable="true"
+               phx-hook="ProductCard"
+               phx-target="<%= @myself %>"
+               id="product-card-<%= element.id %>" data_card_type="product" >
+            <%= for image <- element.images do %>
+                <img alt=""
+                     src="<%= image %>"
+                     class="w-12 h-12"/>
+                <% end %>
+                <%= element.title %>
+          </div>
+          <% end %>
+    </div>
+  </div>
+  <div class="flex w-full flex-col bg-blue-100"
+       phx-hook="StallProd"
+       phx-target="<%= @myself %>"
+       id="stall-prod-<%= @stall.id %>">
+       >
+    <h3 class="p-2">Products</h3>
+
+    <p>
+      drag and drop the ones you want
+    </p>
+
+    <div class="flex p-4">
+      <%= for element <- @stall_products do %>
+          <div class="flex p-2 border">
+            <%= for image <- element.images do %>
+                <img alt=""
+                     src="<%= image %>"
+                     class="w-12 h-12"/>
+                <% end %>
+                <%= element.title %>
+          </div>
+          <% end %>
+    </div>
+
+  </div>
+
+  <div class="mt-4">
+    <span class="text-gray-700">All Pictures from Gallery</span>
+    <div class="p-4 border border-2 flex bg-white">
+      <%= for element <- @all_media do %>
+          <div class="p-2 border border-gray-400 mr-2" draggable="true"
+               phx-hook="MediaCard"
+               phx-target="<%= @myself %>"
+               id="media-card-<%= element.id %>" data_card_type="media" >
+            <img alt="" src="<%= element.url %>" class="w-24 h-24"/>
+            <%= element.caption %>
+          </div>
+          <% end %>
+    </div>
+  </div>
+
+
+  <div class="flex w-full flex-col bg-green-100"
+       phx-hook="StallMedia"
+       phx-target="<%= @myself %>"
+       id="stall-<%= @stall.id %>">
+       >
+    <h3 class="p-2">Pictures from Gallery</h3>
+    <p>
+      drag and drop the ones you want
+    </p>
+    <div class="flex border p-2 h-32 w-full">
+
+      <%= for element <- @stall_medias do %>
+          <div class="p-2 border border-gray-400 mr-2" draggable="true"
+               id="dropped-card-<%= element.id %>"
+               >
+            <img alt="" src="<%= element.url %>" class="w-24 h-24"/>
+            <%= element.caption %>
+          </div>
+          <% end %>
+
+
+    </div>
+  </div>
+
+  <%= submit "Save", phx_disable_with: "Saving...", class: "btn btn-primary mt-4" %>
+</form>
+</section>

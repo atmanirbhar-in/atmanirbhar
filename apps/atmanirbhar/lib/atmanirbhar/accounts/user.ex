@@ -2,6 +2,8 @@ defmodule Atmanirbhar.Accounts.User do
   use Ecto.Schema
   import Ecto.Changeset
   use Waffle.Ecto.Schema
+  alias Atmanirbhar.Marketplace.{GalleryItem, UserGallery}
+  alias Atmanirbhar.Repo
 
   @derive {Inspect, except: [:password]}
   schema "users" do
@@ -10,10 +12,16 @@ defmodule Atmanirbhar.Accounts.User do
     field :hashed_password, :string
     field :confirmed_at, :naive_datetime
     field :avatar, Atmanirbhar.AvatarUploader.Type
+    # field :business, :string, virtual: true
+    # field :city, :string, virtual: true
+
+
+    has_one :business, Atmanirbhar.Marketplace.Business
+    # has_many :businesses, Atmanirbhar.Marketplace.Business, foreign_key: :owner_id
+    # has_one :user_gallery, UserGallery
+    # has_many :gallery_items, GalleryItem
 
     timestamps()
-
-    has_many :businesses, Atmanirbhar.Marketplace.Business
   end
 
   @doc """
@@ -24,11 +32,24 @@ defmodule Atmanirbhar.Accounts.User do
   could lead to unpredictable or insecure behaviour. Long passwords may
   also be very expensive to hash for certain algorithms.
   """
+  # def registration_form_changeset(user, attrs) do
+  #   user
+  #   |> cast(attrs, [:email, :password, :business, :city])
+  #   |> validate_email()
+  #   |> validate_password()
+  #   |> validate_business()
+  #   |> validate_city()
+  # end
+
   def registration_changeset(user, attrs) do
     user
     |> cast(attrs, [:email, :password])
+    |> cast_assoc(:business, required: true)
     |> validate_email()
     |> validate_password()
+    # |> validate_business()
+    # |> validate_city()
+    # |> Repo.preload(:businesses)
   end
 
   defp validate_email(changeset) do
@@ -38,6 +59,16 @@ defmodule Atmanirbhar.Accounts.User do
     |> validate_length(:email, max: 160)
     |> unsafe_validate_unique(:email, Atmanirbhar.Repo)
     |> unique_constraint(:email)
+  end
+
+  defp validate_city(changeset) do
+    changeset
+    |> validate_required([:city])
+  end
+  defp validate_business(changeset) do
+    changeset
+    |> validate_required([:business])
+    |> validate_length(:business, min: 12, max: 80)
   end
 
   defp validate_password(changeset) do

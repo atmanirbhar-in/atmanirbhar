@@ -13,10 +13,18 @@
   </div>
 
   <div class="mb-4">
-    <%= label f, :password, class: "tag-label" %>
-    <%= password_input f, :password, required: true, class: "tag-input" %>
-    <%= error_tag f, :password %>
+      <%= label f, :password, class: "tag-label" %>
+      <%= password_input f, :password, required: true, class: "tag-input" %>
+      <%= error_tag f, :password %>
   </div>
+
+  <%= inputs_for f, :business, fn i -> %>
+      <div class="mb-4">
+          <%= label i, :business_name, class: "tag-label" %>
+          <%= text_input i, :title, required: true, class: "tag-input", placeholder: "sach cakes" %>
+          <%= error_tag i, :title %>
+     </div>
+  <% end %>
 
   <div class="mt-6">
     <%= submit "Register", class: "btn btn-dark w-full" %>

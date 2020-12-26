@@ -1,0 +1,47 @@
+<section class="p-5 flex justify-between w-full border-b mb-5">
+  <%= live_patch to: Routes.user_dashboard_index_path(@socket, :index),
+      class: "btn btn-link" do %>
+  <span>
+    back to Dashboard
+  </span>
+  <% end %>
+
+  <div class="p5">
+    <%= live_patch "Create Product",
+        to: Routes.user_dashboard_catalog_path(@socket, :new_product),
+        class: "text-lg btn mr-2 btn btn-primary" %>
+    <%= live_patch "Bulk Upload Products",
+        to: Routes.user_dashboard_catalog_path(@socket, :new_product),
+        class: "text-lg btn mr-2" %>
+  </div>
+</section>
+<h2 class="text-3xl">My Products and Services</h2>
+
+<%= if @live_action in [:new_product] do %>
+<%= live_modal @socket, AtmanirbharWeb.UserDashboardLive.ProductFormComponent,
+    id: :new_product,
+    title: @page_title,
+    product: @product,
+    current_user: @current_user,
+    current_business: @current_business,
+    action: @live_action,
+    return_to: Routes.user_dashboard_catalog_path(@socket, :index)
+    %>
+<% end %>
+
+
+
+<section class="p-5 flex flex-wrap">
+  <%= for product <- @products do %>
+      <div class="w-52 border p-3 m-1">
+        <h2><%= product.title %></h2>
+        <h3><%= product.description %></h2>
+<div class="flex w-52">
+  <%= for image <- product.images do %>
+      <img alt="" src="<%= image %>" class="w-16 mr-2" />
+      <% end %>
+</div>
+
+      </div>
+      <% end %>
+</section>

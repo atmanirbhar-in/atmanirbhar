@@ -1,0 +1,53 @@
+
+<h2>hello Album upload</h2>
+
+<%= f = form_for @changeset, "#",
+    id: "gallery-upload-form",
+    phx_target: @myself,
+    phx_change: "validate",
+    class: "bg-white flex flex-col",
+    phx_submit: "save" %>
+
+<label class="block">
+  <span class="text-gray-700">Title</span>
+  <%= text_input f, :title,
+      class: "form-input mt-1 block w-full",
+      placeholder: "Enter Title" %>
+  <p class="text-red-500 text-xs italic">
+    <%= error_tag f, :title %>
+  </p>
+</label>
+
+<label class="block">
+  <span class="text-gray-700">Description of Album</span>
+  <%= textarea f, :description,
+      class: "form-textarea mt-1 block w-full",
+      placeholder: "Enter Description of Album" %>
+  <p class="text-red-500 text-xs italic">
+    <%= error_tag f, :description %>
+  </p>
+</label>
+
+
+<label>Pictures</label>
+<%= live_file_input(@uploads.picture) %>
+
+<%= for {_ref, msg} <- @uploads.picture.errors do %>
+    <%= Phoenix.Naming.humanize(msg) %>
+    <% end %>
+
+<%= for entry <- @uploads.picture.entries do %>
+
+    <%= live_img_preview entry, width: 75 %>
+    <span>progress</span>
+    <a href="#" phx-click="cancel-entry"
+            phx-target="<%= @myself %>"
+            phx-value-ref="<%= entry.ref %>">
+      cancel</a>
+
+    <% end %>
+
+    <div class="flex">
+      <%= submit "Save", phx_disable_with: "Saving..." %>
+    </div>
+</form>

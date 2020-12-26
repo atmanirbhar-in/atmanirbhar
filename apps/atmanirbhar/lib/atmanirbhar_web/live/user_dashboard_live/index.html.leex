@@ -1,12 +1,24 @@
-<h1 class="text-lg font-semibold p-4 text-gray-800">
-  User Dashboard
-</h1>
 
-<%= live_patch "Add Advertisement", to: Routes.user_dashboard_index_path(@socket, :new_advertisement), class: "text-lg btn btn-primary mr-2" %>
-<%= live_patch "Add Deal", to: Routes.user_dashboard_index_path(@socket, :new_deal), class: "text-lg btn btn-primary mr-2" %>
-<%= live_patch "Add Business", to: Routes.user_dashboard_index_path(@socket, :new_business), class: "text-lg btn btn-primary mr-2" %>
-<%= live_patch "Bulk Upload", to: Routes.user_dashboard_index_path(@socket, :new_bulk_upload), class: "text-lg btn btn-secondary mr-2" %>
-
+<%= if @live_action in [:new_stall, :edit_stall] do %>
+<%= live_modal @socket, AtmanirbharWeb.UserDashboardLive.StallFormComponent,
+    id: :new,
+    title: @page_title,
+    stall: @stall,
+    current_user: @current_user,
+    current_business: @current_business,
+    action: @live_action,
+    return_to: Routes.user_dashboard_index_path(@socket, :index)
+    %>
+<% end %>
+<%= if @live_action in [:edit_stall_media] do %>
+<%= live_modal @socket, AtmanirbharWeb.UserDashboardLive.StallMediaComponent,
+    id: :stall_media,
+    stall_id: @stall_id,
+    title: @page_title,
+    action: @live_action,
+    return_to: Routes.user_dashboard_index_path(@socket, :index)
+    %>
+<% end %>
 
 <%= if @live_action in [:new_business, :edit_business] do %>
 <%= live_modal @socket, AtmanirbharWeb.UserDashboardLive.BusinessFormComponent,
@@ -19,72 +31,119 @@
 <% end %>
 
 
-<%= if @live_action in [:new_bulk_upload] do %>
-<%= live_modal @socket, AtmanirbharWeb.BulkUploadLive.FormComponent,
-    id: @bulk_upload.id || :new,
+<%= if @live_action in [:new_timeline_post, :edit_timeline_post] do %>
+<%= live_modal @socket, AtmanirbharWeb.UserDashboardLive.TimelinePostFormComponent,
+    id: @stall_element.id || :new,
     title: @page_title,
     action: @live_action,
-    bulk_upload: @bulk_upload,
+    stall_element: @stall_element,
     return_to: Routes.user_dashboard_index_path(@socket, :index)
     %>
 <% end %>
 
 
-<%= if @live_action in [:new_ad, :edit_ad] do %>
-<%= live_modal @socket, AtmanirbharWeb.AdvertisementLive.FormComponent,
-    id: @advertisement.id || :new,
+<%= if @live_action in [:new_product, :edit_product] do %>
+<%= live_modal @socket, AtmanirbharWeb.UserDashboardLive.ProductFormComponent,
+    id: @stall_element.id || :new,
     title: @page_title,
     action: @live_action,
-    advertisement: @advertisement,
+    stall_element: @stall_element,
     return_to: Routes.user_dashboard_index_path(@socket, :index)
     %>
 <% end %>
 
 
-<%= if @live_action in [:new_deal] do %>
-<%= live_modal @socket, AtmanirbharWeb.DealLive.FormComponent,
-    id: @deal.id || :new,
-    title: @page_title,
-    action: @live_action,
-    deal: @deal,
-    return_to: Routes.page_path(@socket, :index) %>
-<% end %>
+<section class="container py-20 px-5">
+  <%#= for business <- @businesses do %>
+      <div class="flex justify-between bg-red-100 flex-col">
+        <div class="flex justify-between">
+          <h3 class="text-3xl font-thin"><%= @business.title %></h3>
+          <div class="flex">
+            <%#= live_component @socket,
+                 FoldersNavigationComponent,
+                 live_action: @live_action %>
 
+            <%= live_patch "Gallery",
+                to: Routes.user_dashboard_gallery_path(@socket,
+                :gallery),
+                class: "text-lg btn btn-primary mr-2" %>
+            <%= live_patch "Products & Services",
+                to: Routes.user_dashboard_catalog_path(@socket,
+                :index),
+                class: "text-lg btn btn-primary mr-2" %>
+          </div>
+        </div>
 
-<%= if @live_action in [:new_advertisement] do %>
-<%= live_modal @socket, AtmanirbharWeb.AdvertisementLive.FormComponent,
-    id: @advertisement.id || :new,
-    title: @page_title,
-    action: @live_action,
-    advertisement: @advertisement,
-    return_to: Routes.page_path(@socket, :index) %>
-<% end %>
+      <table class="table-auto table mt-4">
+        <thead class="">
+          <tr class="border">
+            <th class="mx-2">Stall Name</th>
+            <th class="px-2">Audience</th>
+            <th class="px-2">valid Till</th>
+            <th class="px-2">Products</th>
+            <th class="px-2">Last Update</th>
+            <th class="px-2">Actions</th>
+          </tr>
+        </thead>
+        <tbody id="marketplace_bulk_uploads">
+          <tr id="stall-new-stall" class="border border-b-2 p-2 mt-7">
+            <td class="px-2">
+              Your Stall Title
+              <br/>
+              Location of stall
+            </td>
+            <td class="px-2">
+              M, F, small
+            </td>
+            <td class="px-2">26 Jan 2021</td>
+            <td class="px-2 flex">
+            </td>
+            <td class="px-2"></td>
+            <td class="px-2 py-2">
+              <%= live_patch "New Stall", to: Routes.user_dashboard_index_path(@socket, :new_stall), class: "text-lg btn btn-primary mr-2" %>
+            </td>
 
-<table class="table-auto table mt-4">
-  <thead>
-    <tr>
-      <th class="mx-2">CSV / Excel sheets</th>
-      <th class="px-2">City</th>
-      <th class="px-2">City / Region</th>
-      <th class="px-2">Content description</th>
-      <th class="px-2">Data Imported?</th>
-    </tr>
-  </thead>
-  <tbody id="marketplace_bulk_uploads">
-    <%= for bulk_upload <- @marketplace_bulk_uploads do %>
-      <tr id="bulk_upload-<%= bulk_upload.id %>">
-        <td class="px-2">
-          <%= for csv <- bulk_upload.csv_urls do %>
-              <%= link csv, to: Routes.static_path(@socket, csv) %>
+          </tr>
+          <%= for stall <- @business.stalls do %>
+              <tr id="stall-<%= stall.id %>" class="border border-b-2 p-2 mt-7">
+                <td class="px-2">
+                  <%= stall.title %>
+                  <br/>
+                  <%#= stall.location.title %>
+                </td>
+                <td class="px-2">
+                  M, F, small
+                </td>
+                <td class="px-2">26 Jan 2021</td>
+                <td class="px-2 flex">
+                  <%= display_stall_product_thumbnails(@socket, assigns, stall) %>
+                </td>
+                <td class="px-2"></td>
+                <td class="px-2 py-2">
+                  <%= live_patch "Edit Stall",
+                      to: Routes.user_dashboard_index_path(@socket, :edit_stall, stall.id),
+                      class: "text-lg p-2 btn btn-transparent" %>
+                </td>
+
+              </tr>
               <% end %>
+        </tbody>
+      </table>
 
-        </td>
-        <td class="px-2"><%= bulk_upload.city_name %></td>
-        <td class="px-2"><%= bulk_upload.location_name %></td>
-        <td class="px-2"><%= bulk_upload.content_description %></td>
-        <td class="px-2"><%= bulk_upload.processesed_flag %></td>
+      </div>
+     <%# end %>
+</section>
 
-      </tr>
-    <% end %>
-  </tbody>
-</table>
+<section class="container py-20 px-5">
+  <%= for todo <- @todos do %>
+      <div class="flex justify-between p-10 bg-red-100">
+        <h3 class="text-3xl font-thin"><%= todo.text %></h3>
+        <button class="btn btn-primary p-5"><%= todo.cta %></button>
+      </div>
+     <% end %>
+</section>
+
+
+
+<%#= live_patch "Add Products", to: Routes.user_dashboard_index_path(@socket, :new_product), class: "text-lg btn mr-2" %>
+<%#= live_patch "Upload new picture", to: Routes.user_dashboard_index_path(@socket, :new_picture), class: "text-lg btn mr-2" %>

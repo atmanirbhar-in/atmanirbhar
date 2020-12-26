@@ -3,7 +3,7 @@ defmodule Atmanirbhar.AccountsTest do
 
   alias Atmanirbhar.Accounts
   import Atmanirbhar.AccountsFixtures
-  alias Atmanirbhar.Accounts.{User, UserToken}
+  alias Atmanirbhar.Accounts.{User, UserToken, UserBusinessRegistrationForm}
 
   describe "get_user_by_email/1" do
     test "does not return the user if the email does not exist" do
@@ -47,15 +47,34 @@ defmodule Atmanirbhar.AccountsTest do
     end
   end
 
+  describe "register_user_and_business/1" do
+    test "requires email and password and Business Name to be set" do
+      {:error, changeset} = Accounts.change_user_and_business_registration_form(%UserBusinessRegistrationForm{}, %{})
+      assert %{
+        password: ["can't be blank"],
+        email: ["can't be blank"],
+        business: ["can't be blank"]
+      } = errors_on(changeset)
+    end
+  end
+
   describe "register_user/1" do
-    test "requires email and password to be set" do
+    test "requires email and password and Business Name to be set" do
       {:error, changeset} = Accounts.register_user(%{})
 
       assert %{
                password: ["can't be blank"],
-               email: ["can't be blank"]
-             } = errors_on(changeset)
+               email: ["can't be blank"],
+               # business: ["can't be blank"]
+      } = errors_on(changeset)
     end
+
+    # test "after registration, create user and a business entity" do
+    #   valid = %{}
+    #   {:ok, user} = Account.register_user(valid)
+    #   assert user
+    #   assert user.business.name = business_name
+    # end
 
     test "validates email and password when given" do
       {:error, changeset} = Accounts.register_user(%{email: "not valid", password: "not valid"})
@@ -96,7 +115,7 @@ defmodule Atmanirbhar.AccountsTest do
   describe "change_user_registration/2" do
     test "returns a changeset" do
       assert %Ecto.Changeset{} = changeset = Accounts.change_user_registration(%User{})
-      assert changeset.required == [:password, :email]
+      assert changeset.required == [:city, :business, :password, :email]
     end
   end
 

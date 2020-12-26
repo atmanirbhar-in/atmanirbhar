@@ -42,6 +42,7 @@ Hooks.SetSession = {
 Hooks.InitToast = InitToast
 
 let csrfToken = document.querySelector("meta[name='csrf-token']").getAttribute("content")
+// let liveSocket = new LiveSocket("/live", Socket, {hooks: Hooks})
 let liveSocket = new LiveSocket("/live", Socket, {
   hooks: Hooks,
   params: {_csrf_token: csrfToken},
@@ -56,6 +57,167 @@ let liveSocket = new LiveSocket("/live", Socket, {
 // Show progress bar on live navigation and form submits
 window.addEventListener("phx:page-loading-start", info => NProgress.start())
 window.addEventListener("phx:page-loading-stop", info => NProgress.done())
+
+Hooks.MediaCard = {
+    mounted(){
+        this.el.addEventListener("dragstart", e => {
+            this.el.style.opacity = "0.5"
+
+            // let card_type =  this.el.attributes.data_card_type
+            e.dataTransfer.setData("dragged_card_id", this.el.id)
+            e.dataTransfer.setData("dragged_card_type", "media")
+
+
+        });
+
+        this.el.addEventListener("dragend", e => {
+            this.el.className = "card"
+            // console.log("drag card end")
+        });
+
+        this.el.addEventListener("dragover", e => {
+            this.el.style.opacity = "1"
+            // this.el.classList.remove("card-over-stall");
+            e.preventDefault();
+            // console.log("drag over card, card id")
+        });
+
+        // this.el.addEventListener("dragleave", e => {
+        //     e.preventDefault();
+        //     this.el.className = "card"
+        //     console.log("drag over card, card id")
+        // });
+
+        this.el.addEventListener("drop", e => {
+            let card_type =  this.el.attributes.data_card_type.value
+
+            // # send which card id
+            // # send drop on which card id
+            // collect from car through data transfer
+
+            let payload = {}
+            payload.drag_card_id = e.dataTransfer.getData("dragged_card_id")
+            payload.drag_card_type = e.dataTransfer.getData("dragged_card_type")
+            // payload.drop_card_id = this.el.id;
+            // payload.drop_card_type = card_type
+
+            // this.pushEvent("move-card", payload);
+        });
+    }
+}
+
+Hooks.ProductCard = {
+    mounted(){
+        this.el.addEventListener("dragstart", e => {
+            this.el.style.opacity = "0.5"
+
+            // let card_type =  this.el.attributes.data_card_type
+
+            e.dataTransfer.setData("dragged_card_id", this.el.id)
+            e.dataTransfer.setData("dragged_card_type", "product")
+
+        });
+
+        this.el.addEventListener("dragend", e => {
+            this.el.className = "card"
+            // console.log("drag card end")
+        });
+
+        this.el.addEventListener("dragover", e => {
+            this.el.style.opacity = "1"
+            // this.el.classList.remove("card-over-stall");
+            e.preventDefault();
+            // console.log("drag over card, card id")
+        });
+
+        // this.el.addEventListener("dragleave", e => {
+        //     e.preventDefault();
+        //     this.el.className = "card"
+        //     console.log("drag over card, card id")
+        // });
+
+        this.el.addEventListener("drop", e => {
+            // # send which card id
+            // # send drop on which card id
+            // collect from car through data transfer
+
+            let payload = {}
+            payload.drag_card_id = e.dataTransfer.getData("dragged_card_id")
+            payload.drag_card_type = e.dataTransfer.getData("dragged_card_type")
+            // payload.drop_card_id = this.el.id;
+            // payload.drop_card_type = card_type
+
+            // this.pushEvent("move-card", payload);
+        });
+    }
+}
+
+
+Hooks.StallProd = {
+    mounted(){
+        this.el.addEventListener("dragend", e => {
+            this.el.classList.remove("card-over-stall");
+            // console.log("drag card end - stall")
+        });
+        this.el.addEventListener("dragover", e => {
+            this.el.classList.add("card-over-stall");
+            e.preventDefault();
+            // console.log("card hovered in Stall")
+        });
+        this.el.addEventListener("dragleave", e => {
+            e.preventDefault();
+            // this.el.classList.add("mystyle");
+            this.el.classList.remove("card-over-stall");
+           // this.el.className = "card-left-stall"
+            // console.log("drag over card, card id")
+        });
+        this.el.addEventListener("drop", e => {
+            let phx_target = this.el.getAttribute("phx-target")
+            let payload = {}
+            payload.drag_card_id = e.dataTransfer.getData("dragged_card_id")
+            payload.drag_card_type = e.dataTransfer.getData("dragged_card_type")
+            // payload.drag_card_type = e.dataTransfer.getData("dragged_card_type")
+            // payload.drop_card_id = this.el.id;
+            // payload.drop_card_type = card_type
+            this.pushEventTo(phx_target, "add-card-to-stall", payload);
+        });
+    }
+}
+
+
+Hooks.StallMedia = {
+    mounted(){
+
+        this.el.addEventListener("dragend", e => {
+            this.el.classList.remove("card-over-stall");
+            // console.log("drag card end - stall")
+        });
+        this.el.addEventListener("dragover", e => {
+            this.el.classList.add("card-over-stall");
+            e.preventDefault();
+            // console.log("card hovered in Stall")
+        });
+        this.el.addEventListener("dragleave", e => {
+            e.preventDefault();
+            // this.el.classList.add("mystyle");
+            this.el.classList.remove("card-over-stall");
+           // this.el.className = "card-left-stall"
+            // console.log("drag over card, card id")
+        });
+
+        this.el.addEventListener("drop", e => {
+            let phx_target = this.el.getAttribute("phx-target")
+            let payload = {}
+            payload.drag_card_id = e.dataTransfer.getData("dragged_card_id")
+            payload.drag_card_type = e.dataTransfer.getData("dragged_card_type")
+            // payload.drop_card_id = this.el.id;
+            // payload.drop_card_type = card_type
+            this.pushEventTo(phx_target, "add-card-to-stall", payload);
+        });
+    }
+}
+
+
 
 // connect if there are any LiveViews on the page
 liveSocket.connect()

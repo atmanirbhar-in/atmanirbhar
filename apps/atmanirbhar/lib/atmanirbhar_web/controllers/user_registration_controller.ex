@@ -3,11 +3,17 @@ defmodule AtmanirbharWeb.UserRegistrationController do
 
   alias Atmanirbhar.Accounts
   alias Atmanirbhar.Accounts.User
+  alias Atmanirbhar.Marketplace
+  alias Atmanirbhar.Marketplace.Business
   alias AtmanirbharWeb.UserAuth
 
   def new(conn, _params) do
-    changeset = Accounts.change_user_registration(%User{})
-    render(conn, "new.html", changeset: changeset)
+    # changeset = Accounts.change_user_registration(%User{businesses: [%Business{}]})
+    user = Accounts.change_user_registration(%User{})
+    business = Marketplace.change_business(%Business{})
+    user_with_business = Ecto.Changeset.put_assoc(user, :business, business)
+
+    render(conn, "new.html", changeset: user_with_business)
   end
 
   def create(conn, %{"user" => user_params}) do

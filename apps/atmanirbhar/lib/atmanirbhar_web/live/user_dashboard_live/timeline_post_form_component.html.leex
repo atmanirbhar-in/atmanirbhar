@@ -1,0 +1,50 @@
+<section class="bg-gray-100">
+  <h2 class="py-4 flex text-2xl font-semibold text-center"><%= @title %>
+  </h2>
+
+
+  <%= f = form_for @changeset, "#",
+      id: "product-form",
+      phx_target: @myself,
+      phx_change: "validate",
+      class: "w-full max-w-lg px-5 py-10",
+      phx_auto_recover: "recover_wizard",
+      phx_submit: "save"
+      %>
+
+  <label class="block">
+    <span class="text-gray-700">Title</span>
+    <%= text_input f, :title,
+        class: "form-input mt-1 block w-full",
+        placeholder: "Enter Title" %>
+    <p class="text-red-500 text-xs italic">
+      <%= error_tag f, :title %>
+    </p>
+  </label>
+
+  <label class="block mt-4">
+    <span class="text-gray-700">Stall Description</span>
+    <%= textarea f, :description,
+        class: "form-textarea mt-1 block w-full",
+        placeholder: "Enter Stall Description" %>
+    <p class="text-red-500 text-xs italic">
+      <%= error_tag f, :description %>
+    </p>
+  </label>
+
+  <label class="block">
+    <span class="text-gray-700">Images</span>
+    <%= text_input f, :images,
+        class: "form-input mt-1 block w-full",
+        placeholder: "Enter Images" %>
+    <p class="text-red-500 text-xs italic">
+      <%= error_tag f, :images %>
+    </p>
+  </label>
+
+
+
+  <%= submit "Save", phx_disable_with: "Saving...", class: "btn btn-primary mt-4" %>
+
+</form>
+</section>

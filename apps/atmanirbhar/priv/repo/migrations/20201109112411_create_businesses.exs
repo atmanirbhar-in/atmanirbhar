@@ -7,15 +7,13 @@ defmodule Atmanirbhar.Repo.Migrations.CreateBusinesses do
       add :description, :text
       add :address, :string
       add :power_index, :integer
-      add :owner_id, references(:users, on_delete: :nothing)
+      add :user_id, references(:users, on_delete: :nothing)
       add :city_id, references(:locations, on_delete: :nothing)
-      add :areas_id, references(:locations, on_delete: :nothing)
 
       timestamps()
     end
 
-    create index(:businesses, [:owner_id])
+    create index(:businesses, [:user_id])
     create index(:businesses, [:city_id])
-    create index(:businesses, [:areas_id])
   end
 end

@@ -14,6 +14,11 @@ defmodule AtmanirbharWeb.Router do
     plug :fetch_current_user
   end
 
+  pipeline :user_dashboard do
+    plug :put_root_layout, {AtmanirbharWeb.LayoutView, :user_dashboard}
+  end
+
+
   # Admin Dashboard
   pipeline :kaffy_browser do
     plug :accepts, ["html"]
@@ -35,13 +40,10 @@ defmodule AtmanirbharWeb.Router do
     pipe_through :browser
 
     live "/", PageLive, :index
-    live "/stall", PageStallLive, :index
-    live "/new_deal", UserDashboardLive.Index, :new_deal
-    live "/add-my-business", UserDashboardLive.Index, :new_business
-    live "/new_advertisement", UserDashboardLive.Index, :new_advertisement
-    live "/bulk-upload", UserDashboardLive.Index, :new_bulk_upload
     live "/pincode/:pincode", PageLive, :pincode
+    live "/stall/:stall_id", StallPublicLive, :index
 
+    live "/faqs", FaqsLive, :index
     # import
     # post "/import", BulkUploadController, :import_city_data
 
@@ -75,9 +77,9 @@ defmodule AtmanirbharWeb.Router do
   scope "/", AtmanirbharWeb do
     pipe_through [:browser, :redirect_if_user_is_authenticated, :put_session_layout]
 
-    get "/users/register", UserRegistrationController, :new
+    get "/signup", UserRegistrationController, :new
     post "/users/register", UserRegistrationController, :create
-    get "/users/login", UserSessionController, :new
+    get "/signin", UserSessionController, :new
     post "/users/login", UserSessionController, :create
     get "/users/reset_password", UserResetPasswordController, :new
     post "/users/reset_password", UserResetPasswordController, :create
@@ -87,19 +89,6 @@ defmodule AtmanirbharWeb.Router do
 
   scope "/admin", AtmanirbharWeb do
     pipe_through [:browser, :require_authenticated_user]
-
-    live "/advertisements", AdvertisementLive.Index, :index
-    live "/advertisements/new", AdvertisementLive.Index, :new
-    live "/advertisements/:id/edit", AdvertisementLive.Index, :edit
-    live "/advertisements/:id", AdvertisementLive.Show, :show
-    live "/advertisements/:id/show/edit", AdvertisementLive.Show, :edit
-
-    live "/deals", DealLive.Index, :index
-    live "/deals/new", DealLive.Index, :new
-    live "/deals/:id/edit", DealLive.Index, :edit
-
-    live "/deals/:id", DealLive.Show, :show
-    live "/deals/:id/show/edit", DealLive.Show, :edit
 
     live "/locations", LocationLive.Index, :index
     live "/locations/new", LocationLive.Index, :new
@@ -127,20 +116,12 @@ defmodule AtmanirbharWeb.Router do
     live "/marketplace_products/:id", ProductLive.Show, :show
     live "/marketplace_products/:id/show/edit", ProductLive.Show, :edit
 
-    live "/marketplace_products_deals", DealsLive.Index, :index
-    live "/marketplace_products_deals/new", DealsLive.Index, :new
-    live "/marketplace_products_deals/:id/edit", DealsLive.Index, :edit
-    live "/marketplace_products_deals/:id", DealsLive.Show, :show
-    live "/marketplace_products_deals/:id/show/edit", DealsLive.Show, :edit
-
     live "/marketplace_bulk_uploads", BulkUploadLive.Index, :index
     live "/marketplace_bulk_uploads/new", BulkUploadLive.Index, :new
     live "/marketplace_bulk_uploads/:id/edit", BulkUploadLive.Index, :edit
 
     live "/marketplace_bulk_uploads/:id", BulkUploadLive.Show, :show
     live "/marketplace_bulk_uploads/:id/show/edit", BulkUploadLive.Show, :edit
-
-
 
     live "/pincodes", PincodeLive.Index, :index
     live "/pincodes/new", PincodeLive.Index, :new
@@ -156,13 +137,6 @@ defmodule AtmanirbharWeb.Router do
     live "/cities/:id", CityLive.Show, :show
     live "/cities/:id/show/edit", CityLive.Show, :edit
 
-    live "/shops", ShopLive.Index, :index
-    live "/shops/new", ShopLive.Index, :new
-    live "/shops/:id/edit", ShopLive.Index, :edit
-    live "/shops/:id", ShopLive.Show, :show
-    live "/shops/:id/show/edit", ShopLive.Show, :edit
-
-
     live "/resources", RawMaterialLive.Index, :index
     live "/raw_materials/new", RawMaterialLive.Index, :new
     live "/raw_materials/:id/edit", RawMaterialLive.Index, :edit
@@ -176,40 +150,46 @@ defmodule AtmanirbharWeb.Router do
 
     live "/catalog_taxonomies/:id", TaxonomyLive.Show, :show
     live "/catalog_taxonomies/:id/show/edit", TaxonomyLive.Show, :edit
-  end
-
-  scope "/", AtmanirbharWeb do
-    pipe_through [:browser, :require_authenticated_user]
-
-    get "/users/settings", UserSettingsController, :edit
-    put "/users/settings/update_password", UserSettingsController, :update_password
-    put "/users/settings/update_email", UserSettingsController, :update_email
-    get "/users/settings/confirm_email/:token", UserSettingsController, :confirm_email
-    put "/users/settings/update_avatar", UserSettingsController, :update_avatar
-
-
-    live "/dashboard", UserDashboardLive.Index, :index
-    live "/dashboard/new_advertisement", UserDashboardLive.Index, :new_ad
-
-    live "/marketplace_stalls", StallLive.Index, :index
-    live "/marketplace_stalls/new", StallLive.Index, :new
-    live "/marketplace_stalls/:id/edit", StallLive.Index, :edit
-
     live "/marketplace_stalls/:id", StallLive.Show, :show
     live "/marketplace_stalls/:id/show/edit", StallLive.Show, :edit
+  end
 
+  scope "/dashboard/", AtmanirbharWeb do
+    pipe_through [:browser, :require_authenticated_user, :user_dashboard]
+
+    get "/settings", UserSettingsController, :edit
+    put "/settings/update_password", UserSettingsController, :update_password
+    put "/settings/update_email", UserSettingsController, :update_email
+    get "/settings/confirm_email/:token", UserSettingsController, :confirm_email
+    put "/settings/update_avatar", UserSettingsController, :update_avatar
+
+
+    live "/", UserDashboardLive.Index, :index
+
+    live "/add-my-business", UserDashboardLive.Index, :new_business
+    live "/edit-business", UserDashboardLive.Index, :edit_business
+
+    live "/stalls", UserDashboardLive.Stalls, :stalls
+    live "/new_stall", UserDashboardLive.Index, :new_stall
+    live "/edit-stall/:stall_id", UserDashboardLive.Index, :edit_stall
+    live "/edit-stall-media/:stall_id", UserDashboardLive.Index, :edit_stall_media
+
+    live "/gallery", UserDashboardLive.Gallery, :gallery
+    live "/gallery/new_picture", UserDashboardLive.Gallery, :new_picture
+
+    live "/catalog", UserDashboardLive.Catalog, :index
+    live "/catalog/new_product", UserDashboardLive.Catalog, :new_product
+
+    live "/bulk-upload", UserDashboardLive.Index, :new_bulk_upload
   end
 
   scope "/", AtmanirbharWeb do
     pipe_through [:browser]
 
-
     delete "/users/logout", UserSessionController, :delete
     get "/users/confirm", UserConfirmationController, :new
     post "/users/confirm", UserConfirmationController, :create
     get "/users/confirm/:token", UserConfirmationController, :confirm
-
-
 
   end
 

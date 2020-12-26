@@ -44,8 +44,8 @@ defmodule AtmanirbharWeb do
 
   def live_view do
     quote do
-      use Phoenix.LiveView,
-        layout: {AtmanirbharWeb.LayoutView, "live.html"}
+      use Phoenix.LiveView, layout: {AtmanirbharWeb.LayoutView, "live.html"}
+      alias AtmanirbharWeb.MountHelpers
 
       unquote(view_helpers())
     end
