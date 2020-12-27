@@ -1,11 +1,18 @@
-<h1 class="text-lg font-semibold p-4 text-gray-800">
-  User Dashboard
-</h1>
+<div class="flex flex-col py-5">
+  <a href="" class="mt-2 btn">My Business</a>
+  <a href="" class="mt-2 btn">Catalog</a>
+  <a href="" class="mt-2 btn">Products & Services</a>
+  <a href="" class="mt-2 btn">My Stalls</a>
+  <a href="" class="mt-2 btn">My Social Media Posters</a>
+  <a href="" class="mt-2 btn">Tutorial</a>
+</div>
 
+<div class="flex">
 <%= live_patch "Add Advertisement", to: Routes.user_dashboard_index_path(@socket, :new_advertisement), class: "text-lg btn btn-primary mr-2" %>
 <%= live_patch "Add Deal", to: Routes.user_dashboard_index_path(@socket, :new_deal), class: "text-lg btn btn-primary mr-2" %>
 <%= live_patch "Add Business", to: Routes.user_dashboard_index_path(@socket, :new_business), class: "text-lg btn btn-primary mr-2" %>
 <%= live_patch "Bulk Upload", to: Routes.user_dashboard_index_path(@socket, :new_bulk_upload), class: "text-lg btn btn-secondary mr-2" %>
+</div>
 
 
 <%= if @live_action in [:new_business, :edit_business] do %>
