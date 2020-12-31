@@ -35,12 +35,15 @@ defmodule AtmanirbharWeb.Router do
     pipe_through :browser
 
     live "/", PageLive, :index
-    live "/stall", PageStallLive, :index
     live "/new_deal", UserDashboardLive.Index, :new_deal
     live "/add-my-business", UserDashboardLive.Index, :new_business
     live "/new_advertisement", UserDashboardLive.Index, :new_advertisement
     live "/bulk-upload", UserDashboardLive.Index, :new_bulk_upload
     live "/pincode/:pincode", PageLive, :pincode
+    live "/stall/:stall_id", StallLive.Index, :index
+    # live "/marketplace_stalls/:id/edit", StallLive.Index, :edit
+    # live "/shops/:id/edit", ShopLive.Index, :edit
+    # live "/xstall", PageStallLive, :index
 
     # import
     # post "/import", BulkUploadController, :import_city_data
@@ -191,9 +194,9 @@ defmodule AtmanirbharWeb.Router do
     live "/dashboard", UserDashboardLive.Index, :index
     live "/dashboard/new_advertisement", UserDashboardLive.Index, :new_ad
 
-    live "/marketplace_stalls", StallLive.Index, :index
-    live "/marketplace_stalls/new", StallLive.Index, :new
-    live "/marketplace_stalls/:id/edit", StallLive.Index, :edit
+    # live "/marketplace_stalls", StallLive.Index, :index
+    # live "/marketplace_stalls/new", StallLive.Index, :new
+    # live "/marketplace_stalls/:id/edit", StallLive.Index, :edit
 
     live "/marketplace_stalls/:id", StallLive.Show, :show
     live "/marketplace_stalls/:id/show/edit", StallLive.Show, :edit
