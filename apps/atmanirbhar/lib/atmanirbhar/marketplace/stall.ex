@@ -1,6 +1,7 @@
 defmodule Atmanirbhar.Marketplace.Stall do
   use Ecto.Schema
   import Ecto.Changeset
+  alias Atmanirbhar.Marketplace.Business
 
   schema "marketplace_stalls" do
     field :audience_average, :integer
@@ -12,6 +13,8 @@ defmodule Atmanirbhar.Marketplace.Stall do
     field :title, :string
 
     timestamps()
+
+    belongs_to :business, Business
   end
 
   @doc false

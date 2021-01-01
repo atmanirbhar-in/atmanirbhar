@@ -775,6 +775,12 @@ defmodule Atmanirbhar.Marketplace do
   """
   def get_stall!(id), do: Repo.get!(Stall, id)
 
+  def get_stall_detail!(id) do
+    Stall
+    |> Repo.preload(:business)
+    Repo.get!(id)
+  end
+
   @doc """
   Creates a stall.
 
