@@ -2,6 +2,7 @@ defmodule Atmanirbhar.Marketplace.Business do
   use Ecto.Schema
   import Ecto.Changeset
 
+  # business picture
   schema "businesses" do
     field :address, :string
     field :description, :string
@@ -11,7 +12,7 @@ defmodule Atmanirbhar.Marketplace.Business do
     field :city_id, :id
     field :areas_id, :id
 
-    belongs_to :users, Atmanirbhar.Accounts.User, foreign_key: :owner_id
+    belongs_to :user, Atmanirbhar.Accounts.User, foreign_key: :owner_id
     timestamps()
   end
 

@@ -6,6 +6,7 @@ defmodule Atmanirbhar.Marketplace do
   import Ecto.Query, warn: false
   alias Atmanirbhar.Repo
 
+  alias Atmanirbhar.Accounts.User
   alias Atmanirbhar.Marketplace.{Shop, Business, Stall}
   alias Atmanirbhar.Geo.Location
   alias Atmanirbhar.Marketplace.{LocationForm, StallFiltersForm}
@@ -775,10 +776,21 @@ defmodule Atmanirbhar.Marketplace do
   """
   def get_stall!(id), do: Repo.get!(Stall, id)
 
+  # select: %{name: stall.title, business_id: stall.business_id, answer: 42}
+  # select: [:id, :title, :business_id, business: [:id, :title]
+  # [:id, :title, :description, :business_id]
+  # Stall
+  # |> Repo.preload(:business)
+  # Repo.get!(id)
+  # business - address, picture, address
   def get_stall_detail!(id) do
-    Stall
-    |> Repo.preload(:business)
-    Repo.get!(id)
+    query = from stall in Stall,
+      join: business in Business,
+      on: stall.business_id == business.id,
+      where: stall.id == ^id,
+      preload: [business: business],
+      select: struct(stall, [:id, :title, :description, business: [:id, :title, :address]])
+    Repo.one(query)
   end
 
   @doc """

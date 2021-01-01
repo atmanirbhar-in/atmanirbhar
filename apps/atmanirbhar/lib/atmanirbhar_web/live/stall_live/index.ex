@@ -55,7 +55,8 @@ defmodule AtmanirbharWeb.StallLive.Index do
     # picture
     # join?
 
-    stall = Marketplace.get_stall!(stall_id)
+    stall = Marketplace.get_stall_detail!(stall_id)
+    # def get_stall_detail!(id) do
     # stall_title = "My Toys store"
     # stall_description = "Various Toys for kids.
     # They will love them. Cleaned properly, Take home 2 toys at a time.
@@ -128,7 +129,7 @@ defmodule AtmanirbharWeb.StallLive.Index do
     |> assign(:page_title, stall.title)
     |> assign(:stall_posters, pictures_toys)
     |> assign(:stall_title, stall.title)
-    |> assign(:stall_address, "Amanora, Pune")
+    |> assign(:stall_address, stall.business.address)
     |> assign(:stall_description, stall.description)
     |> assign(:products, products)
     |> assign(:timeline_items, timeline_items)
