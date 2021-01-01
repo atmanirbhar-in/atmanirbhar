@@ -50,6 +50,17 @@ defmodule AtmanirbharWeb.StallLive.Index do
 
   defp apply_action(socket, :index, %{"stall_id" => stall_id}) do
 
+    # get stall_items
+    # products, happy customers, deals
+    # picture
+    # join?
+
+    stall = Marketplace.get_stall!(stall_id)
+    # stall_title = "My Toys store"
+    # stall_description = "Various Toys for kids.
+    # They will love them. Cleaned properly, Take home 2 toys at a time.
+    # I am dentist by profession but this is my passion"
+
     pictures_toys = [
       "/toys/toys2.jpg",
       "/toys/toys8.jpg",
@@ -112,17 +123,13 @@ defmodule AtmanirbharWeb.StallLive.Index do
         description: " Curabitur vulputate vestibulum lorem.  Lorem ipsum dolor sit amet, consectetuer adipiscing elit.  Etiam vel neque nec dui dignissim bibendum. "
       }
     ]
-    stall_title = "My Toys store"
-    stall_description = "Various Toys for kids.
-    They will love them. Cleaned properly, Take home 2 toys at a time.
-    I am dentist by profession but this is my passion"
 
     socket
-    |> assign(:page_title, "stall - ")
+    |> assign(:page_title, stall.title)
     |> assign(:stall_posters, pictures_toys)
-    |> assign(:stall_title, stall_title)
+    |> assign(:stall_title, stall.title)
     |> assign(:stall_address, "Amanora, Pune")
-    |> assign(:stall_description, stall_description)
+    |> assign(:stall_description, stall.description)
     |> assign(:products, products)
     |> assign(:timeline_items, timeline_items)
   end
