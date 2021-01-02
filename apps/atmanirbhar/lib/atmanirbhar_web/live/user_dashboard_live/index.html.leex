@@ -18,7 +18,7 @@
 </div>
 
 <%= if @live_action in [:new_stall, :edit_stall] do %>
-<%= live_modal @socket, AtmanirbharWeb.StallLive.FormComponent,
+<%= live_modal @socket, AtmanirbharWeb.UserDashboardLive.StallFormComponent,
     id: :new,
     title: @page_title,
     stall: @stall,
