@@ -7,6 +7,7 @@ defmodule AtmanirbharWeb.UserDashboardLive.Index do
   def mount(_params, _session, socket) do
     {:ok, assign(socket,
         my_plugins: [],
+        my_stalls: Marketplace.list_stalls_for_business(),
         marketplace_bulk_uploads: Marketplace.list_marketplace_bulk_uploads()
       )
     }
@@ -38,6 +39,14 @@ defmodule AtmanirbharWeb.UserDashboardLive.Index do
     socket
     |> assign(:page_title, "create new stall")
     |> assign(:stall, %Stall{})
+  end
+  defp apply_action(socket, :edit_stall, %{"stall_id" => input_stall_id}) do
+    {stall_id, _} = Integer.parse(input_stall_id)
+    stall = Marketplace.get_stall!(stall_id)
+
+    socket
+    |> assign(:page_title, "create new stall")
+    |> assign(:stall, stall)
   end
 
   defp apply_action(socket, :new_business, _params) do

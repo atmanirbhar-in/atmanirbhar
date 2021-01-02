@@ -37,6 +37,9 @@ defmodule Atmanirbhar.Marketplace do
   def list_shops do
     Repo.all(Shop)
   end
+  def list_stalls_for_business() do
+    Repo.all(Stall)
+  end
   def list_stalls_with_filters(form_params) do
     # %{
     #   show_male: show_male,
