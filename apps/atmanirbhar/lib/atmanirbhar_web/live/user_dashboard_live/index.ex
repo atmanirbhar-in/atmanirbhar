@@ -45,7 +45,7 @@ defmodule AtmanirbharWeb.UserDashboardLive.Index do
     stall = Marketplace.get_stall!(stall_id)
 
     socket
-    |> assign(:page_title, "create new stall")
+    |> assign(:page_title, "Edit Stall")
     |> assign(:stall, stall)
   end
 

@@ -1,58 +1,59 @@
-<h2 class="py-4 flex text-2xl font-semibold text-center"><%= @title %></h2>
+<section class="bg-gray-100">
+  <h2 class="py-4 flex text-2xl font-semibold text-center"><%= @title %>
+  </h2>
 
 
-<%= f = form_for @changeset, "#",
-    id: "stall-form",
-    phx_target: @myself,
-    phx_change: "validate",
-    class: "bg-white",
-    phx_submit: "save" %>
+  <%= f = form_for @changeset, "#",
+      id: "stall-form",
+      phx_target: @myself,
+      phx_change: "validate",
+      class: "px-5 py-10",
+      phx_submit: "save" %>
 
-<label class="block">
-  <span class="text-gray-700">Name of the stall</span>
-  <%= text_input f, :title,
-      class: "form-input mt-1 block w-full",
-      placeholder: "Enter Name of the stall" %>
-  <p class="text-red-500 text-xs italic">
-    <%= error_tag f, :title %>
-  </p>
-</label>
-
-
-<label class="block">
-  <span class="text-gray-700">Stall Description</span>
-  <%= textarea f, :description,
-      class: "form-textarea mt-1 block w-full",
-      placeholder: "Enter Stall Description" %>
-  <p class="text-red-500 text-xs italic">
-    <%= error_tag f, :description %>
-  </p>
-</label>
+  <label class="block">
+    <span class="text-gray-700">Name of the stall</span>
+    <%= text_input f, :title,
+        class: "form-input mt-1 block w-full",
+        placeholder: "Enter Name of the stall" %>
+    <p class="text-red-500 text-xs italic">
+      <%= error_tag f, :title %>
+    </p>
+  </label>
 
 
-<label class="block">
-  <span class="text-gray-700">Target Audience</span>
-  <%= range_input f, :audience_average,
-      class: "form-range mt-1 block w-full",
-      placeholder: "Enter Target Audience" %>
-  <p class="text-red-500 text-xs italic">
-    <%= error_tag f, :audience_average %>
-  </p>
-</label>
+  <label class="block mt-4">
+    <span class="text-gray-700">Stall Description</span>
+    <%= textarea f, :description,
+        class: "form-textarea mt-1 block w-full",
+        placeholder: "Enter Stall Description" %>
+    <p class="text-red-500 text-xs italic">
+      <%= error_tag f, :description %>
+    </p>
+  </label>
 
-<% options = ["only Male", "only Female", "both Male and Female, Neutral"] %>
-<div class="mt-4">
-  <span class="text-gray-700">Gender</span>
-  <div class="mt-2">
-    <%= for option <- options do %>
-        <label class="inline-flex items-center mr-6">
-          <%= radio_button(f, :for_male, option, class: "form-radio") %>
-          <span class="ml-2"><%= option %></span>
-        </label>
-        <% end %>
+
+  <label class="block mt-4">
+    <span class="text-gray-700">Target Audience</span>
+    <%= range_input f, :audience_average,
+        class: "dashboard-audience-slider mt-1 block w-full",
+        placeholder: "Enter Target Audience" %>
+    <p class="text-red-500 text-xs italic">
+      <%= error_tag f, :audience_average %>
+    </p>
+  </label>
+
+  <% options = ["only Male", "only Female", "both Male and Female, Neutral"] %>
+  <div class="mt-4">
+    <span class="text-gray-700">Gender</span>
+    <div class="mt-2">
+      <%= for option <- options do %>
+          <label class="inline-flex items-center mr-6">
+            <%= radio_button(f, :for_male, option, class: "form-radio") %>
+            <span class="ml-2"><%= option %></span>
+          </label>
+          <% end %>
+    </div>
   </div>
-</div>
-
 
 
   <%= label f, :for_male %>
@@ -63,13 +64,18 @@
   <%= checkbox f, :for_female %>
   <%= error_tag f, :for_female %>
 
-<label class="block">
-  <span class="text-gray-700">Stall Poster</span>
-  <%#= file_input f, :poster_image_url, multipart: true %>
-  <p class="text-red-500 text-xs italic">
-    <%= error_tag f, :poster_image_url %>
-  </p>
-</label>
+  <label class="block mt-4">
+    <span class="text-gray-700">Stall Poster</span>
+    <%#= file_input f, :poster_image_url, multipart: true %>
+    <p class="text-red-500 text-xs italic">
+      <%= error_tag f, :poster_image_url %>
+    </p>
+  </label>
 
-<%= submit "create Stall", phx_disable_with: "Saving...", class: "btn btn-primary mt-4" %>
+  <p class="font-gray-700 text-lg mt-4">
+    Stall products and Timeline
+  </p>
+
+  <%= submit "Save", phx_disable_with: "Saving...", class: "btn btn-primary mt-4" %>
 </form>
+</section>

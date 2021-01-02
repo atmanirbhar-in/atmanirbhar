@@ -79,9 +79,18 @@
     return_to: Routes.page_path(@socket, :index) %>
 <% end %>
 
-<%= for stall <- @my_stalls do %>
-    <%= link stall.title, to: Routes.user_dashboard_index_path(@socket, :edit_stall, stall.id), class: "text-lg mr-2" %>
-    <% end %>
+<div class="flex w-full flex-col">
+  <div class="flex justify-between px-2 py-2">
+    <span class="font-semibold text-xl">Stall Name</span>
+    <span>Actions</span>
+  </div>
+  <%= for stall <- @my_stalls do %>
+      <div class="flex justify-between px-2 py-2">
+        <span><%= stall.title %></span>
+        <%= link "Edit Stall", to: Routes.user_dashboard_index_path(@socket, :edit_stall, stall.id), class: "text-lg p-2 btn btn-transparent" %>
+      </div>
+      <% end %>
+</div>
 
 <table class="table-auto table mt-4">
   <thead>
