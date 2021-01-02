@@ -786,10 +786,12 @@ defmodule Atmanirbhar.Marketplace do
   def get_stall_detail!(id) do
     query = from stall in Stall,
       join: business in Business,
+      join: location in Location,
       on: stall.business_id == business.id,
+      on: stall.location_id == location.id,
       where: stall.id == ^id,
-      preload: [business: business],
-      select: struct(stall, [:id, :title, :description, business: [:id, :title, :address]])
+      preload: [business: business, location: location],
+      select: struct(stall, [:id, :title, :description, :location_id, :business_id, business: [:id, :title, :address], location: [:id, :title]])
     Repo.one(query)
   end
 

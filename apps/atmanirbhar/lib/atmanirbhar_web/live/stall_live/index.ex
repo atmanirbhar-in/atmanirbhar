@@ -129,6 +129,7 @@ defmodule AtmanirbharWeb.StallLive.Index do
     |> assign(:page_title, stall.title)
     |> assign(:stall_posters, pictures_toys)
     |> assign(:stall_title, stall.title)
+    |> assign(:stall_location, stall.location.title)
     |> assign(:stall_address, stall.business.address)
     |> assign(:stall_description, stall.description)
     |> assign(:products, products)
