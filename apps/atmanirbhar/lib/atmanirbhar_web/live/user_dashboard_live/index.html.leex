@@ -1,10 +1,9 @@
-<div class="flex flex-col py-5">
-  <a href="" class="mt-2 btn">My Business</a>
-  <a href="" class="mt-2 btn">Catalog</a>
-  <a href="" class="mt-2 btn">Products & Services</a>
-  <a href="" class="mt-2 btn">My Stalls</a>
-  <a href="" class="mt-2 btn">My Social Media Posters</a>
-  <a href="" class="mt-2 btn">Tutorial</a>
+<div class="flex py-5">
+  <a href="" class="mr-2 ">My Stalls</a>
+  <a href="" class="mr-2 ">Catalog</a>
+  <a href="" class="mr-2 ">My Products & Services</a>
+  <a href="" class="mr-2 btn">My Social Media Posters</a>
+  <a href="" class="mr-2">Tutorial</a>
 </div>
 
 <div class="flex">
@@ -74,19 +73,46 @@
     return_to: Routes.page_path(@socket, :index) %>
 <% end %>
 
-<div class="flex w-full flex-col">
-  <div class="flex justify-between px-2 py-2">
-    <span class="font-semibold text-xl">Stall Name</span>
-    <span>Actions</span>
-  </div>
-  <%= for stall <- @my_stalls do %>
-      <div class="flex justify-between px-2 py-2">
-        <span><%= stall.title %></span>
-        <%= link "Edit Stall", to: Routes.user_dashboard_index_path(@socket, :edit_stall, stall.id), class: "text-lg p-2 btn btn-transparent" %>
-      </div>
-      <% end %>
-</div>
 
+<table class="table-auto table mt-4">
+  <thead>
+    <tr>
+      <th class="mx-2">Stall Name</th>
+      <th class="px-2">Audience</th>
+      <th class="px-2">valid Till</th>
+      <th class="px-2">Products</th>
+      <th class="px-2">Last Update</th>
+      <th class="px-2">Actions</th>
+    </tr>
+  </thead>
+  <tbody id="marketplace_bulk_uploads">
+    <%= for stall <- @my_stalls do %>
+      <tr id="stall-<%= stall.id %>" class="border border-b-2 p-2 mt-7">
+        <td class="px-2">
+          <%= stall.title %>
+          <br/>
+          Baner
+        </td>
+        <td class="px-2">
+          M, F, small
+        </td>
+        <td class="px-2">26 Jan 2021</td>
+        <td class="px-2 flex">
+          <img alt="" src="" class="w-12 h-12 p-1 m-1" />
+          <img alt="" src="" class="w-12 h-12 p-1 m-1" />
+          <img alt="" src="" class="w-12 h-12 p-1 m-1" />
+          <img alt="" src="" class="w-12 h-12 p-1 m-1" />
+          <img alt="" src="" class="w-12 h-12 p-1 m-1" />
+        </td>
+        <td class="px-2"></td>
+        <td class="px-2 py-2">
+          <%= link "Edit Stall", to: Routes.user_dashboard_index_path(@socket, :edit_stall, stall.id), class: "text-lg p-2 btn btn-transparent" %>
+        </td>
+
+      </tr>
+    <% end %>
+  </tbody>
+</table>
 <table class="table-auto table mt-4">
   <thead>
     <tr>
