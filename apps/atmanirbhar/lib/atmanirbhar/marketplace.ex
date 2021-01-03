@@ -7,7 +7,7 @@ defmodule Atmanirbhar.Marketplace do
   alias Atmanirbhar.Repo
 
   alias Atmanirbhar.Accounts.User
-  alias Atmanirbhar.Marketplace.{Shop, Business, Stall}
+  alias Atmanirbhar.Marketplace.{Shop, Business, Stall, StallElement}
   alias Atmanirbhar.Geo.Location
   alias Atmanirbhar.Marketplace.{LocationForm, StallFiltersForm}
 
@@ -453,98 +453,30 @@ defmodule Atmanirbhar.Marketplace do
 
   alias Atmanirbhar.Marketplace.Product
 
-  @doc """
-  Returns the list of marketplace_products.
+  # def list_marketplace_products do
+  #   Repo.all(Product)
+  # end
 
-  ## Examples
+  # def get_product!(id), do: Repo.get!(Product, id)
 
-      iex> list_marketplace_products()
-      [%Product{}, ...]
-
-  """
-  def list_marketplace_products do
-    Repo.all(Product)
-  end
-
-  @doc """
-  Gets a single product.
-
-  Raises `Ecto.NoResultsError` if the Product does not exist.
-
-  ## Examples
-
-      iex> get_product!(123)
-      %Product{}
-
-      iex> get_product!(456)
-      ** (Ecto.NoResultsError)
-
-  """
-  def get_product!(id), do: Repo.get!(Product, id)
-
-  @doc """
-  Creates a product.
-
-  ## Examples
-
-      iex> create_product(%{field: value})
-      {:ok, %Product{}}
-
-      iex> create_product(%{field: bad_value})
-      {:error, %Ecto.Changeset{}}
-
-  """
   def create_product(attrs \\ %{}) do
-    %Product{}
-    |> Product.changeset(attrs)
+    %StallElement{}
+    |> StallElement.product_changeset(attrs)
     |> Repo.insert()
   end
 
-  @doc """
-  Updates a product.
+  # def update_product(%Product{} = product, attrs) do
+  #   product
+  #   |> Product.changeset(attrs)
+  #   |> Repo.update()
+  # end
 
-  ## Examples
+  # def delete_product(%Product{} = product) do
+  #   Repo.delete(product)
+  # end
 
-      iex> update_product(product, %{field: new_value})
-      {:ok, %Product{}}
-
-      iex> update_product(product, %{field: bad_value})
-      {:error, %Ecto.Changeset{}}
-
-  """
-  def update_product(%Product{} = product, attrs) do
-    product
-    |> Product.changeset(attrs)
-    |> Repo.update()
-  end
-
-  @doc """
-  Deletes a product.
-
-  ## Examples
-
-      iex> delete_product(product)
-      {:ok, %Product{}}
-
-      iex> delete_product(product)
-      {:error, %Ecto.Changeset{}}
-
-  """
-  def delete_product(%Product{} = product) do
-    Repo.delete(product)
-  end
-
-  @doc """
-  Returns an `%Ecto.Changeset{}` for tracking product changes.
-
-  ## Examples
-
-      iex> change_product(product)
-      %Ecto.Changeset{data: %Product{}}
-
-  """
-  def change_product(%Product{} = product, attrs \\ %{}) do
-    Product.changeset(product, attrs)
+  def change_product(%StallElement{} = product, attrs \\ %{}) do
+    StallElement.product_changeset(product, attrs)
   end
 
   alias Atmanirbhar.Marketplace.Deals
