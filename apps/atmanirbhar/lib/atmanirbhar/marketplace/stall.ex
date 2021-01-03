@@ -1,7 +1,7 @@
 defmodule Atmanirbhar.Marketplace.Stall do
   use Ecto.Schema
   import Ecto.Changeset
-  alias Atmanirbhar.Marketplace.Business
+  alias Atmanirbhar.Marketplace.{Business, StallElement, StallItem}
   alias Atmanirbhar.Geo.Location
 
   schema "marketplace_stalls" do
@@ -14,6 +14,8 @@ defmodule Atmanirbhar.Marketplace.Stall do
     field :title, :string
     # field :business_id, :id
     # field :location_id, :id
+
+    many_to_many(:stall_elements, StallElement, join_through: StallItem)
 
     timestamps()
 
