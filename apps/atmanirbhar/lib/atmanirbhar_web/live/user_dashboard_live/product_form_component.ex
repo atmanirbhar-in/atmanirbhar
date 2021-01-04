@@ -7,23 +7,23 @@ defmodule AtmanirbharWeb.UserDashboardLive.ProductFormComponent do
   @impl true
   def update(%{stall_element: stall_element} = assigns, socket) do
     changeset = Marketplace.change_product(stall_element)
-
     {:ok,
      socket
      |> assign(assigns)
      |> assign(:changeset, changeset)}
   end
+
   @impl true
-  def handle_event("validate", %{"product" => product_params}, socket) do
+  def handle_event("validate", %{"stall_element" => product_params}, socket) do
     changeset =
-      socket.assigns.product
+      socket.assigns.stall_element
       |> Marketplace.change_product(product_params)
       |> Map.put(:action, :validate)
 
     {:noreply, assign(socket, :changeset, changeset)}
   end
 
-  def handle_event("save", %{"product" => product_params}, socket) do
+  def handle_event("save", %{"stall_element" => product_params}, socket) do
     save_product(socket, socket.assigns.action, product_params)
   end
 
@@ -40,7 +40,7 @@ defmodule AtmanirbharWeb.UserDashboardLive.ProductFormComponent do
     end
   end
 
-  defp save_product(socket, :new, product_params) do
+  defp save_product(socket, :new_product, product_params) do
     case Marketplace.create_product(product_params) do
       {:ok, _product} ->
         {:noreply,

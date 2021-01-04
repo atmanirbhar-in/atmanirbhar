@@ -33,6 +33,6 @@ defmodule Atmanirbhar.Marketplace.StallElement do
   def product_changeset(stall_element, attrs) do
     stall_element
     |> cast(attrs, [:title, :description, :images])
-    |> validate_required([:title, :description, :images])
+    |> validate_required([:title, :description])
   end
 end
