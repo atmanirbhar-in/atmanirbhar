@@ -1,8 +1,18 @@
 defmodule AtmanirbharWeb.UserDashboardLive.ProductFormComponent do
   use AtmanirbharWeb, :live_component
 
+  alias Atmanirbhar.Marketplace
   alias Atmanirbhar.Marketplace.{StallElement, Stall}
 
+  @impl true
+  def update(%{stall_element: stall_element} = assigns, socket) do
+    changeset = Marketplace.change_product(stall_element)
+
+    {:ok,
+     socket
+     |> assign(assigns)
+     |> assign(:changeset, changeset)}
+  end
   @impl true
   def handle_event("validate", %{"product" => product_params}, socket) do
     changeset =

@@ -1,6 +1,6 @@
 defmodule AtmanirbharWeb.UserDashboardLive.Index do
   use AtmanirbharWeb, :live_view
-  alias Atmanirbhar.Marketplace.{Advertisement, Deal, Business, BulkUpload, Stall}
+  alias Atmanirbhar.Marketplace.{Advertisement, Deal, Business, StallElement, Stall}
   alias Atmanirbhar.Marketplace
 
   @impl true
@@ -30,10 +30,10 @@ defmodule AtmanirbharWeb.UserDashboardLive.Index do
     # |> assign(:advertisement, Marketplace.get_advertisement!(id))
   end
 
-  defp apply_action(socket, :new_bulk_upload, _params) do
+  defp apply_action(socket, :new_product, _params) do
     socket
-    |> assign(:page_title, "Bulk upload file")
-    |> assign(:bulk_upload, %BulkUpload{})
+    |> assign(:page_title, "New Product")
+    |> assign(:stall_element, %StallElement{})
   end
   defp apply_action(socket, :new_stall, _params) do
     socket
