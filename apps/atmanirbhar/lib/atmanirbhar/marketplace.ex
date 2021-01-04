@@ -476,6 +476,11 @@ defmodule Atmanirbhar.Marketplace do
     |> Repo.insert()
   end
 
+  def add_stall_elements_to_stall do
+    s2 = Atmanirbhar.Marketplace.get_stall!(2) |> Atmanirbhar.Repo.preload(:stall_elements)
+    # cs = Ecto.Changeset.change(s2) |> Ecto.Changeset.put_assoc(:stall_elements, [se3])
+  end
+
   # def update_product(%Product{} = product, attrs) do
   #   product
   #   |> Product.changeset(attrs)
