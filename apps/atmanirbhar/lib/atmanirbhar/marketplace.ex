@@ -481,6 +481,7 @@ defmodule Atmanirbhar.Marketplace do
     # cs = Ecto.Changeset.change(s2) |> Ecto.Changeset.put_assoc(:stall_elements, [se3])
   end
 
+  def get_stall_element!(id), do: Repo.get!(StallElement, id)
   # def update_product(%Product{} = product, attrs) do
   #   product
   #   |> Product.changeset(attrs)
@@ -746,7 +747,7 @@ defmodule Atmanirbhar.Marketplace do
       where: stall.id == ^id,
       preload: [business: business, location: location],
       select: struct(stall, [:id, :title, :description, :location_id, :business_id, business: [:id, :title, :address], location: [:id, :title]])
-    Repo.one(query)
+    Repo.one(query) |> Repo.preload(:stall_elements)
   end
 
   @doc """
