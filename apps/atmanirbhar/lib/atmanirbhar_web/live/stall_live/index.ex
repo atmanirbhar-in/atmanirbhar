@@ -124,6 +124,9 @@ defmodule AtmanirbharWeb.StallLive.Index do
         description: " Curabitur vulputate vestibulum lorem.  Lorem ipsum dolor sit amet, consectetuer adipiscing elit.  Etiam vel neque nec dui dignissim bibendum. "
       }
     ]
+    stall_elements = stall.stall_elements |> Enum.group_by(&Map.get(&1, :type))
+    stall_elements_1 = stall_elements |> Map.get(1)
+    stall_elements_2 = stall_elements |> Map.get(2)
 
     socket
     |> assign(:page_title, stall.title)
@@ -132,6 +135,8 @@ defmodule AtmanirbharWeb.StallLive.Index do
     |> assign(:stall_location, stall.location.title)
     |> assign(:stall_address, stall.business.address)
     |> assign(:stall_description, stall.description)
+    |> assign(:se_1, stall_elements_1)
+    |> assign(:se_2, stall_elements_2)
     |> assign(:products, products)
     |> assign(:timeline_items, timeline_items)
   end
