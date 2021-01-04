@@ -29,8 +29,13 @@ defmodule Atmanirbhar.Marketplace.StallElement do
     |> validate_required([:type, :images, :description, :title])
   end
 
-  # set type as 1
   def product_changeset(stall_element, attrs) do
+    stall_element
+    |> cast(attrs, [:title, :description, :images])
+    |> validate_required([:title, :description])
+  end
+
+  def timeline_post_changeset(stall_element, attrs) do
     stall_element
     |> cast(attrs, [:title, :description, :images])
     |> validate_required([:title, :description])

@@ -195,6 +195,7 @@ defmodule AtmanirbharWeb.Router do
 
     live "/dashboard", UserDashboardLive.Index, :index
     live "/dashboard/new_product", UserDashboardLive.Index, :new_product
+    live "/dashboard/new_timeline_post", UserDashboardLive.Index, :new_timeline_post
 
     # live "/marketplace_stalls", StallLive.Index, :index
     # live "/marketplace_stalls/new", StallLive.Index, :new

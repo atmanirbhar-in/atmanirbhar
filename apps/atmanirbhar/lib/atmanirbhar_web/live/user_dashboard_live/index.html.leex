@@ -9,6 +9,7 @@
 <div class="flex">
 <%= live_patch "Add Stall", to: Routes.user_dashboard_index_path(@socket, :new_stall), class: "text-lg btn btn-primary mr-2" %>
 <%= live_patch "Add Products", to: Routes.user_dashboard_index_path(@socket, :new_product), class: "text-lg btn btn-primary mr-2" %>
+<%= live_patch "Add Timeline post", to: Routes.user_dashboard_index_path(@socket, :new_timeline_post), class: "text-lg btn btn-primary mr-2" %>
 </div>
 
 <%= if @live_action in [:new_stall, :edit_stall] do %>
@@ -38,6 +39,16 @@
     title: @page_title,
     action: @live_action,
     bulk_upload: @bulk_upload,
+    return_to: Routes.user_dashboard_index_path(@socket, :index)
+    %>
+<% end %>
+
+<%= if @live_action in [:new_timeline_post, :edit_timeline_post] do %>
+<%= live_modal @socket, AtmanirbharWeb.UserDashboardLive.TimelinePostFormComponent,
+    id: @stall_element.id || :new,
+    title: @page_title,
+    action: @live_action,
+    stall_element: @stall_element,
     return_to: Routes.user_dashboard_index_path(@socket, :index)
     %>
 <% end %>

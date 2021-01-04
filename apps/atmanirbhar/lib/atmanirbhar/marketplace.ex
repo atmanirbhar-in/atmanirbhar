@@ -4,6 +4,7 @@ defmodule Atmanirbhar.Marketplace do
   """
 
   import Ecto.Query, warn: false
+  import Ecto.Changeset, warn: false
   alias Atmanirbhar.Repo
 
   alias Atmanirbhar.Accounts.User
@@ -459,9 +460,19 @@ defmodule Atmanirbhar.Marketplace do
 
   # def get_product!(id), do: Repo.get!(Product, id)
 
+  # set StallElement type for Product
   def create_product(attrs \\ %{}) do
     %StallElement{}
     |> StallElement.product_changeset(attrs)
+    |> put_change(:type, 1)
+    |> Repo.insert()
+  end
+
+  # set StallElement type for Happy Customers i.e Timeline post
+  def create_timeline_post(attrs \\ %{}) do
+    %StallElement{}
+    |> StallElement.product_changeset(attrs)
+    |> put_change(:type, 2)
     |> Repo.insert()
   end
 
@@ -477,6 +488,9 @@ defmodule Atmanirbhar.Marketplace do
 
   def change_product(%StallElement{} = product, attrs \\ %{}) do
     StallElement.product_changeset(product, attrs)
+  end
+  def change_timeline_post(%StallElement{} = product, attrs \\ %{}) do
+    StallElement.timeline_post_changeset(product, attrs)
   end
 
   alias Atmanirbhar.Marketplace.Deals

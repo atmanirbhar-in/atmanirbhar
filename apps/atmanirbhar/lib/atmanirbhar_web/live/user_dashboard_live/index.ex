@@ -30,6 +30,11 @@ defmodule AtmanirbharWeb.UserDashboardLive.Index do
     # |> assign(:advertisement, Marketplace.get_advertisement!(id))
   end
 
+  defp apply_action(socket, :new_timeline_post, _params) do
+    socket
+    |> assign(:page_title, "New Timeline Post")
+    |> assign(:stall_element, %StallElement{})
+  end
   defp apply_action(socket, :new_product, _params) do
     socket
     |> assign(:page_title, "New Product")
