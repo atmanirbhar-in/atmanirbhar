@@ -84,20 +84,27 @@
   %>
 <div class="mt-4">
   <span class="text-gray-700">Products</span>
-  <div class="mt-2">
+  <div class="mt-2 flex">
     <%= for option <- @products do %>
-        <div class="p-2">
+        <div class="p-2 border border-gray-400">
           <%= label f, option.title %>
-          <%= checkbox f, :for_female, class: "ml-2 form-checkbox" %>
+          <%#= checkbox f, :stall_elements, class: "ml-2 form-checkbox" %>
         </div>
         <% end %>
   </div>
 </div>
 
-
-
-
-
+<div class="mt-4">
+  <span class="text-gray-700">Products Elements</span>
+  <div class="mt-2 flex">
+    <%= for element <- @stall.stall_elements do %>
+        <div class="p-2 border border-gray-400">
+          <%= label f, element.title %>
+          <%#= checkbox f, :stall_elements, class: "ml-2 form-checkbox" %>
+        </div>
+        <% end %>
+  </div>
+</div>
 
   <%= submit "Save", phx_disable_with: "Saving...", class: "btn btn-primary mt-4" %>
 </form>

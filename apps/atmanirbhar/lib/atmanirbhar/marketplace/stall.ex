@@ -12,6 +12,7 @@ defmodule Atmanirbhar.Marketplace.Stall do
     field :is_active, :boolean, default: false
     field :poster_image_url, :string
     field :title, :string
+    field :stall_pods, :string, virtual: true
     # field :business_id, :id
     # field :location_id, :id
 
