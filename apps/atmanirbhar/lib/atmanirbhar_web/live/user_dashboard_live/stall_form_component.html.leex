@@ -76,6 +76,29 @@
     Stall products and Timeline
   </p>
 
+<% opts = ["admin", "moderater", "visitor"] %>
+<%#
+  # 1 title of options
+  # 2 param of options
+  # 3 form input-field name
+  %>
+<div class="mt-4">
+  <span class="text-gray-700">Products</span>
+  <div class="mt-2">
+    <%= for option <- @products do %>
+        <div class="p-2">
+          <%= label f, option.title %>
+          <%= checkbox f, :for_female, class: "ml-2 form-checkbox" %>
+        </div>
+        <% end %>
+  </div>
+</div>
+
+
+
+
+
+
   <%= submit "Save", phx_disable_with: "Saving...", class: "btn btn-primary mt-4" %>
 </form>
 </section>

@@ -47,10 +47,12 @@ defmodule AtmanirbharWeb.UserDashboardLive.Index do
   end
   defp apply_action(socket, :edit_stall, %{"stall_id" => input_stall_id}) do
     {stall_id, _} = Integer.parse(input_stall_id)
+    products = Marketplace.list_products_of_business()
     stall = Marketplace.get_stall!(stall_id)
 
     socket
     |> assign(:page_title, "Edit Stall")
+    |> assign(:products, products)
     |> assign(:stall, stall)
   end
 
