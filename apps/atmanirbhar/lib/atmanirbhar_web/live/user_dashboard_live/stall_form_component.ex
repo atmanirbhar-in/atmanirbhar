@@ -23,11 +23,11 @@ defmodule AtmanirbharWeb.UserDashboardLive.StallFormComponent do
     {:noreply, assign(socket, :changeset, changeset)}
   end
 
-  def handle_event("save", %{"stall" => stall_params}, socket) do
+  def handle_event("save_stall", %{"stall" => stall_params}, socket) do
     save_stall(socket, socket.assigns.action, stall_params)
   end
 
-  defp save_stall(socket, :edit, stall_params) do
+  defp save_stall(socket, :edit_stall, stall_params) do
     case Marketplace.update_stall(socket.assigns.stall, stall_params) do
       {:ok, _stall} ->
         {:noreply,
@@ -40,7 +40,7 @@ defmodule AtmanirbharWeb.UserDashboardLive.StallFormComponent do
     end
   end
 
-  defp save_stall(socket, :new, stall_params) do
+  defp save_stall(socket, :new_stall, stall_params) do
     case Marketplace.create_stall(stall_params) do
       {:ok, _stall} ->
         {:noreply,
