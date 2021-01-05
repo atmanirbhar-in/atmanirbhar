@@ -83,23 +83,24 @@
   # 3 form input-field name
   %>
 <div class="mt-4">
-  <span class="text-gray-700">Products</span>
+  <span class="text-gray-700">All Products</span>
   <div class="mt-2 flex">
     <%= for option <- @products do %>
         <div class="p-2 border border-gray-400">
           <%= label f, option.title %>
-          <%#= checkbox f, :stall_elements, class: "ml-2 form-checkbox" %>
+          <img alt="" src="https://via.placeholder.com/60/fFF/808080?Text=Product" class="w-24 h-24"/>
         </div>
         <% end %>
   </div>
 </div>
 
 <div class="mt-4">
-  <span class="text-gray-700">Products Elements</span>
+  <span class="text-gray-700">Products in Stall</span>
   <div class="mt-2 flex">
     <%= for element <- @stall.stall_elements do %>
         <div class="p-2 border border-gray-400">
           <%= label f, element.title %>
+          <img alt="" src="https://via.placeholder.com/60/fFF/808080?Text=Product" class="w-24 h-24"/>
           <%#= checkbox f, :stall_elements, class: "ml-2 form-checkbox" %>
         </div>
         <% end %>
