@@ -99,10 +99,10 @@
   <div class="mt-4">
     <span class="text-gray-700">All Products</span>
     <div class="p-4 border border-2 flex bg-white">
-      <%= for option <- @products do %>
-          <div class="p-2 border border-gray-400 mr-2" draggable="true">
-            <%= label f, option.title %>
+      <%= for element <- @products do %>
+          <div class="p-2 border border-gray-400 mr-2" draggable="true" phx-hook="Card" id="card-<%= element.id %>" >
             <img alt="" src="https://via.placeholder.com/60/fFF/808080?Text=Product" class="w-24 h-24"/>
+            <%= label f, element.title %>
           </div>
           <% end %>
     </div>
@@ -114,7 +114,7 @@
         <span class="text-gray-700">Products in this Stall</span>
         <div class="mt-2 p-2 flex">
           <%= for element <- Map.get(stall_elements, 1) do %>
-              <div class="p-2 border border-gray-400 mr-2">
+              <div class="p-2 border border-gray-400 mr-2" phx-hook="Card" id="card-<%= element.id %>" >
                 <%= label f, element.title %>
                 <img alt="" src="https://via.placeholder.com/60/fFF/808080?Text=Product" class="w-24 h-24"/>
                 <%#= checkbox f, :stall_elements, class: "ml-2 form-checkbox" %>

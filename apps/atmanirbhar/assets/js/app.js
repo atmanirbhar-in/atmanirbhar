@@ -42,6 +42,7 @@ Hooks.SetSession = {
 Hooks.InitToast = InitToast
 
 let csrfToken = document.querySelector("meta[name='csrf-token']").getAttribute("content")
+// let liveSocket = new LiveSocket("/live", Socket, {hooks: Hooks})
 let liveSocket = new LiveSocket("/live", Socket, {
   hooks: Hooks,
   params: {_csrf_token: csrfToken},
@@ -56,6 +57,62 @@ let liveSocket = new LiveSocket("/live", Socket, {
 // Show progress bar on live navigation and form submits
 window.addEventListener("phx:page-loading-start", info => NProgress.start())
 window.addEventListener("phx:page-loading-stop", info => NProgress.done())
+
+
+Hooks.Card = {
+    mounted(){
+        this.el.addEventListener("dragstart", e => {
+            console.log("drag card started")
+
+            // add to dataTransfer. card_id
+
+            this.el.style.opacity = "0.5"
+
+            let col_id =  this.el.attributes.data_column_id.value
+
+            e.dataTransfer.setData("dragged_card_id", this.el.id)
+            e.dataTransfer.setData("dragged_column_id", col_id)
+
+        });
+
+        this.el.addEventListener("dragend", e => {
+            this.el.className = "card"
+            console.log("drag card end")
+        });
+
+        this.el.addEventListener("dragover", e => {
+            this.el.className = "card above"
+            e.preventDefault();
+            console.log("drag over card, card id")
+        });
+
+        this.el.addEventListener("dragleave", e => {
+            e.preventDefault();
+            this.el.className = "card"
+            console.log("drag over card, card id")
+        });
+
+        this.el.addEventListener("drop", e => {
+
+            let col_id =  this.el.attributes.data_column_id.value
+
+            // # send which card id
+            // # send drop on which card id
+            // collect from car through data transfer
+
+            let payload = {}
+            payload.drag_card_id = e.dataTransfer.getData("dragged_card_id")
+            payload.drag_column_id = e.dataTransfer.getData("dragged_column_id")
+            payload.drop_card_id = this.el.id;
+            payload.drop_column_id = col_id
+
+            this.pushEvent("move-card", payload);
+        });
+    }
+}
+
+
+
 
 // connect if there are any LiveViews on the page
 liveSocket.connect()
