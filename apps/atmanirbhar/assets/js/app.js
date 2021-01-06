@@ -64,8 +64,6 @@ Hooks.Card = {
         this.el.addEventListener("dragstart", e => {
             console.log("drag card started")
 
-            // add to dataTransfer. card_id
-
             this.el.style.opacity = "0.5"
 
             let card_type =  this.el.attributes.data_card_type.value
@@ -80,20 +78,19 @@ Hooks.Card = {
             console.log("drag card end")
         });
 
-        this.el.addEventListener("dragover", e => {
-            this.el.className = "card above"
-            e.preventDefault();
-            console.log("drag over card, card id")
-        });
+        // this.el.addEventListener("dragover", e => {
+        //     this.el.className = "card above"
+        //     e.preventDefault();
+        //     console.log("drag over card, card id")
+        // });
 
-        this.el.addEventListener("dragleave", e => {
-            e.preventDefault();
-            this.el.className = "card"
-            console.log("drag over card, card id")
-        });
+        // this.el.addEventListener("dragleave", e => {
+        //     e.preventDefault();
+        //     this.el.className = "card"
+        //     console.log("drag over card, card id")
+        // });
 
         this.el.addEventListener("drop", e => {
-
             let card_type =  this.el.attributes.data_card_type.value
 
             // # send which card id
@@ -106,11 +103,57 @@ Hooks.Card = {
             // payload.drop_card_id = this.el.id;
             // payload.drop_card_type = card_type
 
-            this.pushEvent("move-card", payload);
+            // this.pushEvent("move-card", payload);
         });
     }
 }
 
+
+Hooks.Stall = {
+    mounted(){
+        // this.el.addEventListener("dragstart", e => {
+        //     console.log("drag card started")
+        //     this.el.style.opacity = "0.5"
+        //     let card_type =  this.el.attributes.data_card_type.value
+        //     e.dataTransfer.setData("dragged_card_id", this.el.id)
+        //     e.dataTransfer.setData("dragged_card_type", card_type)
+        // });
+
+        this.el.addEventListener("dragend", e => {
+            this.el.className = "card-above"
+            console.log("drag card end - stall")
+        });
+
+        this.el.addEventListener("dragover", e => {
+            this.el.className = "card-over-stall"
+            e.preventDefault();
+            console.log("card hovered in Stall")
+        });
+
+        this.el.addEventListener("dragleave", e => {
+            e.preventDefault();
+            this.el.className = "card-left-stall"
+            console.log("drag over card, card id")
+        });
+
+        this.el.addEventListener("drop", e => {
+
+            // let card_type =  this.el.attributes.data_card_type.value;
+
+            // # send which card id
+            // # send drop on which card id
+            // collect from car through data transfer
+
+            let payload = {}
+            payload.drag_card_id = e.dataTransfer.getData("dragged_card_id")
+            payload.drag_card_type = e.dataTransfer.getData("dragged_card_type")
+            // payload.drop_card_id = this.el.id;
+            // payload.drop_card_type = card_type
+
+            this.pushEvent("add-card-to-stall", payload);
+        });
+    }
+}
 
 
 

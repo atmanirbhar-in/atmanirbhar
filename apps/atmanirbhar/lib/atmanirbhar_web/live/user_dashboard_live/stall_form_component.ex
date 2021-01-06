@@ -27,6 +27,14 @@ defmodule AtmanirbharWeb.UserDashboardLive.StallFormComponent do
     save_stall(socket, socket.assigns.action, stall_params)
   end
 
+  def handle_event("add_card_to_stall",
+    %{"drag_card_id" => element_id, "drag_card_type" => element_type}, socket) do
+    # save_stall(socket, socket.assigns.action, stall_params)
+    # Marketplace.add_element_to_stall()
+    # assign(socket, :changeset, changeset)
+    {:noreply, socket}
+  end
+
   defp save_stall(socket, :edit_stall, stall_params) do
     case Marketplace.update_stall(socket.assigns.stall, stall_params) do
       {:ok, _stall} ->
