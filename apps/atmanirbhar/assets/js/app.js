@@ -68,10 +68,10 @@ Hooks.Card = {
 
             this.el.style.opacity = "0.5"
 
-            let col_id =  this.el.attributes.data_column_id.value
+            let card_type =  this.el.attributes.data_card_type.value
 
             e.dataTransfer.setData("dragged_card_id", this.el.id)
-            e.dataTransfer.setData("dragged_column_id", col_id)
+            e.dataTransfer.setData("dragged_card_type", card_type)
 
         });
 
@@ -94,7 +94,7 @@ Hooks.Card = {
 
         this.el.addEventListener("drop", e => {
 
-            let col_id =  this.el.attributes.data_column_id.value
+            let card_type =  this.el.attributes.data_card_type.value
 
             // # send which card id
             // # send drop on which card id
@@ -102,9 +102,9 @@ Hooks.Card = {
 
             let payload = {}
             payload.drag_card_id = e.dataTransfer.getData("dragged_card_id")
-            payload.drag_column_id = e.dataTransfer.getData("dragged_column_id")
-            payload.drop_card_id = this.el.id;
-            payload.drop_column_id = col_id
+            payload.drag_card_type = e.dataTransfer.getData("dragged_card_type")
+            // payload.drop_card_id = this.el.id;
+            // payload.drop_card_type = card_type
 
             this.pushEvent("move-card", payload);
         });
