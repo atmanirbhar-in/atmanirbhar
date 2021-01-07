@@ -76,16 +76,6 @@
 <% end %>
 
 
-<%= if @live_action in [:new_advertisement] do %>
-<%= live_modal @socket, AtmanirbharWeb.AdvertisementLive.FormComponent,
-    id: @advertisement.id || :new,
-    title: @page_title,
-    action: @live_action,
-    advertisement: @advertisement,
-    return_to: Routes.page_path(@socket, :index) %>
-<% end %>
-
-
 <table class="table-auto table mt-4">
   <thead>
     <tr>
@@ -118,7 +108,7 @@
         </td>
         <td class="px-2"></td>
         <td class="px-2 py-2">
-          <%= link "Edit Stall", to: Routes.user_dashboard_index_path(@socket, :edit_stall, stall.id), class: "text-lg p-2 btn btn-transparent" %>
+          <%= link "Edit Stall", to: Routes.user_dashboard_stall_index_path(@socket, :edit_stall, stall.id), class: "text-lg p-2 btn btn-transparent" %>
         </td>
 
       </tr>
