@@ -42,6 +42,18 @@
   </div>
 
   <div class="flex flex-col w-full md:w-1/2 p-4">
+
+    <label class="block">
+      <span class="text-gray-700">Location</span>
+      <%= text_input f, :location_id,
+          class: "form-input mt-1 block w-full",
+          placeholder: "Enter Location" %>
+      <p class="text-red-500 text-xs italic">
+        <%= error_tag f, :location_id %>
+      </p>
+    </label>
+
+
     <label class="block">
       <span class="text-gray-700">Target Audience</span>
       <%= range_input f, :audience_average,
@@ -89,54 +101,6 @@
   </label>
 
 
-  <% opts = ["admin", "moderater", "visitor"] %>
-  <%#
-    # 1 title of options
-    # 2 param of options
-    # 3 form input-field name
-    %>
-  <div class="mt-4">
-    <span class="text-gray-700">All Products</span>
-    <div class="p-4 border border-2 flex bg-white">
-      <%= for element <- @products do %>
-          <div class="p-2 border border-gray-400 mr-2" draggable="true"
-               phx-hook="Card" id="card-<%= element.id %>" data_card_type="<%= element.type %>" >
-            <img alt="" src="https://via.placeholder.com/60/fFF/808080?Text=Product" class="w-24 h-24"/>
-            <%= label f, element.title %>
-          </div>
-          <% end %>
-    </div>
-  </div>
-
-  <div class="mt-4 flex flex-col border-2 border-gray-700 bg-white p-4" phx-hook="Stall" id="stall-<%= @stall.id %>">
-    <% stall_elements = @stall.stall_elements |> Enum.group_by(&Map.get(&1, :type)) %>
-      <div class="">
-        <span class="text-gray-700">Products in this Stall</span>
-        <div class="mt-2 p-2 flex">
-          <%= for element <- Map.get(stall_elements, 1) do %>
-              <div class="p-2 border border-gray-400 mr-2" phx-hook="Card" id="card-<%= element.id %>">
-                <%= label f, element.title %>
-                <img alt="" src="https://via.placeholder.com/60/fFF/808080?Text=Product" class="w-24 h-24"/>
-                <%#= checkbox f, :stall_elements, class: "ml-2 form-checkbox" %>
-              </div>
-              <% end %>
-        </div>
-      </div>
-
-      <div class="border-t">
-        <span class="text-gray-700">Customer Pictures</span>
-        <div class="mt-2 flex">
-          <%= for element <- Map.get(stall_elements, 2) do %>
-              <div class="p-2 border border-gray-400">
-              <%= label f, element.title %>
-              <img alt="" src="https://via.placeholder.com/60/fFF/808080?Text=Product" class="w-24 h-24"/>
-              <%#= checkbox f, :stall_elements, class: "ml-2 form-checkbox" %>
-              </div>
-            <% end %>
-        </div>
-      </div>
-    </div>
-
-    <%= submit "Save", phx_disable_with: "Saving...", class: "btn btn-primary mt-4" %>
+  <%= submit "Save", phx_disable_with: "Saving...", class: "btn btn-primary mt-4" %>
 </form>
 </section>
