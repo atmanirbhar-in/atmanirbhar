@@ -24,13 +24,17 @@ defmodule AtmanirbharWeb.UserDashboardStallLive.Index do
   defp apply_action(socket, :edit_stall, %{"stall_id" => input_stall_id}) do
     {stall_id, _} = Integer.parse(input_stall_id)
     products = Marketplace.list_products_of_business()
+
     # stall = Marketplace.get_stall!(stall_id)
     stall = Marketplace.get_stall_detail!(stall_id)
+    stall_elements_groups = stall.stall_elements
+    |> Enum.group_by(&Map.get(&1, :type))
 
     socket
     |> assign(:page_title, "Edit Stall")
     |> assign(:products, products)
     |> assign(:stall, stall)
+    |> assign(:stall_elements_groups, stall_elements_groups)
   end
 
   def handle_event("add-card-to-stall",
@@ -44,12 +48,15 @@ defmodule AtmanirbharWeb.UserDashboardStallLive.Index do
     case Marketplace.add_stall_element_to_stall(stall_element_id, stall) do
       {:ok, stall} ->
 
-        IO.puts "stall inspect..."
-        IO.puts inspect(stall)
+        # IO.puts "stall inspect..."
+        # IO.puts inspect(stall)
+        stall_elements_groups = stall.stall_elements
+        |> Enum.group_by(&Map.get(&1, :type))
 
         {:noreply,
          socket
          |> assign(:stall, stall)
+         |> assign(:stall_elements_groups, stall_elements_groups)
         }
         # {:noreply,
         #  socket
