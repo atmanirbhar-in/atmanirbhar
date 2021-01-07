@@ -16,14 +16,19 @@
     </div>
   </div>
 
-  <div class="mt-4 flex flex-col border-2 border-gray-700 bg-white p-4" phx-hook="Stall" id="stall-<%= @stall.id %>">
+  <div class="mt-4 flex flex-col border-2 border-gray-700 bg-white" phx-hook="Stall" id="stall-<%= @stall.id %>">
       <div class="">
         <span class="text-gray-700">Products in this Stall</span>
-        <div class="mt-2 p-2 flex">
+        <div class="flex p-4">
           <%= for element <- Map.get(@stall_elements_groups, 1, []) do %>
               <div class="p-2 border border-gray-400 mr-2" phx-hook="Card" id="card-<%= element.id %>">
-                <%= element.title %>
+                <div class="flex flex-row-reverse">
+                  <button class="rounded-full h-4 w-4 flex items-center justify-center bg-red-500 font-bold text-white">
+                    x
+                  </button>
+                </div>
                 <img alt="" src="https://via.placeholder.com/60/fFF/808080?Text=Product" class="w-24 h-24"/>
+                <%= element.title %>
               </div>
               <% end %>
         </div>
@@ -31,7 +36,7 @@
 
       <div class="border-t">
         <span class="text-gray-700">Customer Pictures</span>
-        <div class="mt-2 flex">
+        <div class="flex p-4">
           <%= for element <- Map.get(@stall_elements_groups, 2, []) do %>
               <div class="p-2 border border-gray-400">
               <%= element.title %>
