@@ -16,7 +16,7 @@ defmodule Atmanirbhar.Marketplace.Stall do
     # field :business_id, :id
     # field :location_id, :id
 
-    many_to_many(:stall_elements, StallElement, join_through: StallItem)
+    many_to_many(:stall_elements, StallElement, join_through: StallItem, on_replace: :delete)
 
     timestamps()
 
@@ -24,10 +24,23 @@ defmodule Atmanirbhar.Marketplace.Stall do
     belongs_to :location, Location
   end
 
-  @doc false
+  # @doc false
+  # def changeset(stall, attrs) do
+  #   stall
+  #   |> cast(attrs, [:title, :description, :business_id, :location_id, :audience_average, :for_male, :for_female, :poster_image_url, :is_active])
+  #   |> validate_required([:title, :description, :audience_average, :for_male, :for_female, :is_active])
+  #   |> cast_assoc(:stall_elements, required: true, on_replace: :nilify)
+  # end
+
+  # allow delete, ref many_to_many
+  def changeset(stall, %{"delete" => "true"}) do
+    %{Ecto.Changeset.change(stall) | action: :delete}
+  end
+
   def changeset(stall, attrs) do
     stall
     |> cast(attrs, [:title, :description, :business_id, :location_id, :audience_average, :for_male, :for_female, :poster_image_url, :is_active])
     |> validate_required([:title, :description, :audience_average, :for_male, :for_female, :is_active])
+    |> cast_assoc(:stall_elements, required: true, on_replace: :delete)
   end
 end

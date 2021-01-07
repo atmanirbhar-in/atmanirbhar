@@ -10,7 +10,7 @@ defmodule Atmanirbhar.Marketplace.StallElement do
     field :type, :integer
 
     timestamps()
-    many_to_many(:stalls, Stall, join_through: StallItem)
+    many_to_many(:stalls, Stall, join_through: StallItem, on_replace: :delete)
   end
 
   @doc """
@@ -26,7 +26,7 @@ defmodule Atmanirbhar.Marketplace.StallElement do
   def changeset(stall_element, attrs) do
     stall_element
     |> cast(attrs, [:type, :images, :description, :title])
-    |> validate_required([:type, :images, :description, :title])
+    # |> maybe_mark_for_deletion
   end
 
   def product_changeset(stall_element, attrs) do
@@ -40,4 +40,13 @@ defmodule Atmanirbhar.Marketplace.StallElement do
     |> cast(attrs, [:title, :description, :images])
     |> validate_required([:title, :description])
   end
+
+  # defp maybe_mark_for_deletion(changeset) do
+  #   if get_change(changeset, :delete) do
+  #     %{changeset | action: :delete}
+  #   else
+  #     changeset
+  #   end
+  # end
+
 end

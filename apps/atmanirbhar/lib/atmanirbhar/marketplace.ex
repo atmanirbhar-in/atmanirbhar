@@ -482,17 +482,25 @@ defmodule Atmanirbhar.Marketplace do
     |> Repo.update
   end
 
+
+
+  # def update_stall(%Stall{} = stall, attrs) do
+  # stall
+  # |> Stall.changeset(attrs)
+  # |> Repo.update()
+  # end
+
   def remove_stall_element_from_stall(stall_element_id, stall) do
 
-    # stall_element = Repo.get!(StallElement, stall_element_id)
-    # stall_elements = stall.stall_elements ++ [stall_element]
-    # |> Enum.map(&Ecto.Changeset.change/1)
+    stall_element = Repo.get!(StallElement, stall_element_id)
+    stall_elements = stall.stall_elements -- [stall_element]
+    |> Enum.map(&Ecto.Changeset.change/1)
+    # |> Enum.map(&changeset(&1, %{"delete" => "true"}))
 
-    # stall
-    # |> Ecto.Changeset.change
-    # |> Ecto.Changeset.put_assoc(:stall_elements, stall_elements)
-    # |> Repo.update
-
+    stall
+    |> Ecto.Changeset.change
+    |> Ecto.Changeset.put_assoc(:stall_elements, stall_elements)
+    |> Repo.update
   end
 
   # set StallElement type for Happy Customers i.e Timeline post
