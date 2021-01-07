@@ -120,19 +120,22 @@ Hooks.Stall = {
         // });
 
         this.el.addEventListener("dragend", e => {
-            this.el.className = "card-above"
+            // this.el.className = "card-above"
             console.log("drag card end - stall")
         });
 
         this.el.addEventListener("dragover", e => {
-            this.el.className = "card-over-stall"
+            // this.el.className = "card-over-stall"
+            this.el.classList.add("card-over-stall");
             e.preventDefault();
             console.log("card hovered in Stall")
         });
 
         this.el.addEventListener("dragleave", e => {
             e.preventDefault();
-            this.el.className = "card-left-stall"
+            // this.el.classList.add("mystyle");
+            this.el.classList.remove("card-over-stall");
+           // this.el.className = "card-left-stall"
             console.log("drag over card, card id")
         });
 

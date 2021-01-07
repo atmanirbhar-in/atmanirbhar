@@ -112,6 +112,10 @@ input[type=range]::-webkit-slider-thumb {
     margin-top: 20px;
 }
 
+.card-over-stall {
+    @apply border-red-500 border-dashed border-2
+}
+
 .card.abovex::before {
     content: "";
     min-height: 60px;
