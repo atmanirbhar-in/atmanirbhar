@@ -40,11 +40,28 @@ defmodule AtmanirbharWeb.UserDashboardStallLive.Index do
     {stall_element_id, _} = String.trim_leading(element_id, "card-") |> Integer.parse
 
       # Marketplace.add_stall_element_to_stall(element_id, stall_id)
-    Marketplace.add_stall_element_to_stall(stall_element_id, stall)
+
+    case Marketplace.add_stall_element_to_stall(stall_element_id, stall) do
+      {:ok, stall} ->
+
+        IO.puts "stall inspect..."
+        IO.puts inspect(stall)
+
+        {:noreply,
+         socket
+         |> assign(:stall, stall)
+        }
+        # {:noreply,
+        #  socket
+        #  |> put_flash(:info, "Product updated successfully")
+        # |> push_redirect(to: socket.assigns.return_to)}
+
+      {:error, %Ecto.Changeset{} = changeset} ->
+        {:noreply, assign(socket, :changeset, changeset)}
+    end
     # save_stall(socket, socket.assigns.action, stall_params)
     # Marketplace.add_element_to_stall()
     # assign(socket, :changeset, changeset)
-    {:noreply, socket}
   end
 
   def handle_event("recover_wizard", params, socket) do
