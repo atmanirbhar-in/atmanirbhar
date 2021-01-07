@@ -468,6 +468,48 @@ defmodule Atmanirbhar.Marketplace do
     |> Repo.insert()
   end
 
+  # link stall_element and stall
+  # def add_stall_element_to_stall(stall_element = %StallElement{}, stall = %Stall{}) do
+  # def add_stall_element_to_stall(stall_element_id, stall_id) do
+  def add_stall_element_to_stall(stall_element_id, stall) do
+    # user = Repo.preload(user, :companies)
+    # companies = user.companies ++ [company]
+    # |> Enum.map(&Ecto.Changeset.change/1)
+
+    # user
+    # |> Ecto.Changeset.change
+    # |> Ecto.Changeset.put_assoc(:companies, companies)
+    # |> Repo.update
+
+    # stall = Repo.preload(stall, :stall_elements)
+    # stall = Repo.get!(Stall, id)
+
+    # Demo.Repo.all(
+    # from p in Demo.Blog.Posts,
+    # join: c in assoc(p, :comments),
+    # where: c.inserted_at > p.updated_at,
+    # preload: [comments: c]
+    # )
+
+    # stall = Repo.one(
+    #   from s in Stall,
+    #   join: se in assoc(s, :stall_elements),
+    #   where: s.id == ^stall_id,
+    #   preload: [stall_elements: se]
+    # )
+
+    stall_element = Repo.get!(StallElement, stall_element_id)
+
+    stall_elements = stall.stall_elements ++ [stall_element]
+    |> Enum.map(&Ecto.Changeset.change/1)
+
+    stall
+    |> Ecto.Changeset.change
+    |> Ecto.Changeset.put_assoc(:stall_elements, stall_elements)
+    |> Repo.update
+
+  end
+
   # set StallElement type for Happy Customers i.e Timeline post
   def create_timeline_post(attrs \\ %{}) do
     %StallElement{}

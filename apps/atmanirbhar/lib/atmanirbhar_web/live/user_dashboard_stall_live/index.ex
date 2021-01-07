@@ -35,7 +35,12 @@ defmodule AtmanirbharWeb.UserDashboardStallLive.Index do
 
   def handle_event("add-card-to-stall",
     %{"drag_card_id" => element_id, "drag_card_type" => element_type}, socket) do
-    IO.puts "add card to stall"
+    IO.puts "add card to stall ----  #{element_id}"
+    stall = socket.assigns.stall
+    {stall_element_id, _} = String.trim_leading(element_id, "card-") |> Integer.parse
+
+      # Marketplace.add_stall_element_to_stall(element_id, stall_id)
+    Marketplace.add_stall_element_to_stall(stall_element_id, stall)
     # save_stall(socket, socket.assigns.action, stall_params)
     # Marketplace.add_element_to_stall()
     # assign(socket, :changeset, changeset)
