@@ -108,7 +108,7 @@
     </div>
   </div>
 
-  <div class="mt-4 flex flex-col border border-2 border-gray-700 bg-white p-4" phx-hook="Stall" id="stall-<%= @stall.id %>">
+  <div class="mt-4 flex flex-col border-2 border-gray-700 bg-white p-4" phx-hook="Stall" id="stall-<%= @stall.id %>">
     <% stall_elements = @stall.stall_elements |> Enum.group_by(&Map.get(&1, :type)) %>
       <div class="">
         <span class="text-gray-700">Products in this Stall</span>
