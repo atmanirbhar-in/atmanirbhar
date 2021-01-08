@@ -44,24 +44,44 @@ defmodule AtmanirbharWeb.UserDashboardStallLive.Index do
     case Marketplace.remove_stall_element_from_stall(stall_element_id, stall) do
       {:ok, stall} ->
 
-        updated_stall = Marketplace.get_stall_detail!(stall.id)
+        send(self(), :reload_stall_elements)
 
-        IO.puts "stall inspect..."
-        # IO.puts inspect(updated_stall)
+        # updated_stall = Marketplace.get_stall_detail!(stall.id)
 
-        stall_elements_groups = updated_stall.stall_elements
-        |> Enum.group_by(&Map.get(&1, :type))
+        # IO.puts "stall inspect..."
+        # # IO.puts inspect(updated_stall)
 
-        IO.puts Enum.count(stall.stall_elements)
+        # stall_elements_groups = updated_stall.stall_elements
+        # |> Enum.group_by(&Map.get(&1, :type))
 
-        {:noreply,
-         socket
-         |> assign(:stall, stall)
-         |> assign(:stall_elements_groups, stall_elements_groups)
-        }
+        # IO.puts Enum.count(stall.stall_elements)
+
+        # {:noreply,
+        #  socket
+        #  |> assign(:stall, updated_stall)
+        #  |> assign(:stall_elements_groups, stall_elements_groups)
+        # }
+
+        {:noreply, socket}
+
       {:error, %Ecto.Changeset{} = changeset} ->
         {:noreply, assign(socket, :changeset, changeset)}
     end
+  end
+
+  def handle_info(:reload_stall_elements, socket) do
+    updated_stall = Marketplace.get_stall_detail!(socket.assigns.stall.id)
+
+    stall_elements_groups = updated_stall.stall_elements
+    |> Enum.group_by(&Map.get(&1, :type))
+
+    # IO.puts Enum.count(stall.stall_elements)
+
+    {:noreply,
+     socket
+     |> assign(:stall, updated_stall)
+     |> assign(:stall_elements_groups, stall_elements_groups)
+    }
   end
 
   def handle_event("add-card-to-stall",

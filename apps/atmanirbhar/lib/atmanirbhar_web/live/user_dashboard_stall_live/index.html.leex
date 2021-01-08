@@ -19,9 +19,9 @@
   <div class="mt-4 flex flex-col border-2 border-gray-700 bg-white" phx-hook="Stall" id="stall-<%= @stall.id %>">
       <div class="">
         <span class="text-gray-700">Products in this Stall</span>
-        <div class="flex p-4">
+        <div class="flex p-4" phx-update="replace">
           <%= for element <- Map.get(@stall_elements_groups, 1, []) do %>
-              <div class="p-2 border border-gray-400 mr-2" phx-hook="Card" id="card-<%= element.id %>">
+              <div class="p-2 border border-gray-400 mr-2" id="stall-card-<%= element.id %>">
                 <div class="flex flex-row-reverse">
                   <button phx-click="remove-card-from-stall" phx-value-card="card-<%= element.id %>" class="rounded-full h-4 w-4 flex items-center justify-center bg-red-500 font-bold text-white">
                     x
