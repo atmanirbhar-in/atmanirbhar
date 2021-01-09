@@ -67,10 +67,7 @@ defmodule AtmanirbharWeb.PageLive do
     stall_filters = stall_changeset
     |> Ecto.Changeset.apply_changes
 
-    IO.puts inspect(form_params)
-
     stalls = Atmanirbhar.Marketplace.list_stalls_with_filters(stall_filters)
-    # changeset = Marketplace.change_stall_filters(stall_filters)
 
     socket = socket
     |> assign(:stalls, stalls)
@@ -91,22 +88,6 @@ defmodule AtmanirbharWeb.PageLive do
     # {:noreply, assign(socket, deals: deals, pincode: new_pincode)}
     {:noreply, socket}
   end
-
-  # @impl true
-  # def handle_info({:deal_created, deal}, socket) do
-  #   {:noreply, update(socket, :deals, fn deals -> [deal | deals] end)}
-  # end
-
-  # defp search(query) do
-  #   if not AtmanirbharWeb.Endpoint.config(:code_reloader) do
-  #     raise "action disabled when not in development"
-  #   end
-  #   for {app, desc, vsn} <- Application.started_applications(),
-  #       app = to_string(app),
-  #       String.starts_with?(app, query) and not List.starts_with?(desc, ~c"ERTS"),
-  #       into: %{},
-  #       do: {app, vsn}
-  # end
 
   def handle_info(
     %{event: "presence_diff", payload: %{joins: joins, leaves: leaves}},
