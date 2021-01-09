@@ -23,7 +23,8 @@ defmodule AtmanirbharWeb.UserDashboardStallLive.Index do
   end
   defp apply_action(socket, :edit_stall, %{"stall_id" => input_stall_id}) do
     {stall_id, _} = Integer.parse(input_stall_id)
-    products = Marketplace.list_products_of_business()
+    # products = Marketplace.list_products_of_business()
+    products = Marketplace.list_all_stall_elements_of_business()
 
     # stall = Marketplace.get_stall!(stall_id)
     stall = Marketplace.get_stall_detail!(stall_id)

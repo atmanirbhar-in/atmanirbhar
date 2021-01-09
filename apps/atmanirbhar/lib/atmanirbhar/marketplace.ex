@@ -125,6 +125,11 @@ defmodule Atmanirbhar.Marketplace do
     Repo.all query
   end
 
+  def list_all_stall_elements_of_business() do
+    query = from se in StallElement
+    Repo.all query
+  end
+
   def add_stall_elements_to_stall do
     s2 = Atmanirbhar.Marketplace.get_stall!(2) |> Atmanirbhar.Repo.preload(:stall_elements)
     # cs = Ecto.Changeset.change(s2) |> Ecto.Changeset.put_assoc(:stall_elements, [se3])
