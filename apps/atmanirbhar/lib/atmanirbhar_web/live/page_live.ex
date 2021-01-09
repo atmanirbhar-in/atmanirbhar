@@ -9,23 +9,16 @@ defmodule AtmanirbharWeb.PageLive do
   # def mount(params, %{"locale" => locale}, socket) do
   def mount(params, session, socket) do
 
-    # IO.puts inspect(socket)
-    # IO.puts "host in socket? -----------------"
-
-    # Atmanirbhar.Repo.put_org_id(123)
-
     pincode = params["pincode"] || 12345
     location_form = %LocationForm{pincode: pincode}
     pincode_changeset = Marketplace.change_location_form(location_form)
 
-    # stall_filters = %StallFilters{}
-    # stall_filters_changeset = Marketplace.change_stall_filters(stall_filters)
-    stall_filters_changeset = Marketplace.change_stall_filters(%StallFilters{}, %{})
-    stalls = Atmanirbhar.Marketplace.list_stalls_with_filters(stall_filters_changeset)
+    # stall_filters_changeset = Marketplace.change_stall_filters(%StallFilters{}, %{})
+    # stalls = Atmanirbhar.Marketplace.list_stalls_with_filters(stall_filters_changeset.data)
 
-    if connected?(socket) do
-      Marketplace.subscribe(pincode)
-    end
+    # if connected?(socket) do
+    #   Marketplace.subscribe(pincode)
+    # end
 
     topic = "marketplace:#{pincode}"
     initial_count = Presence.list(topic) |> map_size
@@ -38,19 +31,19 @@ defmodule AtmanirbharWeb.PageLive do
       %{}
     )
 
-    deals = Atmanirbhar.Marketplace.list_deals_for_pincode(pincode)
+    # deals = Atmanirbhar.Marketplace.list_deals_for_pincode(pincode)
     # shops = Atmanirbhar.Marketplace.list_shops()
-    shops = []
+    # shops = []
     # advertisements = Atmanirbhar.Marketplace.list_advertisements()
-    advertisements = []
+    # advertisements = []
 
     socket = socket
     |> assign(:page_title, "Packages")
     |> assign(location_form: location_form)
-    |> assign(pincode_changeset: pincode_changeset)
+    # |> assign(pincode_changeset: pincode_changeset)
     # |> assign(stall_filters: stall_filters)
-    |> assign(stall_filters_changeset: stall_filters_changeset)
-    |> assign(reader_count: initial_count)
+    # |> assign(stall_filters_changeset: stall_filters_changeset)
+    # |> assign(reader_count: initial_count)
     # |> assign(deals: deals)
     # |> assign(advertisements: advertisements)
     # |> assign(shops: shops)
@@ -115,7 +108,7 @@ defmodule AtmanirbharWeb.PageLive do
 
     socket = socket
     |> assign(:stalls, stalls)
-    |> assign(stall_filters_changeset: stall_filters_changeset)
+    # |> assign(stall_filters_changeset: stall_filters_changeset)
 
     {:noreply, socket}
   end
@@ -184,25 +177,28 @@ defmodule AtmanirbharWeb.PageLive do
   end
 
   defp apply_action(socket, :index, params) do
-    stall_filters_changeset = Marketplace.change_stall_filters(%StallFilters{}, params)
-    stalls = Atmanirbhar.Marketplace.list_stalls_with_filters(stall_filters_changeset)
+    stall_filters = Marketplace.change_stall_filters(%StallFilters{}, params)
+    |> Ecto.Changeset.apply_changes
+
+    stalls = Atmanirbhar.Marketplace.list_stalls_with_filters(stall_filters)
+    changeset = Marketplace.change_stall_filters(stall_filters)
     # stalls = []
 
     socket = socket
     |> assign(:stalls, stalls)
-    |> assign(stall_filters_changeset: stall_filters_changeset)
+    |> assign(stall_filters_changeset: changeset)
     |> assign(:page_title, "Micro businesses in this region")
   end
 
-  defp apply_action(socket, :new_deal, _params) do
-    socket
-    |> assign(:page_title, "Add your deal in this region")
-    |> assign(:deal, %Deal{})
-  end
-  defp apply_action(socket, :new_advertisement, _params) do
-    socket
-    |> assign(:page_title, "Add your Advertisement in this region")
-    |> assign(:advertisement, %Advertisement{})
-  end
+  # defp apply_action(socket, :new_deal, _params) do
+  #   socket
+  #   |> assign(:page_title, "Add your deal in this region")
+  #   |> assign(:deal, %Deal{})
+  # end
+  # defp apply_action(socket, :new_advertisement, _params) do
+  #   socket
+  #   |> assign(:page_title, "Add your Advertisement in this region")
+  #   |> assign(:advertisement, %Advertisement{})
+  # end
 
 end

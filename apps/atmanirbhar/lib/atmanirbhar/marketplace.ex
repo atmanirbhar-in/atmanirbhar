@@ -41,8 +41,8 @@ defmodule Atmanirbhar.Marketplace do
   def list_stalls_for_business() do
     Repo.all(Stall)
   end
-  def list_stalls_with_filters(%StallFilters{} = stall_filters_changeset) do
-    StallFilters.query_for(stall_filters_changeset)
+  def list_stalls_with_filters(%StallFilters{} = stall_filters) do
+    StallFilters.query_for(stall_filters)
     |> Repo.all
   end
 
@@ -132,34 +132,40 @@ defmodule Atmanirbhar.Marketplace do
     LocationForm.changeset(location_form, attrs)
   end
 
-  # use fefaults for empty
-  def change_stall_filters(%StallFilters{} = _stall_filters, attrs = %{}) do
-    StallFilters.changeset(%StallFilters{}, attrs)
-  end
+  # # use fefaults for empty
+  # def change_stall_filters(%StallFilters{} = stall_filters, %{}) do
+  #   # IO.puts "line 137"
+  #   default_options = %{
+  #     show_male: true,
+  #     show_female: true,
+  #     audience_min: 20,
+  #     audience_max: 60
+  #   }
+  #   StallFilters.changeset(stall_filters, default_options)
+  # end
 
-  def change_stall_filters(abc, attrs) do
-    IO.puts inspect(abc)
-    IO.puts inspect(attrs)
-    # StallFilters.changeset(%StallFilters{}, attrs)
-  end
 
   # default params when empty
-  def change_stall_filters(%StallFilters{} = stall_filters,
-    %{"show_male" => show_male,
-      "show_female" => show_female,
-      "maximum_audience" => max_audience,
-      "minimum_audience" => min_audience,
-      "pincode" => pincode
-    } = attrs
-  ) do
-
+  def change_stall_filters(%StallFilters{} = stall_filters, input_params \\ %{}) do
+    # %{"show_male" => show_male,
+    #   "show_female" => show_female,
+    #   "maximum_audience" => max_audience,
+    #   "minimum_audience" => min_audience,
+    #   "pincode" => pincode
+    # } = params
+    # IO.puts "line 159"
     # prepare attributes
-    stall_filters_prepared = %StallFilters{
-      show_male: to_bool(show_male),
-      show_female: to_bool(show_female),
-      audience_min: parse_num(min_audience),
-      audience_max: parse_num(max_audience),
-      pincode: parse_num(pincode)
+
+    raw_params = input_params
+    |> Enum.filter(fn {_, v} -> v != nil end)
+    |> Enum.into(%{})
+
+    stall_filters_prepared = %{
+      show_male: Map.get(raw_params, "show_male", true) |> to_bool,
+      show_female: Map.get(raw_params, "show_female", true) |> to_bool,
+      audience_min: Map.get(raw_params, "minimum_audience", "20") |> parse_num,
+      audience_max: Map.get(raw_params, "maximum_audience", "60") |> parse_num,
+      pincode: Map.get(raw_params, "pincode", "413512") |> parse_num,
     }
 
     StallFilters.changeset(stall_filters, stall_filters_prepared)

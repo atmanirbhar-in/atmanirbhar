@@ -20,13 +20,35 @@ defmodule Atmanirbhar.Marketplace.StallFilters do
     # |> validate_length(:pincode, is: 6)
   end
 
+  def stall_filters_from_params(params) do
+    # IO.puts "line 137"
 
-  def query_for(%__MODULE__{} = changeset) do
-    {_, for_male} = changeset.fetch_fields(changeset, :for_male)
-    {_, for_female} = changeset.fetch_fields(changeset, :for_female)
-    {_, audience_min} = changeset.fetch_fields(changeset, :audience_min)
-    {_, audience_max} = changeset.fetch_fields(changeset, :audience_max)
-    {_, pincode} = changeset.fetch_fields(changeset, :pincode)
+    # default_options = %{
+    #   show_male: true,
+    #   show_female: true,
+    #   audience_min: 20,
+    #   audience_max: 60
+    # }
+
+    # StallFilters.changeset(stall_filters, default_options)
+  end
+
+
+  def query_for(%__MODULE__{} = stall_filters) do
+    # IO.puts "params - sf"
+    # IO.puts inspect(params)
+
+    for_male = Map.get(stall_filters, :for_male, true)
+    for_female = Map.get(stall_filters, :for_female, true)
+    audience_min = Map.get(stall_filters, :audience_min, 20)
+    audience_max = Map.get(stall_filters, :audience_max, 60)
+    pincode = Map.get(stall_filters, :pincode, 12345)
+
+    # {_, for_male} = changeset.fetch_fields(changeset, :for_male)
+    # {_, for_female} = changeset.fetch_fields(changeset, :for_female)
+    # {_, audience_min} = changeset.fetch_fields(changeset, :audience_min)
+    # {_, audience_max} = changeset.fetch_fields(changeset, :audience_max)
+    # {_, pincode} = changeset.fetch_fields(changeset, :pincode)
 
     build_query_for(%{
       show_male: for_male,
