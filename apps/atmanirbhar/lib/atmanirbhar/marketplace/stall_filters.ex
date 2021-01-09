@@ -1,7 +1,8 @@
 defmodule Atmanirbhar.Marketplace.StallFilters do
   use Ecto.Schema
   import Ecto.Query, warn: false
-  alias Atmanirbhar.Marketplace.{Stall}
+  alias Atmanirbhar.Marketplace.{Shop, Business, Stall, StallElement}
+  alias Atmanirbhar.Geo.Location
   import Ecto.Changeset
 
   embedded_schema do
@@ -71,9 +72,27 @@ defmodule Atmanirbhar.Marketplace.StallFilters do
       order_by: [desc: s.inserted_at]
   end
   defp build_query_for(%{show_male: _show_male, show_female: _show_female, audience_min: audience_min, audience_max: audience_max} = form_params) do
-    from s in Stall,
-      where: s.audience_average >= ^audience_min and s.audience_average <= ^audience_max,
-      order_by: [desc: s.inserted_at]
+
+    # query = from stall in Stall,
+    #   join: business in Business,
+    #   join: location in Location,
+    #   on: stall.business_id == business.id,
+    #   on: stall.location_id == location.id,
+    #   where: stall.id == ^id,
+    #   preload: [business: business, location: location],
+    #   select: struct(stall, [:id, :title, :description, :location_id, :business_id, business: [:id, :title, :address], location: [:id, :title]])
+    # Repo.one(query) |> Repo.preload(:stall_elements)
+
+    from stall in Stall,
+      join: business in Business,
+      join: location in Location,
+      on: stall.business_id == business.id,
+      on: stall.location_id == location.id,
+      where: stall.audience_average >= ^audience_min and stall.audience_average <= ^audience_max,
+      order_by: [desc: stall.inserted_at],
+      preload: [business: business, location: location],
+      select: struct(stall, [:id, :title, :description, :location_id, :business_id, business: [:id, :title, :address], location: [:id, :title]])
+      # select: struct(stall, [:id, :title, :description, :location_id, :business_id, business: [:id, :title, :address]])
   end
 
 end
