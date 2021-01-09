@@ -40,7 +40,7 @@ defmodule AtmanirbharWeb.UserDashboardStallLive.Index do
   def handle_event("remove-card-from-stall", %{"card" => element_id}, socket) do
     stall = socket.assigns.stall
     {stall_element_id, _} = String.trim_leading(element_id, "card-") |> Integer.parse
-    IO.puts "remove stall element - #{stall_element_id}"
+    # IO.puts "remove stall element - #{stall_element_id}"
     case Marketplace.remove_stall_element_from_stall(stall_element_id, stall) do
       {:ok, stall} ->
 

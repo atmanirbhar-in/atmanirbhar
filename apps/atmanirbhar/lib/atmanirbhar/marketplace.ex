@@ -10,7 +10,7 @@ defmodule Atmanirbhar.Marketplace do
   alias Atmanirbhar.Accounts.User
   alias Atmanirbhar.Marketplace.{Shop, Business, Stall, StallElement}
   alias Atmanirbhar.Geo.Location
-  alias Atmanirbhar.Marketplace.{LocationForm, StallFiltersForm}
+  alias Atmanirbhar.Marketplace.{LocationForm, StallFilters}
 
 
   # TODO
@@ -41,15 +41,11 @@ defmodule Atmanirbhar.Marketplace do
   def list_stalls_for_business() do
     Repo.all(Stall)
   end
-  def list_stalls_with_filters(form_params) do
-    # %{
-    #   show_male: show_male,
-    #   show_female: show_female
-    # } = form_params
-
-    StallFiltersForm.query_for(form_params)
+  def list_stalls_with_filters(%StallFilters{} = stall_filters_changeset) do
+    StallFilters.query_for(stall_filters_changeset)
     |> Repo.all
   end
+
 
   @doc """
   Gets a single shop.
@@ -136,8 +132,46 @@ defmodule Atmanirbhar.Marketplace do
     LocationForm.changeset(location_form, attrs)
   end
 
-  def change_stall_filters_form(%StallFiltersForm{} = stall_filters_form, attrs \\ %{}) do
-    StallFiltersForm.changeset(stall_filters_form, attrs)
+  # use fefaults for empty
+  def change_stall_filters(%StallFilters{} = _stall_filters, attrs = %{}) do
+    StallFilters.changeset(%StallFilters{}, attrs)
+  end
+
+  def change_stall_filters(abc, attrs) do
+    IO.puts inspect(abc)
+    IO.puts inspect(attrs)
+    # StallFilters.changeset(%StallFilters{}, attrs)
+  end
+
+  # default params when empty
+  def change_stall_filters(%StallFilters{} = stall_filters,
+    %{"show_male" => show_male,
+      "show_female" => show_female,
+      "maximum_audience" => max_audience,
+      "minimum_audience" => min_audience,
+      "pincode" => pincode
+    } = attrs
+  ) do
+
+    # prepare attributes
+    stall_filters_prepared = %StallFilters{
+      show_male: to_bool(show_male),
+      show_female: to_bool(show_female),
+      audience_min: parse_num(min_audience),
+      audience_max: parse_num(max_audience),
+      pincode: parse_num(pincode)
+    }
+
+    StallFilters.changeset(stall_filters, stall_filters_prepared)
+  end
+
+  defp to_bool("true"), do: true
+  defp to_bool("false"), do: false
+  defp to_bool(_), do: true
+
+  defp parse_num(string) do
+    {number, _} = Integer.parse(string)
+    number
   end
 
   alias Atmanirbhar.Marketplace.Advertisement

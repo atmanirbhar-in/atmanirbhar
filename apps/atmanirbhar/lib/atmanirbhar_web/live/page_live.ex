@@ -2,7 +2,7 @@ defmodule AtmanirbharWeb.PageLive do
   use AtmanirbharWeb, :live_view
 
   alias Atmanirbhar.Marketplace
-  alias Atmanirbhar.Marketplace.{Advertisement, Deal, LocationForm, StallFiltersForm}
+  alias Atmanirbhar.Marketplace.{Advertisement, Deal, LocationForm, StallFilters}
   alias Atmanirbhar.Presence
 
   @impl true
@@ -18,8 +18,10 @@ defmodule AtmanirbharWeb.PageLive do
     location_form = %LocationForm{pincode: pincode}
     pincode_changeset = Marketplace.change_location_form(location_form)
 
-    stall_filters_form = %StallFiltersForm{}
-    stall_filters_changeset = Marketplace.change_stall_filters_form(stall_filters_form)
+    # stall_filters = %StallFilters{}
+    # stall_filters_changeset = Marketplace.change_stall_filters(stall_filters)
+    stall_filters_changeset = Marketplace.change_stall_filters(%StallFilters{}, %{})
+    stalls = Atmanirbhar.Marketplace.list_stalls_with_filters(stall_filters_changeset)
 
     if connected?(socket) do
       Marketplace.subscribe(pincode)
@@ -46,12 +48,12 @@ defmodule AtmanirbharWeb.PageLive do
     |> assign(:page_title, "Packages")
     |> assign(location_form: location_form)
     |> assign(pincode_changeset: pincode_changeset)
-    |> assign(stall_filters_form: stall_filters_form)
+    # |> assign(stall_filters: stall_filters)
     |> assign(stall_filters_changeset: stall_filters_changeset)
     |> assign(reader_count: initial_count)
-    |> assign(deals: deals)
-    |> assign(advertisements: advertisements)
-    |> assign(shops: shops)
+    # |> assign(deals: deals)
+    # |> assign(advertisements: advertisements)
+    # |> assign(shops: shops)
 
     {:ok, socket}
 
@@ -105,22 +107,11 @@ defmodule AtmanirbharWeb.PageLive do
 
 
   @impl true
-  def handle_event("change-stall-filters", %{"stall_filters_form" => form_params}, socket) do
-    IO.puts inspect(form_params)
-    IO.puts "slider values"
-    %{"show_male" => show_male,
-      "show_female" => show_female,
-      "maximum_audience" => max_audience,
-      "minimum_audience" => min_audience
-    } = form_params
-    stall_filters_form = %StallFiltersForm{
-      show_male: to_bool(show_male),
-      show_female: to_bool(show_female),
-      audience_min: parse_num(min_audience),
-      audience_max: parse_num(max_audience)
-    }
-    stalls = Atmanirbhar.Marketplace.list_stalls_with_filters(stall_filters_form)
-    stall_filters_changeset = Marketplace.change_stall_filters_form(stall_filters_form)
+  def handle_event("change-stall-filters", %{"stall_filters" => form_params}, socket) do
+
+    stall_filters_changeset = Marketplace.change_stall_filters(%StallFilters{}, form_params)
+    stalls = Atmanirbhar.Marketplace.list_stalls_with_filters(stall_filters_changeset)
+    # stalls = []
 
     socket = socket
     |> assign(:stalls, stalls)
@@ -129,12 +120,6 @@ defmodule AtmanirbharWeb.PageLive do
     {:noreply, socket}
   end
 
-  defp to_bool("true"), do: true
-  defp to_bool("false"), do: false
-  defp parse_num(string) do
-    {number, _} = Integer.parse(string)
-    number
-  end
 
 
   @impl true
@@ -197,12 +182,16 @@ defmodule AtmanirbharWeb.PageLive do
     socket
     |> assign(:pincode, pincode)
   end
-  defp apply_action(socket, :index, _params) do
-    stalls = Marketplace.list_marketplace_stalls()
 
-    socket
-    |> assign(:page_title, "Micro businesses in this region")
+  defp apply_action(socket, :index, params) do
+    stall_filters_changeset = Marketplace.change_stall_filters(%StallFilters{}, params)
+    stalls = Atmanirbhar.Marketplace.list_stalls_with_filters(stall_filters_changeset)
+    # stalls = []
+
+    socket = socket
     |> assign(:stalls, stalls)
+    |> assign(stall_filters_changeset: stall_filters_changeset)
+    |> assign(:page_title, "Micro businesses in this region")
   end
 
   defp apply_action(socket, :new_deal, _params) do
