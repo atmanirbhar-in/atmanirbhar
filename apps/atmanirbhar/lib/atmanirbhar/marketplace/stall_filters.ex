@@ -86,13 +86,15 @@ defmodule Atmanirbhar.Marketplace.StallFilters do
     from stall in Stall,
       join: business in Business,
       join: location in Location,
+      # join: stall_element in StallElement,
       on: stall.business_id == business.id,
       on: stall.location_id == location.id,
+      # on: stall_element.stall_id == stall.id,
       where: stall.audience_average >= ^audience_min and stall.audience_average <= ^audience_max,
       order_by: [desc: stall.inserted_at],
-      preload: [business: business, location: location],
-      select: struct(stall, [:id, :title, :description, :location_id, :business_id, business: [:id, :title, :address], location: [:id, :title]])
-      # select: struct(stall, [:id, :title, :description, :location_id, :business_id, business: [:id, :title, :address]])
+      # preload: [location: location, business: business],
+      # select: struct(stall, [:id, :title, :description])
+      select: struct(stall, [:id, :title, :description, :location_id, :business_id, business: [:id, :title, :address]])
   end
 
 end
