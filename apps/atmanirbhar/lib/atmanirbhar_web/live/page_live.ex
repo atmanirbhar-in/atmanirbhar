@@ -63,13 +63,18 @@ defmodule AtmanirbharWeb.PageLive do
 
   @impl true
   def handle_event("change-stall-filters", %{"stall_filters" => form_params}, socket) do
-    stall_filters_changeset = Marketplace.change_stall_filters(%StallFilters{}, form_params)
-    stalls = Atmanirbhar.Marketplace.list_stalls_with_filters(stall_filters_changeset)
+    stall_changeset = Marketplace.change_stall_filters(%StallFilters{}, form_params)
+    stall_filters = stall_changeset
+    |> Ecto.Changeset.apply_changes
+
+    IO.puts inspect(form_params)
+
+    stalls = Atmanirbhar.Marketplace.list_stalls_with_filters(stall_filters)
+    # changeset = Marketplace.change_stall_filters(stall_filters)
 
     socket = socket
     |> assign(:stalls, stalls)
-    # |> assign(stall_filters_changeset: stall_filters_changeset)
-
+    |> assign(stall_filters_changeset: stall_changeset)
     {:noreply, socket}
   end
 
@@ -123,10 +128,7 @@ defmodule AtmanirbharWeb.PageLive do
     |> Ecto.Changeset.apply_changes
 
     stalls = Atmanirbhar.Marketplace.list_stalls_with_filters(stall_filters)
-    # stalls = Atmanirbhar.Marketplace.list_stalls_for_business()
-    # _with_filters(stall_filters)
     changeset = Marketplace.change_stall_filters(stall_filters)
-    # stalls = []
 
     socket = socket
     |> assign(:stalls, stalls)

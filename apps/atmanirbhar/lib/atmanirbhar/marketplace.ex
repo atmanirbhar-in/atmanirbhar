@@ -29,6 +29,20 @@ defmodule Atmanirbhar.Marketplace do
     LocationForm.changeset(location_form, attrs)
   end
 
+  # def change_stall_filters(%StallFilters{} = stall_filters, input_params \\ %{}) do
+  #   # raw_params = input_params
+  #   # |> Enum.filter(fn {_, v} -> v != nil end)
+  #   # |> Enum.into(%{})
+  #   # stall_filters_prepared = %{
+  #   #   show_male: Map.get(raw_params, "show_male", true) |> to_bool,
+  #   #   show_female: Map.get(raw_params, "show_female", true) |> to_bool,
+  #   #   audience_min: Map.get(raw_params, "minimum_audience", "20") |> parse_num,
+  #   #   audience_max: Map.get(raw_params, "maximum_audience", "60") |> parse_num,
+  #   #   pincode: Map.get(raw_params, "pincode", "413512") |> parse_num,
+  #   # }
+  #   StallFilters.changeset(stall_filters, stall_filters_prepared)
+  # end
+
   # default params when empty
   def change_stall_filters(%StallFilters{} = stall_filters, input_params \\ %{}) do
 
