@@ -45,9 +45,7 @@
 
     <label class="block">
       <span class="text-gray-700">Location</span>
-      <%= text_input f, :location_id,
-          class: "form-input mt-1 block w-full",
-          placeholder: "Enter Location" %>
+      <%= select f, :location_id, @locations ,class: "form-select" %>
       <p class="text-red-500 text-xs italic">
         <%= error_tag f, :location_id %>
       </p>
