@@ -8,9 +8,7 @@ defmodule Atmanirbhar.Marketplace do
   alias Atmanirbhar.Repo
 
   alias Atmanirbhar.Accounts.User
-  alias Atmanirbhar.Marketplace.{Shop, Business, Stall, StallElement}
-  alias Atmanirbhar.Geo.Location
-  alias Atmanirbhar.Marketplace.{LocationForm, StallFilters}
+  alias Atmanirbhar.Marketplace.{Business, Stall, StallElement, LocationForm, StallFilters, BulkUpload}
 
   # with stalls?
   def list_user_businesses(user_id) do
@@ -94,10 +92,6 @@ defmodule Atmanirbhar.Marketplace do
   # end
 
 
-
-  alias Atmanirbhar.Marketplace.Product
-
-
   # set StallElement type for Product
   def create_product(attrs \\ %{}) do
     %StallElement{}
@@ -123,11 +117,9 @@ defmodule Atmanirbhar.Marketplace do
 
 
   def remove_stall_element_from_stall(stall_element_id, stall) do
-
     stall_element = Repo.get!(StallElement, stall_element_id)
     stall_elements = stall.stall_elements -- [stall_element]
     |> Enum.map(&Ecto.Changeset.change/1)
-    # |> Enum.map(&changeset(&1, %{"delete" => "true"}))
 
     stall
     |> Ecto.Changeset.change
@@ -160,15 +152,6 @@ defmodule Atmanirbhar.Marketplace do
   end
 
   def get_stall_element!(id), do: Repo.get!(StallElement, id)
-  # def update_product(%Product{} = product, attrs) do
-  #   product
-  #   |> Product.changeset(attrs)
-  #   |> Repo.update()
-  # end
-
-  # def delete_product(%Product{} = product) do
-  #   Repo.delete(product)
-  # end
 
   def change_product(%StallElement{} = product, attrs \\ %{}) do
     StallElement.product_changeset(product, attrs)
@@ -176,8 +159,6 @@ defmodule Atmanirbhar.Marketplace do
   def change_timeline_post(%StallElement{} = product, attrs \\ %{}) do
     StallElement.timeline_post_changeset(product, attrs)
   end
-
-  alias Atmanirbhar.Marketplace.BulkUpload
 
   def list_marketplace_bulk_uploads do
     Repo.all(BulkUpload)
