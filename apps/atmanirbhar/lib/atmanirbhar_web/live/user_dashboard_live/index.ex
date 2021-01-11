@@ -5,14 +5,17 @@ defmodule AtmanirbharWeb.UserDashboardLive.Index do
 
   @impl true
   def mount(_params, _session, socket) do
-    business = %Business{
-      title: "Mobile spares",
-      description: "Trendy mobile accessories, Cases,Earphones, charging cables",
-      address: "xyz, near ABC, Pune",
-    }
+    businesses = Marketplace.list_user_businesses(1)
+
+    #   %Business{
+    #   title: "Mobile spares",
+    #   description: "Trendy mobile accessories, Cases,Earphones, charging cables",
+    #   address: "xyz, near ABC, Pune",
+    # }
+
     {:ok, assign(socket,
         my_plugins: [],
-        businesses: [business],
+        businesses: businesses,
         my_stalls: Marketplace.list_stalls_for_business(),
         marketplace_bulk_uploads: Marketplace.list_marketplace_bulk_uploads()
       )

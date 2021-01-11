@@ -12,6 +12,13 @@ defmodule Atmanirbhar.Marketplace do
   alias Atmanirbhar.Geo.Location
   alias Atmanirbhar.Marketplace.{LocationForm, StallFilters}
 
+  # with stalls?
+  def list_user_businesses(user_id) do
+    query = from business in Business,
+      where: business.owner_id == ^user_id,
+      select: struct(business, [:id, :title, :description, :address])
+    Repo.all(query)
+  end
 
   def list_stalls_for_business() do
     query = from stall in Stall,
