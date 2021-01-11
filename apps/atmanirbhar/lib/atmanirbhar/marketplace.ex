@@ -14,8 +14,16 @@ defmodule Atmanirbhar.Marketplace do
 
 
   def list_stalls_for_business() do
-    Repo.all(Stall)
+    query = from stall in Stall,
+      join: location in Location,
+      join: business in Business,
+      where: stall.location_id == location.id,
+      where: stall.business_id == business.id,
+      preload: [business: business, location: location],
+      select: struct(stall, [:id, :title, :description, :location_id, :business_id, location: [:id, :title]])
+    Repo.all(query)
   end
+
   def list_stalls_with_filters(%StallFilters{} = stall_filters) do
     StallFilters.query_for(stall_filters)
     |> Repo.all
