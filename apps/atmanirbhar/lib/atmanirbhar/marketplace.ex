@@ -236,7 +236,7 @@ defmodule Atmanirbhar.Marketplace do
 
   def create_stall(attrs \\ %{}) do
     %Stall{}
-    |> Stall.changeset(attrs)
+    |> Stall.create_changeset(attrs)
     |> Repo.insert()
   end
 

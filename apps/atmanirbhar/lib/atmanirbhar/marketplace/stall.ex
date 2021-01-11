@@ -43,4 +43,13 @@ defmodule Atmanirbhar.Marketplace.Stall do
     |> validate_required([:title, :description, :audience_average, :for_male, :for_female, :is_active])
     |> cast_assoc(:stall_elements, required: true, on_replace: :delete)
   end
+
+  def create_changeset(stall, attrs) do
+    stall
+    |> cast(attrs, [:title, :description, :business_id, :location_id, :audience_average, :for_male, :for_female, :poster_image_url, :is_active])
+    |> validate_required([:title, :description, :audience_average, :for_male, :for_female, :is_active])
+    # |> cast_assoc(:stall_elements, required: true, on_replace: :delete)
+  end
+
+
 end

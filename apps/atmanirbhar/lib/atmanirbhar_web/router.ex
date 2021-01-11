@@ -121,8 +121,6 @@ defmodule AtmanirbharWeb.Router do
     live "/marketplace_bulk_uploads/:id", BulkUploadLive.Show, :show
     live "/marketplace_bulk_uploads/:id/show/edit", BulkUploadLive.Show, :edit
 
-
-
     live "/pincodes", PincodeLive.Index, :index
     live "/pincodes/new", PincodeLive.Index, :new
     live "/pincodes/:id/edit", PincodeLive.Index, :edit
