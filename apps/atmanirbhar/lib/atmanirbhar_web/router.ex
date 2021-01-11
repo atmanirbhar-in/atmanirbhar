@@ -40,10 +40,6 @@ defmodule AtmanirbharWeb.Router do
     pipe_through :browser
 
     live "/", PageLive, :index
-    live "/add-my-business", UserDashboardLive.Index, :new_business
-    live "/new_stall", UserDashboardLive.Index, :new_stall
-    live "/edit_stall/:stall_id", UserDashboardStallLive.Index, :edit_stall
-    live "/bulk-upload", UserDashboardLive.Index, :new_bulk_upload
     live "/pincode/:pincode", PageLive, :pincode
     live "/stall/:stall_id", StallLive.Index, :index
 
@@ -156,7 +152,6 @@ defmodule AtmanirbharWeb.Router do
   end
 
   scope "/", AtmanirbharWeb do
-    # plug :put_root_layout, {AtmanirbharWeb.LayoutView, :root}
     pipe_through [:browser, :require_authenticated_user, :user_dashboard]
 
     get "/users/settings", UserSettingsController, :edit
@@ -173,6 +168,10 @@ defmodule AtmanirbharWeb.Router do
     live "/marketplace_stalls/:id", StallLive.Show, :show
     live "/marketplace_stalls/:id/show/edit", StallLive.Show, :edit
 
+    live "/add-my-business", UserDashboardLive.Index, :new_business
+    live "/new_stall", UserDashboardLive.Index, :new_stall
+    live "/edit_stall/:stall_id", UserDashboardStallLive.Index, :edit_stall
+    live "/bulk-upload", UserDashboardLive.Index, :new_bulk_upload
   end
 
   scope "/", AtmanirbharWeb do
