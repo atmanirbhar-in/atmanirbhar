@@ -125,7 +125,7 @@ defmodule AtmanirbharWeb.StallLive.Index do
         description: " Curabitur vulputate vestibulum lorem.  Lorem ipsum dolor sit amet, consectetuer adipiscing elit.  Etiam vel neque nec dui dignissim bibendum. "
       }
     ]
-    stall_elements = stall.stall_elements |> Enum.group_by(&Map.get(&1, :type))
+    stall_elements =  grouped_stall_elements(stall.stall_elements)
     stall_elements_1 = stall_elements |> Map.get(1)
     stall_elements_2 = stall_elements |> Map.get(2)
 
@@ -147,4 +147,10 @@ defmodule AtmanirbharWeb.StallLive.Index do
     socket
     |> assign(:page_title, pincode)
   end
+
+
+  def grouped_stall_elements([]), do: %{1 => [], 2 => []}
+  def grouped_stall_elements(elements), do: elements |> Enum.group_by(&Map.get(&1, :type))
+
+
 end
