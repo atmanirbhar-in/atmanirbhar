@@ -7,18 +7,9 @@ defmodule AtmanirbharWeb.UserDashboardLive.Index do
   def mount(_params, _session, socket) do
     businesses = Marketplace.list_user_businesses(1)
 
-    #   %Business{
-    #   title: "Mobile spares",
-    #   description: "Trendy mobile accessories, Cases,Earphones, charging cables",
-    #   address: "xyz, near ABC, Pune",
-    # }
-    stalls = List.first(businesses).stalls
-
     {:ok, assign(socket,
         my_plugins: [],
         businesses: businesses,
-        # my_stalls: Marketplace.list_stalls_for_business(),
-        # my_stalls: stalls,
         marketplace_bulk_uploads: Marketplace.list_marketplace_bulk_uploads()
       )
     }
@@ -32,13 +23,11 @@ defmodule AtmanirbharWeb.UserDashboardLive.Index do
   defp apply_action(socket, :edit, %{"id" => id}) do
     socket
     |> assign(:page_title, "Edit config")
-    # |> assign(:advertisement, Marketplace.get_advertisement!(id))
   end
 
   defp apply_action(socket, :index, %{}) do
     socket
-    |> assign(:page_title, "Edit config")
-    # |> assign(:advertisement, Marketplace.get_advertisement!(id))
+    |> assign(:page_title, "My Dashboard - my Businesses and Stalls")
   end
 
   defp apply_action(socket, :new_timeline_post, _params) do
@@ -58,13 +47,10 @@ defmodule AtmanirbharWeb.UserDashboardLive.Index do
   end
   defp apply_action(socket, :edit_stall, %{"stall_id" => input_stall_id}) do
     {stall_id, _} = Integer.parse(input_stall_id)
-    products = Marketplace.list_products_of_business()
-    # stall = Marketplace.get_stall!(stall_id)
     stall = Marketplace.get_stall_detail!(stall_id)
 
     socket
     |> assign(:page_title, "Edit Stall")
-    |> assign(:products, products)
     |> assign(:stall, stall)
   end
 
@@ -76,31 +62,10 @@ defmodule AtmanirbharWeb.UserDashboardLive.Index do
     |> assign(:business, %Business{})
     |> assign(:cities, cities)
   end
-  defp apply_action(socket, :new_advertisement, _params) do
-    socket
-    |> assign(:page_title, "Add your deal in this region")
-    |> assign(:advertisement, %Advertisement{})
-  end
-  defp apply_action(socket, :new_deal, _params) do
-    socket
-    |> assign(:page_title, "Add your deal in this region")
-    |> assign(:deal, %Deal{})
-  end
-
-
-
-
-
-
 
   def handle_event("recover_wizard", params, socket) do
-    # rebuild state based on client input data up to the current step
-    IO.puts "---------- recover wizaer "
     {:noreply, socket}
   end
-
-
-
 
 
 end

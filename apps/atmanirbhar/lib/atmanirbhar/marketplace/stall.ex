@@ -32,10 +32,10 @@ defmodule Atmanirbhar.Marketplace.Stall do
   #   |> cast_assoc(:stall_elements, required: true, on_replace: :nilify)
   # end
 
-  # allow delete, ref many_to_many
-  def changeset(stall, %{"delete" => "true"}) do
-    %{Ecto.Changeset.change(stall) | action: :delete}
-  end
+  # # allow delete, ref many_to_many
+  # def changeset(stall, %{"delete" => "true"}) do
+  #   %{Ecto.Changeset.change(stall) | action: :delete}
+  # end
 
   def changeset(stall, attrs) do
     stall
