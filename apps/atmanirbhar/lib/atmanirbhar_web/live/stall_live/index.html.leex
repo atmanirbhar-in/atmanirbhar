@@ -14,15 +14,18 @@
               <%= @stall_title %>
             </h2>
             <div class="w-12 h-1 bg-indigo-500 rounded mt-2 mb-4"></div>
-            <p class="text-base text-gray-600">
-              <%= @stall_address %>
-            </p>
           </div>
         </div>
         <div class="sm:w-2/3 sm:pl-8 sm:py-8 sm:border-l border-gray-300 sm:border-t-0 border-t mt-4 pt-4 sm:mt-0 text-center sm:text-left">
           <p class="leading-relaxed text-lg mb-4">
             <%= @stall_description %>
           </p>
+          <div class="border p-4">
+            <p class="text-base text-gray-600">
+              <%= @business.title %>
+            </p>
+            <%= @business_address %>
+          </div>
         </div>
       </div>
     </div>

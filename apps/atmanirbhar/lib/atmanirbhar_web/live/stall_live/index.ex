@@ -131,10 +131,11 @@ defmodule AtmanirbharWeb.StallLive.Index do
 
     socket
     |> assign(:page_title, stall.title)
+    |> assign(:business, stall.business)
     |> assign(:stall_posters, pictures_toys)
     |> assign(:stall_title, stall.title)
     |> assign(:stall_location, stall.location.title)
-    |> assign(:stall_address, stall.business.address)
+    |> assign(:business_address, stall.business.address)
     |> assign(:stall_description, stall.description)
     |> assign(:se_1, stall_elements_1)
     |> assign(:se_2, stall_elements_2)
