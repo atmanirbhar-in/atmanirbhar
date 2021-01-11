@@ -14,6 +14,11 @@ defmodule AtmanirbharWeb.Router do
     plug :fetch_current_user
   end
 
+  pipeline :user_dashboard do
+    plug :put_root_layout, {AtmanirbharWeb.LayoutView, :user_dashboard}
+  end
+
+
   # Admin Dashboard
   pipeline :kaffy_browser do
     plug :accepts, ["html"]
@@ -151,7 +156,8 @@ defmodule AtmanirbharWeb.Router do
   end
 
   scope "/", AtmanirbharWeb do
-    pipe_through [:browser, :require_authenticated_user]
+    # plug :put_root_layout, {AtmanirbharWeb.LayoutView, :root}
+    pipe_through [:browser, :require_authenticated_user, :user_dashboard]
 
     get "/users/settings", UserSettingsController, :edit
     put "/users/settings/update_password", UserSettingsController, :update_password

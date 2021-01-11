@@ -1,7 +1,3 @@
-<button class="flex-px-2 btn-transparent btn ">Products and Services</button>
-<button class="flex-px-2 btn-transparent btn ">Gallery</button>
-<button class="flex-px-2 btn-transparent btn ">Social Media Posters</button>
-
 <%= if @live_action in [:new_stall, :edit_stall] do %>
 <%= live_modal @socket, AtmanirbharWeb.UserDashboardLive.StallFormComponent,
     id: :new,
@@ -53,17 +49,6 @@
     return_to: Routes.user_dashboard_index_path(@socket, :index)
     %>
 <% end %>
-
-
-<%= if @live_action in [:new_deal] do %>
-<%= live_modal @socket, AtmanirbharWeb.DealLive.FormComponent,
-    id: @deal.id || :new,
-    title: @page_title,
-    action: @live_action,
-    deal: @deal,
-    return_to: Routes.page_path(@socket, :index) %>
-<% end %>
-
 
 <section class="py-5 flex flex-col">
   <%= for {business, stalls} <- @businesses_kv do %>
