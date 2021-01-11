@@ -15,8 +15,13 @@ defmodule Atmanirbhar.Marketplace do
   # with stalls?
   def list_user_businesses(user_id) do
     query = from business in Business,
+      join: stalls in assoc(business, :stalls),
+      # left_join: entity in assoc(s, :entity),
+      # on: stall.business_id == business.id,
       where: business.owner_id == ^user_id,
-      select: struct(business, [:id, :title, :description, :address])
+      preload: [stalls: stalls],
+      # |> preload([user, posts, comments], [posts: {posts, comments: comments}])
+      select: struct(business, [:id, :title, :owner_id, :description, :address, stalls: [:id, :business_id, :title]])
     Repo.all(query)
   end
 

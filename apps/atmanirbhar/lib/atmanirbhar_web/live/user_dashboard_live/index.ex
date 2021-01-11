@@ -12,11 +12,13 @@ defmodule AtmanirbharWeb.UserDashboardLive.Index do
     #   description: "Trendy mobile accessories, Cases,Earphones, charging cables",
     #   address: "xyz, near ABC, Pune",
     # }
+    stalls = List.first(businesses).stalls
 
     {:ok, assign(socket,
         my_plugins: [],
         businesses: businesses,
-        my_stalls: Marketplace.list_stalls_for_business(),
+        # my_stalls: Marketplace.list_stalls_for_business(),
+        my_stalls: stalls,
         marketplace_bulk_uploads: Marketplace.list_marketplace_bulk_uploads()
       )
     }

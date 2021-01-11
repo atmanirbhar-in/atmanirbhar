@@ -13,6 +13,7 @@ defmodule Atmanirbhar.Marketplace.Business do
     field :areas_id, :id
 
     belongs_to :user, Atmanirbhar.Accounts.User, foreign_key: :owner_id
+    has_many :stalls, Atmanirbhar.Marketplace.Stall
     timestamps()
   end
 
