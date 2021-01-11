@@ -3,6 +3,7 @@ defmodule AtmanirbharWeb.StallLive.Index do
 
   alias Atmanirbhar.Marketplace
   alias Atmanirbhar.Marketplace.{Advertisement, Deal, LocationForm}
+  alias Atmanirbhar.Geo.Location
   alias Atmanirbhar.Presence
 
   @impl true

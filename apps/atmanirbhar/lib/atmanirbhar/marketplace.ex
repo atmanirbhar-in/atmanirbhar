@@ -9,6 +9,7 @@ defmodule Atmanirbhar.Marketplace do
 
   alias Atmanirbhar.Accounts.User
   alias Atmanirbhar.Marketplace.{Business, Stall, StallElement, LocationForm, StallFilters, BulkUpload}
+  alias Atmanirbhar.Geo.Location
 
   # with stalls?
   def list_user_businesses(user_id) do
