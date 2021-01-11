@@ -67,7 +67,7 @@
 
 <section class="py-5 flex flex-col">
   <%= for business <- @businesses do %>
-      <div class="flex w-full bg-blue-100 px-4 py-6 justify-between">
+      <div class="flex w-full bg-blue-100 px-4 py-2 mt-10 justify-between">
         <div class="flex flex-col p-4">
           <h2 class="flex font-semibold text-2xl ">
           <%= business.title %>
@@ -83,20 +83,19 @@
           <button class="flex-px-2 btn-transparent btn ">Edit Business</button>
         </div>
       </div>
-      <% end %>
 
-  <table class="table-auto table mt-4">
-    <thead class="">
-      <tr class="border">
-        <th class="mx-2">Stall Name</th>
-        <th class="px-2">Audience</th>
-        <th class="px-2">valid Till</th>
-        <th class="px-2">Products</th>
-        <th class="px-2">Last Update</th>
-        <th class="px-2">Actions</th>
-      </tr>
-    </thead>
-    <tbody id="marketplace_bulk_uploads">
+      <table class="table-auto table mt-4">
+        <thead class="">
+          <tr class="border">
+            <th class="mx-2">Stall Name</th>
+            <th class="px-2">Audience</th>
+            <th class="px-2">valid Till</th>
+            <th class="px-2">Products</th>
+            <th class="px-2">Last Update</th>
+            <th class="px-2">Actions</th>
+          </tr>
+        </thead>
+        <tbody id="marketplace_bulk_uploads">
           <tr id="stall-new-stall" class="border border-b-2 p-2 mt-7">
             <td class="px-2">
               Your Stall Title
@@ -115,33 +114,34 @@
             </td>
 
           </tr>
-      <%= for stall <- @my_stalls do %>
-          <tr id="stall-<%= stall.id %>" class="border border-b-2 p-2 mt-7">
-            <td class="px-2">
-              <%= stall.title %>
-              <br/>
-              <%#= stall.location.title %>
-            </td>
-            <td class="px-2">
-              M, F, small
-            </td>
-            <td class="px-2">26 Jan 2021</td>
-            <td class="px-2 flex">
-              <img alt="" src="" class="w-12 h-12 p-1 m-1" />
-              <img alt="" src="" class="w-12 h-12 p-1 m-1" />
-              <img alt="" src="" class="w-12 h-12 p-1 m-1" />
-              <img alt="" src="" class="w-12 h-12 p-1 m-1" />
-              <img alt="" src="" class="w-12 h-12 p-1 m-1" />
-            </td>
-            <td class="px-2"></td>
-            <td class="px-2 py-2">
-              <%= link "Edit Stall", to: Routes.user_dashboard_stall_index_path(@socket, :edit_stall, stall.id), class: "text-lg p-2 btn btn-transparent" %>
-            </td>
+          <%= for stall <- business.stalls do %>
+              <tr id="stall-<%= stall.id %>" class="border border-b-2 p-2 mt-7">
+                <td class="px-2">
+                  <%= stall.title %>
+                  <br/>
+                  <%#= stall.location.title %>
+                </td>
+                <td class="px-2">
+                  M, F, small
+                </td>
+                <td class="px-2">26 Jan 2021</td>
+                <td class="px-2 flex">
+                  <img alt="" src="" class="w-12 h-12 p-1 m-1" />
+                  <img alt="" src="" class="w-12 h-12 p-1 m-1" />
+                  <img alt="" src="" class="w-12 h-12 p-1 m-1" />
+                  <img alt="" src="" class="w-12 h-12 p-1 m-1" />
+                  <img alt="" src="" class="w-12 h-12 p-1 m-1" />
+                </td>
+                <td class="px-2"></td>
+                <td class="px-2 py-2">
+                  <%= link "Edit Stall", to: Routes.user_dashboard_stall_index_path(@socket, :edit_stall, stall.id), class: "text-lg p-2 btn btn-transparent" %>
+                </td>
 
-          </tr>
-          <% end %>
-    </tbody>
-  </table>
+              </tr>
+              <% end %>
+        </tbody>
+      </table>
+      <% end %>
 </section>
 
 <%= live_patch "Add Products", to: Routes.user_dashboard_index_path(@socket, :new_product), class: "text-lg btn mr-2" %>

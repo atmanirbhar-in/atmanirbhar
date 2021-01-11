@@ -18,7 +18,7 @@ defmodule AtmanirbharWeb.UserDashboardLive.Index do
         my_plugins: [],
         businesses: businesses,
         # my_stalls: Marketplace.list_stalls_for_business(),
-        my_stalls: stalls,
+        # my_stalls: stalls,
         marketplace_bulk_uploads: Marketplace.list_marketplace_bulk_uploads()
       )
     }
