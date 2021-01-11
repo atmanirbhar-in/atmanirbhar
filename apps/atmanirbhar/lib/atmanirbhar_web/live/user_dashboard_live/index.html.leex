@@ -66,7 +66,7 @@
 
 
 <section class="py-5 flex flex-col">
-  <%= for business <- @businesses do %>
+  <%= for {business, stalls} <- @businesses_kv do %>
       <div class="flex w-full bg-blue-100 px-4 py-2 mt-10 justify-between">
         <div class="flex flex-col p-4">
           <h2 class="flex font-semibold text-2xl ">
@@ -114,12 +114,12 @@
             </td>
 
           </tr>
-          <%= for stall <- business.stalls do %>
+          <%= for stall <- stalls do %>
               <tr id="stall-<%= stall.id %>" class="border border-b-2 p-2 mt-7">
                 <td class="px-2">
                   <%= stall.title %>
                   <br/>
-                  <%= stall.location.title %>
+                  <%#= stall.location.title %>
                 </td>
                 <td class="px-2">
                   M, F, small

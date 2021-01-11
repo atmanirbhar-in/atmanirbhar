@@ -5,11 +5,14 @@ defmodule AtmanirbharWeb.UserDashboardLive.Index do
 
   @impl true
   def mount(_params, _session, socket) do
-    businesses = Marketplace.list_user_businesses(1)
+    user_id = 1
+    user_businesses_n_stalls = user_id
+    |> Atmanirbhar.Marketplace.list_user_businesses
+    |> Enum.group_by(&Map.get(&1, :business))
 
     {:ok, assign(socket,
         my_plugins: [],
-        businesses: businesses,
+        businesses_kv: user_businesses_n_stalls,
         marketplace_bulk_uploads: Marketplace.list_marketplace_bulk_uploads()
       )
     }

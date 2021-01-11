@@ -11,30 +11,23 @@ defmodule Atmanirbhar.Marketplace do
   alias Atmanirbhar.Marketplace.{Business, Stall, StallElement, LocationForm, StallFilters, BulkUpload}
   alias Atmanirbhar.Geo.Location
 
-  # with stalls?
-  # FIX this query
-  def list_user_businesses(user_id) do
-    query = from business in Business,
-      join: stalls in assoc(business, :stalls),
-      join: location in assoc(stalls, :location),
-      # on: stalls.location_id == location.id,
-      # left_join: entity in assoc(s, :entity),
-      # on: stall.business_id == business.id,
-      where: business.owner_id == ^user_id,
-      where: stalls.location_id == location.id,
-      preload: [stalls: {stalls, location: location}],
-      # preload: [entity: {entity, topics: topics, comments: comments}]
-      # |> preload([user, posts, comments], [posts: {posts, comments: comments}])
-      select: struct(business, [:id, :title, :owner_id, :description, :address, stalls: [:id, :business_id, :title, location: [:id, :title]]])
+    def list_user_businesses(user_id) do
+    query = from stall in Stall,
+      # join: location in assoc(stall, :location),
+      # on: stall.location_id == location.id,
+      inner_join: business in Business,
+      on: stall.business_id == business.id,
+      preload: [business: business],
+      select: struct(stall, [:id, :title, :description, :location_id, :business_id, location: [:id, :title], business: [:id, :title, :description, :owner_id]])
     Repo.all(query)
   end
 
-  def list_stalls_for_business() do
+  def list_stalls_for_business(input_business_id) do
     query = from stall in Stall,
-      join: location in Location,
+      left_join: location in Location,
+      on: stall.location_id == location.id,
       join: business in Business,
-      where: stall.location_id == location.id,
-      where: stall.business_id == business.id,
+      on: stall.business_id == ^input_business_id,
       preload: [business: business, location: location],
       select: struct(stall, [:id, :title, :description, :location_id, :business_id, location: [:id, :title]])
     Repo.all(query)
