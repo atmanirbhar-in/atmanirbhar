@@ -93,19 +93,6 @@ defmodule AtmanirbharWeb.Router do
   scope "/admin", AtmanirbharWeb do
     pipe_through [:browser, :require_authenticated_user]
 
-    live "/advertisements", AdvertisementLive.Index, :index
-    live "/advertisements/new", AdvertisementLive.Index, :new
-    live "/advertisements/:id/edit", AdvertisementLive.Index, :edit
-    live "/advertisements/:id", AdvertisementLive.Show, :show
-    live "/advertisements/:id/show/edit", AdvertisementLive.Show, :edit
-
-    live "/deals", DealLive.Index, :index
-    live "/deals/new", DealLive.Index, :new
-    live "/deals/:id/edit", DealLive.Index, :edit
-
-    live "/deals/:id", DealLive.Show, :show
-    live "/deals/:id/show/edit", DealLive.Show, :edit
-
     live "/locations", LocationLive.Index, :index
     live "/locations/new", LocationLive.Index, :new
     live "/locations/:id/edit", LocationLive.Index, :edit
