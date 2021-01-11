@@ -35,17 +35,12 @@ defmodule AtmanirbharWeb.Router do
     pipe_through :browser
 
     live "/", PageLive, :index
-    live "/new_deal", UserDashboardLive.Index, :new_deal
     live "/add-my-business", UserDashboardLive.Index, :new_business
-    live "/new_advertisement", UserDashboardLive.Index, :new_advertisement
     live "/new_stall", UserDashboardLive.Index, :new_stall
     live "/edit_stall/:stall_id", UserDashboardStallLive.Index, :edit_stall
     live "/bulk-upload", UserDashboardLive.Index, :new_bulk_upload
     live "/pincode/:pincode", PageLive, :pincode
     live "/stall/:stall_id", StallLive.Index, :index
-    # live "/marketplace_stalls/:id/edit", StallLive.Index, :edit
-    # live "/shops/:id/edit", ShopLive.Index, :edit
-    # live "/xstall", PageStallLive, :index
 
     # import
     # post "/import", BulkUploadController, :import_city_data
@@ -119,12 +114,6 @@ defmodule AtmanirbharWeb.Router do
     live "/marketplace_products/:id", ProductLive.Show, :show
     live "/marketplace_products/:id/show/edit", ProductLive.Show, :edit
 
-    live "/marketplace_products_deals", DealsLive.Index, :index
-    live "/marketplace_products_deals/new", DealsLive.Index, :new
-    live "/marketplace_products_deals/:id/edit", DealsLive.Index, :edit
-    live "/marketplace_products_deals/:id", DealsLive.Show, :show
-    live "/marketplace_products_deals/:id/show/edit", DealsLive.Show, :edit
-
     live "/marketplace_bulk_uploads", BulkUploadLive.Index, :index
     live "/marketplace_bulk_uploads/new", BulkUploadLive.Index, :new
     live "/marketplace_bulk_uploads/:id/edit", BulkUploadLive.Index, :edit
@@ -147,13 +136,6 @@ defmodule AtmanirbharWeb.Router do
 
     live "/cities/:id", CityLive.Show, :show
     live "/cities/:id/show/edit", CityLive.Show, :edit
-
-    live "/shops", ShopLive.Index, :index
-    live "/shops/new", ShopLive.Index, :new
-    live "/shops/:id/edit", ShopLive.Index, :edit
-    live "/shops/:id", ShopLive.Show, :show
-    live "/shops/:id/show/edit", ShopLive.Show, :edit
-
 
     live "/resources", RawMaterialLive.Index, :index
     live "/raw_materials/new", RawMaterialLive.Index, :new
@@ -184,10 +166,6 @@ defmodule AtmanirbharWeb.Router do
     live "/dashboard/new_product", UserDashboardLive.Index, :new_product
     live "/dashboard/new_timeline_post", UserDashboardLive.Index, :new_timeline_post
 
-    # live "/marketplace_stalls", StallLive.Index, :index
-    # live "/marketplace_stalls/new", StallLive.Index, :new
-    # live "/marketplace_stalls/:id/edit", StallLive.Index, :edit
-
     live "/marketplace_stalls/:id", StallLive.Show, :show
     live "/marketplace_stalls/:id/show/edit", StallLive.Show, :edit
 
@@ -196,13 +174,10 @@ defmodule AtmanirbharWeb.Router do
   scope "/", AtmanirbharWeb do
     pipe_through [:browser]
 
-
     delete "/users/logout", UserSessionController, :delete
     get "/users/confirm", UserConfirmationController, :new
     post "/users/confirm", UserConfirmationController, :create
     get "/users/confirm/:token", UserConfirmationController, :confirm
-
-
 
   end
 
