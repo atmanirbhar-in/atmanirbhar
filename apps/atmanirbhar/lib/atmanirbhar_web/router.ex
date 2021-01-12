@@ -169,6 +169,7 @@ defmodule AtmanirbharWeb.Router do
     live "/marketplace_stalls/:id/show/edit", StallLive.Show, :edit
 
     live "/add-my-business", UserDashboardLive.Index, :new_business
+    live "/edit-business/:business_id", UserDashboardLive.Index, :edit_business
     live "/new_stall", UserDashboardLive.Index, :new_stall
     live "/edit_stall/:stall_id", UserDashboardStallLive.Index, :edit_stall
     live "/bulk-upload", UserDashboardLive.Index, :new_bulk_upload

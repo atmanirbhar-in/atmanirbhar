@@ -57,6 +57,17 @@ defmodule AtmanirbharWeb.UserDashboardLive.Index do
     |> assign(:stall, stall)
   end
 
+  defp apply_action(socket, :edit_business, %{"business_id" => input_business_id}) do
+    cities = Atmanirbhar.Geo.list_cities()
+    {business_id, _} = Integer.parse(input_business_id)
+    business = Marketplace.get_business(input_business_id)
+
+    socket
+    |> assign(:page_title, "Edit business")
+    |> assign(:business, business)
+    |> assign(:cities, cities)
+  end
+
   defp apply_action(socket, :new_business, _params) do
     cities = Atmanirbhar.Geo.list_cities()
 
