@@ -11,6 +11,11 @@ defmodule Atmanirbhar.Marketplace do
   alias Atmanirbhar.Marketplace.{Business, Stall, StallElement, LocationForm, StallFilters, BulkUpload}
   alias Atmanirbhar.Geo.Location
 
+  def get_business!(id), do: Repo.get!(Business, id)
+  def change_business(%Business{} = business, attrs \\ %{}) do
+    Business.changeset(business, attrs)
+  end
+
     def list_user_businesses(user_id) do
     query = from stall in Stall,
       # join: location in assoc(stall, :location),

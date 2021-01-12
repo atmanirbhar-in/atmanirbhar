@@ -60,7 +60,7 @@ defmodule AtmanirbharWeb.UserDashboardLive.Index do
   defp apply_action(socket, :edit_business, %{"business_id" => input_business_id}) do
     cities = Atmanirbhar.Geo.list_cities()
     {business_id, _} = Integer.parse(input_business_id)
-    business = Marketplace.get_business(input_business_id)
+    business = Marketplace.get_business!(input_business_id)
 
     socket
     |> assign(:page_title, "Edit business")
