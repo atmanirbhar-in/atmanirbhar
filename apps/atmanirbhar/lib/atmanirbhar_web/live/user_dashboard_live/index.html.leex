@@ -1,3 +1,45 @@
+<section class="text-gray-600 body-font">
+  <div class="container px-5 py-4 mx-auto">
+    <div class="flex flex-col text-center w-full mb-20">
+
+    </div>
+    <div class="flex flex-wrap -m-4 text-center">
+      <div class="p-4 md:w-1/4 sm:w-1/2 w-full">
+        <div class="border-2 border-gray-200 px-4 py-6 rounded-lg">
+
+          <%= img_tag(Routes.static_path(@socket, "/images/dashboard/gallery_folder.png")) %>
+
+          <h2 class="title-font font-medium text-3xl text-gray-900">200</h2>
+          <p class="leading-relaxed">Pictures</p>
+        </div>
+      </div>
+      <div class="p-4 md:w-1/4 sm:w-1/2 w-full">
+        <div class="border-2 border-gray-200 px-4 py-6 rounded-lg">
+
+          <%= img_tag(Routes.static_path(@socket, "/images/dashboard/shop_products.png")) %>
+          <h2 class="title-font font-medium text-3xl text-gray-900">140 </h2>
+          <p class="leading-relaxed">Products </p>
+        </div>
+      </div>
+      <div class="p-4 md:w-1/4 sm:w-1/2 w-full">
+        <div class="border-2 border-gray-200 px-4 py-6 rounded-lg">
+          <%= img_tag(Routes.static_path(@socket, "/images/dashboard/locations_stalls.png")) %>
+          <h2 class="title-font font-medium text-3xl text-gray-900">4</h2>
+          <p class="leading-relaxed">Stalls </p>
+        </div>
+      </div>
+      <div class="p-4 md:w-1/4 sm:w-1/2 w-full">
+        <div class="border-2 border-gray-200 px-4 py-6 rounded-lg">
+          <%= img_tag(Routes.static_path(@socket, "/images/dashboard/social-media-posters.png")) %>
+          <h2 class="title-font font-medium text-3xl text-gray-900">1</h2>
+          <p class="leading-relaxed"> Social Media Posters </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
 <%= if @live_action in [:new_stall, :edit_stall] do %>
 <%= live_modal @socket, AtmanirbharWeb.UserDashboardLive.StallFormComponent,
     id: :new,
