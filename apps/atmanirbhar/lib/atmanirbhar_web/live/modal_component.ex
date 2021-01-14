@@ -26,12 +26,11 @@ defmodule AtmanirbharWeb.ModalComponent do
     <div @click.away="open = false" class="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
     <div class="hidden sm:block absolute top-0 right-0 pt-4 pr-4">
 
-    <%= live_patch raw("&times;"), to: @return_to, class: "phx-modal-close" %>
-    <button type="button" @click="open = false" class="text-gray-400 hover:text-gray-500 focus:outline-none focus:text-gray-500 transition ease-in-out duration-150">
+    <%= live_patch to: @return_to, class: "phx-modal-close" do %>
     <svg class="h-6 w-6" stroke="currentColor" fill="none" viewBox="0 0 24 24">
     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
     </svg>
-    </button>
+    <% end %>
     </div>
     <!-- CONTENT -->
     <%= live_component @socket, @component, @opts %>
