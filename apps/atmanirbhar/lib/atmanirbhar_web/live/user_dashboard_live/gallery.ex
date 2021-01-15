@@ -1,4 +1,4 @@
-defmodule AtmanirbharWeb.GalleryLive.Index do
+defmodule AtmanirbharWeb.UserDashboardLive.Gallery do
   use AtmanirbharWeb, :live_view
 
   def mount(_params, _session, socket) do
@@ -12,7 +12,7 @@ defmodule AtmanirbharWeb.GalleryLive.Index do
     }
   end
 
-  def apply_action(socket, :index, _params) do
+  def apply_action(socket, :gallery, _params) do
     # all_pictures = Marketplace.list_pictures()
     picture = %{
       title: "lorel ipseum",

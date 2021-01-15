@@ -5,6 +5,8 @@
     </div>
     <div class="flex flex-wrap -m-4 text-center">
       <div class="p-4 md:w-1/4 sm:w-1/2 w-full">
+
+        <%= live_patch to: Routes.user_dashboard_gallery_path(@socket, :gallery), class: "btn btn-link w-full" do %>
         <div class="border-2 border-gray-200 px-4 py-6 rounded-lg">
 
           <%= img_tag(Routes.static_path(@socket, "/images/dashboard/gallery_folder.png")) %>
@@ -12,6 +14,7 @@
           <h2 class="title-font font-medium text-3xl text-gray-900">200</h2>
           <p class="leading-relaxed">Pictures</p>
         </div>
+        <% end %>
       </div>
       <div class="p-4 md:w-1/4 sm:w-1/2 w-full">
         <div class="border-2 border-gray-200 px-4 py-6 rounded-lg">
@@ -173,7 +176,7 @@
 </section>
 
 <%= live_patch "Add Products", to: Routes.user_dashboard_index_path(@socket, :new_product), class: "text-lg btn mr-2" %>
-<%= live_patch "Add Timeline post", to: Routes.user_dashboard_index_path(@socket, :new_timeline_post), class: "text-lg btn mr-2" %>
+<%= live_patch "Upload new picture", to: Routes.user_dashboard_index_path(@socket, :new_picture), class: "text-lg btn mr-2" %>
 
 <table class="table-auto table mt-4">
   <thead>
