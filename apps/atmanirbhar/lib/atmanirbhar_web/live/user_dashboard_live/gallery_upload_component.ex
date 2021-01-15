@@ -2,6 +2,7 @@ defmodule AtmanirbharWeb.UserDashboardLive.GalleryUploadComponent do
   use AtmanirbharWeb, :live_component
   alias Atmanirbhar.Marketplace
 
+  # maybe here is problem?
   def mount(socket) do
     {:ok,
      allow_upload(socket, :picture, accept: [".png", ".jpg"], max_entries: 4)
@@ -23,6 +24,10 @@ defmodule AtmanirbharWeb.UserDashboardLive.GalleryUploadComponent do
       |> Map.put(:action, :validate)
 
     {:noreply, assign(socket, :changeset, changeset)}
+  end
+
+  def handle_event("cancel-entry", %{"ref" => ref}, socket) do
+    {:noreply, cancel_upload(socket, :picture, ref)}
   end
 
 end

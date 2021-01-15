@@ -5,7 +5,7 @@
     id: "gallery-upload-form",
     phx_target: @myself,
     phx_change: "validate",
-    class: "bg-white",
+    class: "bg-white flex flex-col",
     phx_submit: "save" %>
 
 <label class="block">
@@ -23,8 +23,16 @@
 
 <%= for entry <- @uploads.picture.entries do %>
 
+    <%= live_img_preview entry, width: 75 %>
+    <span>progress</span>
+    <button phx-click="cancel-entry"
+            phx-target="<%= @myself %>"
+            phx-value-ref="<%= entry.ref %>">
+      cancel</button>
+
     <% end %>
 
-
-  <%= submit "Save", phx_disable_with: "Saving..." %>
+    <div class="flex">
+      <%= submit "Save", phx_disable_with: "Saving..." %>
+    </div>
 </form>
