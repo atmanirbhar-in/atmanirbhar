@@ -4,39 +4,20 @@
 
     </div>
     <div class="flex flex-wrap -m-4 text-center">
-      <div class="p-4 md:w-1/4 sm:w-1/2 w-full">
+      <div class="md:w-1/4 sm:w-1/2 w-full">
 
         <%= live_patch to: Routes.user_dashboard_gallery_path(@socket, :gallery), class: "btn btn-link w-full" do %>
-        <div class="border-2 border-gray-200 px-4 py-6 rounded-lg">
-
-          <%= img_tag(Routes.static_path(@socket, "/images/dashboard/gallery_folder.png")) %>
-
-          <h2 class="title-font font-medium text-3xl text-gray-900">200</h2>
-          <p class="leading-relaxed">Pictures</p>
-        </div>
+          <%= img_tag(Routes.static_path(@socket, "/images/dashboard/pictures_folder.png")) %>
+          <p class="leading-relaxed">Gallery</p>
         <% end %>
       </div>
-      <div class="p-4 md:w-1/4 sm:w-1/2 w-full">
-        <div class="border-2 border-gray-200 px-4 py-6 rounded-lg">
-
-          <%= img_tag(Routes.static_path(@socket, "/images/dashboard/shop_products.png")) %>
-          <h2 class="title-font font-medium text-3xl text-gray-900">140 </h2>
-          <p class="leading-relaxed">Products </p>
-        </div>
+      <div class="md:w-1/4 sm:w-1/2 w-full">
+        <%= img_tag(Routes.static_path(@socket, "/images/dashboard/products_folder.png")) %>
+        <p class="leading-relaxed">My Products & Services</p>
       </div>
-      <div class="p-4 md:w-1/4 sm:w-1/2 w-full">
-        <div class="border-2 border-gray-200 px-4 py-6 rounded-lg">
-          <%= img_tag(Routes.static_path(@socket, "/images/dashboard/locations_stalls.png")) %>
-          <h2 class="title-font font-medium text-3xl text-gray-900">4</h2>
-          <p class="leading-relaxed">Stalls </p>
-        </div>
-      </div>
-      <div class="p-4 md:w-1/4 sm:w-1/2 w-full">
-        <div class="border-2 border-gray-200 px-4 py-6 rounded-lg">
-          <%= img_tag(Routes.static_path(@socket, "/images/dashboard/social-media-posters.png")) %>
-          <h2 class="title-font font-medium text-3xl text-gray-900">1</h2>
-          <p class="leading-relaxed"> Social Media Posters </p>
-        </div>
+      <div class="md:w-1/4 sm:w-1/2 w-full">
+        <%= img_tag(Routes.static_path(@socket, "/images/dashboard/smedia_folder.png")) %>
+        <p class="leading-relaxed"> Social Media Posters </p>
       </div>
     </div>
   </div>
