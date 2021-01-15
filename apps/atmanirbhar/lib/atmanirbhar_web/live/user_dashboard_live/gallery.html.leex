@@ -4,9 +4,23 @@
     back to Dashboard
   </span>
   <% end %>
-  <button class="btn btn-primary p-2"> <span>+</span> Upload Photos</button>
+
+  <%= live_patch "Upload photos",
+      to: Routes.user_dashboard_gallery_path(@socket, :new_picture),
+      class: "text-lg btn mr-2" %>
 </section>
   <h2 class="text-2xl">Gallery</h2>
+
+<%= if @live_action in [:new_picture] do %>
+<%= live_modal @socket, AtmanirbharWeb.UserDashboardLive.GalleryUploadComponent,
+    id: :new_gallery_upload,
+    title: @page_title,
+    gallery_upload: @gallery_upload,
+    action: @live_action,
+    return_to: Routes.user_dashboard_gallery_path(@socket, :gallery)
+    %>
+<% end %>
+
 
 
 <section class="flex">

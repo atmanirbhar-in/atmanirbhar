@@ -8,7 +8,9 @@ defmodule Atmanirbhar.Marketplace do
   alias Atmanirbhar.Repo
 
   alias Atmanirbhar.Accounts.User
-  alias Atmanirbhar.Marketplace.{Business, Stall, GalleryItem, LocationForm, StallFilters, BulkUpload}
+  alias Atmanirbhar.Marketplace.{Business, GalleryUpload,
+                                 Stall, GalleryItem,
+                                 LocationForm, StallFilters, BulkUpload}
   alias Atmanirbhar.Geo.Location
 
   def get_business!(id), do: Repo.get!(Business, id)
@@ -195,6 +197,11 @@ defmodule Atmanirbhar.Marketplace do
   def change_bulk_upload(%BulkUpload{} = bulk_upload, attrs \\ %{}) do
     BulkUpload.changeset(bulk_upload, attrs)
   end
+
+  def change_gallery_upload(%GalleryUpload{} = gallery_upload, attrs \\ %{}) do
+    GalleryUpload.changeset(gallery_upload, attrs)
+  end
+
 
   alias Atmanirbhar.Marketplace.Stall
 

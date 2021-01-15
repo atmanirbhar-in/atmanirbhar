@@ -1,5 +1,6 @@
 defmodule AtmanirbharWeb.UserDashboardLive.Gallery do
   use AtmanirbharWeb, :live_view
+  alias Atmanirbhar.Marketplace.GalleryUpload
 
   def mount(_params, _session, socket) do
     {:ok, socket}
@@ -12,7 +13,7 @@ defmodule AtmanirbharWeb.UserDashboardLive.Gallery do
     }
   end
 
-  def apply_action(socket, :gallery, _params) do
+  defp apply_action(socket, :gallery, _params) do
     # all_pictures = Marketplace.list_pictures()
     picture = %{
       title: "lorel ipseum",
@@ -22,6 +23,13 @@ defmodule AtmanirbharWeb.UserDashboardLive.Gallery do
     all_pictures = [picture, picture]
 
     socket
+    |> assign(:pictures, all_pictures)
+  end
+  defp apply_action(socket, :new_picture, _params) do
+    all_pictures = []
+    socket
+    |> assign(:page_title, "Upload pictures")
+    |> assign(:gallery_upload, %GalleryUpload{})
     |> assign(:pictures, all_pictures)
   end
 

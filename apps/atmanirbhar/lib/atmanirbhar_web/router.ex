@@ -163,7 +163,6 @@ defmodule AtmanirbharWeb.Router do
 
     live "/dashboard", UserDashboardLive.Index, :index
     live "/dashboard/new_product", UserDashboardLive.Index, :new_product
-    live "/dashboard/new_picture", UserDashboardLive.Index, :new_picture
 
     live "/dashboard", UserDashboardLive.Index, :index
 
@@ -175,6 +174,7 @@ defmodule AtmanirbharWeb.Router do
     live "/new_stall", UserDashboardLive.Index, :new_stall
     live "/edit_stall/:stall_id", UserDashboardStallLive.Index, :edit_stall
     live "/dashboard/gallery", UserDashboardLive.Gallery, :gallery
+    live "/dashboard/new_picture", UserDashboardLive.Gallery, :new_picture
     live "/bulk-upload", UserDashboardLive.Index, :new_bulk_upload
   end
 
