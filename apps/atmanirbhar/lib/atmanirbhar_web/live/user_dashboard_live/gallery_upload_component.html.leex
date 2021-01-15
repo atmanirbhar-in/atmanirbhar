@@ -18,6 +18,12 @@
   </p>
 </label>
 
+<label>Pictures</label>
+<%= live_file_input(@uploads.picture) %>
+
+<%= for entry <- @uploads.picture.entries do %>
+
+    <% end %>
 
 
   <%= submit "Save", phx_disable_with: "Saving..." %>
