@@ -8,7 +8,7 @@ defmodule Atmanirbhar.Marketplace do
   alias Atmanirbhar.Repo
 
   alias Atmanirbhar.Accounts.User
-  alias Atmanirbhar.Marketplace.{Business, Stall, StallElement, LocationForm, StallFilters, BulkUpload}
+  alias Atmanirbhar.Marketplace.{Business, Stall, GalleryItem, LocationForm, StallFilters, BulkUpload}
   alias Atmanirbhar.Geo.Location
 
   def get_business!(id), do: Repo.get!(Business, id)
@@ -41,7 +41,7 @@ defmodule Atmanirbhar.Marketplace do
   def list_stalls_with_filters(%StallFilters{} = stall_filters) do
     StallFilters.query_for(stall_filters)
     |> Repo.all
-    # |> Repo.preload(:stall_elements)
+    # |> Repo.preload(:gallery_items)
     # |> Repo.all
   end
 
@@ -92,73 +92,73 @@ defmodule Atmanirbhar.Marketplace do
   # end
 
 
-  # set StallElement type for Product
+  # set GalleryItem type for Product
   def create_product(attrs \\ %{}) do
-    %StallElement{}
-    |> StallElement.product_changeset(attrs)
+    %GalleryItem{}
+    |> GalleryItem.product_changeset(attrs)
     |> put_change(:type, 1)
     |> Repo.insert()
   end
 
-  # link stall_element and stall
-  # def add_stall_element_to_stall(stall_element = %StallElement{}, stall = %Stall{}) do
-  # def add_stall_element_to_stall(stall_element_id, stall_id) do
-  def add_stall_element_to_stall(stall_element_id, stall) do
-    stall_element = Repo.get!(StallElement, stall_element_id)
-    stall_elements = stall.stall_elements ++ [stall_element]
+  # link gallery_item and stall
+  # def add_gallery_item_to_stall(gallery_item = %GalleryItem{}, stall = %Stall{}) do
+  # def add_gallery_item_to_stall(gallery_item_id, stall_id) do
+  def add_gallery_item_to_stall(gallery_item_id, stall) do
+    gallery_item = Repo.get!(GalleryItem, gallery_item_id)
+    gallery_items = stall.gallery_items ++ [gallery_item]
     |> Enum.map(&Ecto.Changeset.change/1)
 
     stall
     |> Ecto.Changeset.change
-    |> Ecto.Changeset.put_assoc(:stall_elements, stall_elements)
+    |> Ecto.Changeset.put_assoc(:gallery_items, gallery_items)
     |> Repo.update
   end
 
 
 
-  def remove_stall_element_from_stall(stall_element_id, stall) do
-    stall_element = Repo.get!(StallElement, stall_element_id)
-    stall_elements = stall.stall_elements -- [stall_element]
+  def remove_gallery_item_from_stall(gallery_item_id, stall) do
+    gallery_item = Repo.get!(GalleryItem, gallery_item_id)
+    gallery_items = stall.gallery_items -- [gallery_item]
     |> Enum.map(&Ecto.Changeset.change/1)
 
     stall
     |> Ecto.Changeset.change
-    |> Ecto.Changeset.put_assoc(:stall_elements, stall_elements)
+    |> Ecto.Changeset.put_assoc(:gallery_items, gallery_items)
     |> Repo.update
   end
 
-  # set StallElement type for Happy Customers i.e Timeline post
+  # set GalleryItem type for Happy Customers i.e Timeline post
   def create_timeline_post(attrs \\ %{}) do
-    %StallElement{}
-    |> StallElement.product_changeset(attrs)
+    %GalleryItem{}
+    |> GalleryItem.product_changeset(attrs)
     |> put_change(:type, 2)
     |> Repo.insert()
   end
 
   def list_products_of_business() do
-    query = from se in StallElement,
+    query = from se in GalleryItem,
       where: se.type == 1
     Repo.all query
   end
 
   # TODO stall elements of User
-  def list_all_stall_elements_of_business() do
-    query = from se in StallElement
+  def list_all_gallery_items_of_business() do
+    query = from se in GalleryItem
     Repo.all query
   end
 
-  # def add_stall_elements_to_stall do
-  #   s2 = Atmanirbhar.Marketplace.get_stall!(2) |> Atmanirbhar.Repo.preload(:stall_elements)
-  #   # cs = Ecto.Changeset.change(s2) |> Ecto.Changeset.put_assoc(:stall_elements, [se3])
+  # def add_gallery_items_to_stall do
+  #   s2 = Atmanirbhar.Marketplace.get_stall!(2) |> Atmanirbhar.Repo.preload(:gallery_items)
+  #   # cs = Ecto.Changeset.change(s2) |> Ecto.Changeset.put_assoc(:gallery_items, [se3])
   # end
 
-  def get_stall_element!(id), do: Repo.get!(StallElement, id)
+  def get_gallery_item!(id), do: Repo.get!(GalleryItem, id)
 
-  def change_product(%StallElement{} = product, attrs \\ %{}) do
-    StallElement.product_changeset(product, attrs)
+  def change_product(%GalleryItem{} = product, attrs \\ %{}) do
+    GalleryItem.product_changeset(product, attrs)
   end
-  def change_timeline_post(%StallElement{} = product, attrs \\ %{}) do
-    StallElement.timeline_post_changeset(product, attrs)
+  def change_timeline_post(%GalleryItem{} = product, attrs \\ %{}) do
+    GalleryItem.timeline_post_changeset(product, attrs)
   end
 
   def list_marketplace_bulk_uploads do
@@ -213,7 +213,7 @@ defmodule Atmanirbhar.Marketplace do
       where: stall.id == ^id,
       preload: [business: business, location: location],
       select: struct(stall, [:id, :title, :description, :location_id, :business_id, business: [:id, :title, :address], location: [:id, :title]])
-    Repo.one(query) |> Repo.preload(:stall_elements)
+    Repo.one(query) |> Repo.preload(:gallery_items)
   end
 
   def create_stall(attrs \\ %{}) do

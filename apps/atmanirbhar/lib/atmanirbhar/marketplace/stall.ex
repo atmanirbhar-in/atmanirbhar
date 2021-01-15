@@ -1,7 +1,7 @@
 defmodule Atmanirbhar.Marketplace.Stall do
   use Ecto.Schema
   import Ecto.Changeset
-  alias Atmanirbhar.Marketplace.{Business, StallElement, StallItem}
+  alias Atmanirbhar.Marketplace.{Business, GalleryItem, StallItem}
   alias Atmanirbhar.Geo.Location
 
   schema "marketplace_stalls" do
@@ -16,7 +16,7 @@ defmodule Atmanirbhar.Marketplace.Stall do
     # field :business_id, :id
     # field :location_id, :id
 
-    many_to_many(:stall_elements, StallElement, join_through: StallItem, on_replace: :delete)
+    many_to_many(:gallery_items, GalleryItem, join_through: StallItem, on_replace: :delete)
 
     timestamps()
 
@@ -29,7 +29,7 @@ defmodule Atmanirbhar.Marketplace.Stall do
   #   stall
   #   |> cast(attrs, [:title, :description, :business_id, :location_id, :audience_average, :for_male, :for_female, :poster_image_url, :is_active])
   #   |> validate_required([:title, :description, :audience_average, :for_male, :for_female, :is_active])
-  #   |> cast_assoc(:stall_elements, required: true, on_replace: :nilify)
+  #   |> cast_assoc(:gallery_items, required: true, on_replace: :nilify)
   # end
 
   # # allow delete, ref many_to_many
@@ -41,14 +41,14 @@ defmodule Atmanirbhar.Marketplace.Stall do
     stall
     |> cast(attrs, [:title, :description, :business_id, :location_id, :audience_average, :for_male, :for_female, :poster_image_url, :is_active])
     |> validate_required([:title, :description, :audience_average, :for_male, :for_female, :is_active])
-    |> cast_assoc(:stall_elements, required: true, on_replace: :delete)
+    |> cast_assoc(:gallery_items, required: true, on_replace: :delete)
   end
 
   def create_changeset(stall, attrs) do
     stall
     |> cast(attrs, [:title, :description, :business_id, :location_id, :audience_average, :for_male, :for_female, :poster_image_url, :is_active])
     |> validate_required([:title, :description, :audience_average, :for_male, :for_female, :is_active])
-    # |> cast_assoc(:stall_elements, required: true, on_replace: :delete)
+    # |> cast_assoc(:gallery_items, required: true, on_replace: :delete)
   end
 
 

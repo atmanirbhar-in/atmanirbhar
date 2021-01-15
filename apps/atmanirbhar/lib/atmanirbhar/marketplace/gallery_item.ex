@@ -1,9 +1,10 @@
-defmodule Atmanirbhar.Marketplace.StallElement do
+defmodule Atmanirbhar.Marketplace.GalleryItem do
   use Ecto.Schema
   import Ecto.Changeset
-  alias Atmanirbhar.Marketplace.{Stall, StallItem}
+  alias Atmanirbhar.Accounts.User
+  alias Atmanirbhar.Marketplace.{Stall, StallItem, UserGallery}
 
-  schema "marketplace_stall_elements" do
+  schema "user_gallery_items" do
     field :description, :string
     field :images, {:array, :string}
     field :title, :string
@@ -11,6 +12,7 @@ defmodule Atmanirbhar.Marketplace.StallElement do
 
     timestamps()
     many_to_many(:stalls, Stall, join_through: StallItem, on_replace: :delete)
+    # belongs_to :user, User, join_through: UserGallery
   end
 
   @doc """

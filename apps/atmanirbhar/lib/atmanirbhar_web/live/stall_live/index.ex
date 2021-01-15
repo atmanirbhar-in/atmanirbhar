@@ -125,9 +125,9 @@ defmodule AtmanirbharWeb.StallLive.Index do
         description: " Curabitur vulputate vestibulum lorem.  Lorem ipsum dolor sit amet, consectetuer adipiscing elit.  Etiam vel neque nec dui dignissim bibendum. "
       }
     ]
-    stall_elements =  grouped_stall_elements(stall.stall_elements)
-    stall_elements_1 = stall_elements |> Map.get(1)
-    stall_elements_2 = stall_elements |> Map.get(2)
+    gallery_items =  grouped_gallery_items(stall.gallery_items)
+    gallery_items_1 = gallery_items |> Map.get(1)
+    gallery_items_2 = gallery_items |> Map.get(2)
 
     socket
     |> assign(:page_title, stall.title)
@@ -137,8 +137,8 @@ defmodule AtmanirbharWeb.StallLive.Index do
     |> assign(:stall_location, stall.location.title)
     |> assign(:business_address, stall.business.address)
     |> assign(:stall_description, stall.description)
-    |> assign(:se_1, stall_elements_1)
-    |> assign(:se_2, stall_elements_2)
+    |> assign(:se_1, gallery_items_1)
+    |> assign(:se_2, gallery_items_2)
     |> assign(:products, products)
     |> assign(:timeline_items, timeline_items)
   end
@@ -149,8 +149,8 @@ defmodule AtmanirbharWeb.StallLive.Index do
   end
 
 
-  def grouped_stall_elements([]), do: %{1 => [], 2 => []}
-  def grouped_stall_elements(elements), do: elements |> Enum.group_by(&Map.get(&1, :type))
+  def grouped_gallery_items([]), do: %{1 => [], 2 => []}
+  def grouped_gallery_items(elements), do: elements |> Enum.group_by(&Map.get(&1, :type))
 
 
 end

@@ -1,6 +1,6 @@
 defmodule AtmanirbharWeb.UserDashboardStallLive.Index do
   use AtmanirbharWeb, :live_view
-  alias Atmanirbhar.Marketplace.{Advertisement, Deal, Business, StallElement, Stall}
+  alias Atmanirbhar.Marketplace.{Advertisement, Deal, Business, GalleryItem, Stall}
   alias Atmanirbhar.Marketplace
 
   @impl true
@@ -24,43 +24,43 @@ defmodule AtmanirbharWeb.UserDashboardStallLive.Index do
   defp apply_action(socket, :edit_stall, %{"stall_id" => input_stall_id}) do
     {stall_id, _} = Integer.parse(input_stall_id)
     # products = Marketplace.list_products_of_business()
-    products = Marketplace.list_all_stall_elements_of_business()
+    products = Marketplace.list_all_gallery_items_of_business()
 
     # stall = Marketplace.get_stall!(stall_id)
     stall = Marketplace.get_stall_detail!(stall_id)
-    stall_elements_groups = stall.stall_elements
+    gallery_items_groups = stall.gallery_items
     |> Enum.group_by(&Map.get(&1, :type))
 
     socket
     |> assign(:page_title, "Edit Stall")
     |> assign(:products, products)
     |> assign(:stall, stall)
-    |> assign(:stall_elements_groups, stall_elements_groups)
+    |> assign(:gallery_items_groups, gallery_items_groups)
   end
 
   def handle_event("remove-card-from-stall", %{"card" => element_id}, socket) do
     stall = socket.assigns.stall
-    {stall_element_id, _} = String.trim_leading(element_id, "card-") |> Integer.parse
-    # IO.puts "remove stall element - #{stall_element_id}"
-    case Marketplace.remove_stall_element_from_stall(stall_element_id, stall) do
+    {gallery_item_id, _} = String.trim_leading(element_id, "card-") |> Integer.parse
+    # IO.puts "remove stall element - #{gallery_item_id}"
+    case Marketplace.remove_gallery_item_from_stall(gallery_item_id, stall) do
       {:ok, stall} ->
 
-        send(self(), :reload_stall_elements)
+        send(self(), :reload_gallery_items)
 
         # updated_stall = Marketplace.get_stall_detail!(stall.id)
 
         # IO.puts "stall inspect..."
         # # IO.puts inspect(updated_stall)
 
-        # stall_elements_groups = updated_stall.stall_elements
+        # gallery_items_groups = updated_stall.gallery_items
         # |> Enum.group_by(&Map.get(&1, :type))
 
-        # IO.puts Enum.count(stall.stall_elements)
+        # IO.puts Enum.count(stall.gallery_items)
 
         # {:noreply,
         #  socket
         #  |> assign(:stall, updated_stall)
-        #  |> assign(:stall_elements_groups, stall_elements_groups)
+        #  |> assign(:gallery_items_groups, gallery_items_groups)
         # }
 
         {:noreply, socket}
@@ -70,18 +70,18 @@ defmodule AtmanirbharWeb.UserDashboardStallLive.Index do
     end
   end
 
-  def handle_info(:reload_stall_elements, socket) do
+  def handle_info(:reload_gallery_items, socket) do
     updated_stall = Marketplace.get_stall_detail!(socket.assigns.stall.id)
 
-    stall_elements_groups = updated_stall.stall_elements
+    gallery_items_groups = updated_stall.gallery_items
     |> Enum.group_by(&Map.get(&1, :type))
 
-    # IO.puts Enum.count(stall.stall_elements)
+    # IO.puts Enum.count(stall.gallery_items)
 
     {:noreply,
      socket
      |> assign(:stall, updated_stall)
-     |> assign(:stall_elements_groups, stall_elements_groups)
+     |> assign(:gallery_items_groups, gallery_items_groups)
     }
   end
 
@@ -89,20 +89,20 @@ defmodule AtmanirbharWeb.UserDashboardStallLive.Index do
     %{"drag_card_id" => element_id, "drag_card_type" => element_type}, socket) do
     IO.puts "add card to stall ----  #{element_id}"
     stall = socket.assigns.stall
-    {stall_element_id, _} = String.trim_leading(element_id, "card-") |> Integer.parse
+    {gallery_item_id, _} = String.trim_leading(element_id, "card-") |> Integer.parse
 
-      # Marketplace.add_stall_element_to_stall(element_id, stall_id)
+      # Marketplace.add_gallery_item_to_stall(element_id, stall_id)
 
-    case Marketplace.add_stall_element_to_stall(stall_element_id, stall) do
+    case Marketplace.add_gallery_item_to_stall(gallery_item_id, stall) do
       {:ok, stall} ->
 
-        stall_elements_groups = stall.stall_elements
+        gallery_items_groups = stall.gallery_items
         |> Enum.group_by(&Map.get(&1, :type))
 
         {:noreply,
          socket
          |> assign(:stall, stall)
-         |> assign(:stall_elements_groups, stall_elements_groups)
+         |> assign(:gallery_items_groups, gallery_items_groups)
         }
         # {:noreply,
         #  socket

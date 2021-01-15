@@ -1,11 +1,11 @@
 defmodule Atmanirbhar.Marketplace.StallItem do
   use Ecto.Schema
   import Ecto.Changeset
-  alias Atmanirbhar.Marketplace.{Stall, StallElement}
+  alias Atmanirbhar.Marketplace.{Stall, GalleryItem}
 
   schema "marketplace_stall_items" do
     belongs_to(:stall, Stall)
-    belongs_to(:stall_element, StallElement)
+    belongs_to(:gallery_item, GalleryItem)
 
     timestamps()
   end

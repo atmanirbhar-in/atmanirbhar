@@ -2,6 +2,7 @@ defmodule Atmanirbhar.Accounts.User do
   use Ecto.Schema
   import Ecto.Changeset
   use Waffle.Ecto.Schema
+  alias Atmanirbhar.Marketplace.{GalleryItem, UserGallery}
 
   @derive {Inspect, except: [:password]}
   schema "users" do
@@ -14,6 +15,8 @@ defmodule Atmanirbhar.Accounts.User do
     timestamps()
 
     has_many :businesses, Atmanirbhar.Marketplace.Business
+    has_one :user_gallery, UserGallery
+    has_many :gallery_items, GalleryItem
   end
 
   @doc """

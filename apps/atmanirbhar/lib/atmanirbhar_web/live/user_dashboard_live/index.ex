@@ -1,6 +1,6 @@
 defmodule AtmanirbharWeb.UserDashboardLive.Index do
   use AtmanirbharWeb, :live_view
-  alias Atmanirbhar.Marketplace.{Advertisement, Deal, Business, StallElement, Stall}
+  alias Atmanirbhar.Marketplace.{Advertisement, Deal, Business, GalleryItem, Stall}
   alias Atmanirbhar.Marketplace
 
   @impl true
@@ -36,12 +36,12 @@ defmodule AtmanirbharWeb.UserDashboardLive.Index do
   defp apply_action(socket, :new_timeline_post, _params) do
     socket
     |> assign(:page_title, "New Timeline Post")
-    |> assign(:stall_element, %StallElement{})
+    |> assign(:gallery_item, %GalleryItem{})
   end
   defp apply_action(socket, :new_product, _params) do
     socket
     |> assign(:page_title, "New Product")
-    |> assign(:stall_element, %StallElement{})
+    |> assign(:gallery_item, %GalleryItem{})
   end
   defp apply_action(socket, :new_stall, _params) do
     socket
