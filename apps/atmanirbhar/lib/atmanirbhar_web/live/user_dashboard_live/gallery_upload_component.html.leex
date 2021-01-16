@@ -21,6 +21,10 @@
 <label>Pictures</label>
 <%= live_file_input(@uploads.picture) %>
 
+<%= for {_ref, msg} <- @uploads.picture.errors do %>
+    <%= Phoenix.Naming.humanize(msg) %>
+    <% end %>
+
 <%= for entry <- @uploads.picture.entries do %>
 
     <%= live_img_preview entry, width: 75 %>
