@@ -6,7 +6,7 @@ defmodule Atmanirbhar.Marketplace.GalleryItem do
 
   schema "user_gallery_items" do
     field :description, :string
-    field :images, {:array, :string}
+    field :images, {:array, :string}, nil: false, default: []
     field :title, :string
     field :type, :integer
 

@@ -209,6 +209,13 @@ defmodule Atmanirbhar.Marketplace do
     Repo.all(Stall)
   end
 
+  # TODO fix query
+  def list_user_gallery_items(_user_id) do
+    query = from gi in GalleryItem,
+      where: gi.type == 2
+    Repo.all(query)
+  end
+
   def get_stall!(id), do: Repo.get!(Stall, id)
 
   def get_stall_detail!(id) do
