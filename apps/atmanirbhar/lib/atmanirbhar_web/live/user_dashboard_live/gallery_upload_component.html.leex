@@ -25,10 +25,10 @@
 
     <%= live_img_preview entry, width: 75 %>
     <span>progress</span>
-    <button phx-click="cancel-entry"
+    <a href="#" phx-click="cancel-entry"
             phx-target="<%= @myself %>"
             phx-value-ref="<%= entry.ref %>">
-      cancel</button>
+      cancel</a>
 
     <% end %>
 
