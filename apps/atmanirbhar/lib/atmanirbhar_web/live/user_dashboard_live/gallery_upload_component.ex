@@ -30,4 +30,25 @@ defmodule AtmanirbharWeb.UserDashboardLive.GalleryUploadComponent do
     {:noreply, cancel_upload(socket, :picture, ref)}
   end
 
+  def handle_event("save",
+    %{"gallery_upload" => gallery_params} = params,
+    socket) do
+    # save creates new records
+    # and stores to DB
+    IO.puts "save gallery_upload"
+
+    {:noreply, socket}
+  end
+
+
+
 end
+
+
+
+
+
+
+
+
+

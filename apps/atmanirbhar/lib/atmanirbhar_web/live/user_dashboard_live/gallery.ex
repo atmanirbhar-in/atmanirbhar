@@ -32,4 +32,16 @@ defmodule AtmanirbharWeb.UserDashboardLive.Gallery do
     |> assign(:picture_albums, all_picture_albums)
   end
 
+
+
 end
+
+
+
+
+
+
+
+
+
+
