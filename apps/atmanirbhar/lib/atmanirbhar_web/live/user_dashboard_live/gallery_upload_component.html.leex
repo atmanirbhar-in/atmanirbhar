@@ -1,5 +1,5 @@
 
-<h2>hello bulk upload</h2>
+<h2>hello Album upload</h2>
 
 <%= f = form_for @changeset, "#",
     id: "gallery-upload-form",
@@ -17,6 +17,17 @@
     <%= error_tag f, :title %>
   </p>
 </label>
+
+<label class="block">
+  <span class="text-gray-700">Description of Album</span>
+  <%= textarea f, :description,
+      class: "form-textarea mt-1 block w-full",
+      placeholder: "Enter Description of Album" %>
+  <p class="text-red-500 text-xs italic">
+    <%= error_tag f, :description %>
+  </p>
+</label>
+
 
 <label>Pictures</label>
 <%= live_file_input(@uploads.picture) %>

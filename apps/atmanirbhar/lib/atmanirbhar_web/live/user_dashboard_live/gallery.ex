@@ -22,11 +22,14 @@ defmodule AtmanirbharWeb.UserDashboardLive.Gallery do
     |> assign(:picture_albums, all_picture_albums)
   end
   defp apply_action(socket, :new_picture, _params) do
+    user_id = 1
     all_pictures = []
+    all_picture_albums = Marketplace.list_user_gallery_items(user_id)
     socket
+    # |> assign(assigns)
     |> assign(:page_title, "Upload pictures")
     |> assign(:gallery_upload, %GalleryUpload{})
-    |> assign(:pictures, all_pictures)
+    |> assign(:picture_albums, all_picture_albums)
   end
 
 end
