@@ -12,11 +12,8 @@ defmodule AtmanirbharWeb.UserDashboardLive.Index do
     |> Atmanirbhar.Marketplace.list_user_businesses
     |> Enum.group_by(&Map.get(&1, :business))
 
-    {:ok, assign(socket,
-        my_plugins: [],
-        businesses_kv: user_businesses_n_stalls,
-        marketplace_bulk_uploads: Marketplace.list_marketplace_bulk_uploads()
-      )
+    {:ok,
+     assign(socket, businesses_kv: user_businesses_n_stalls)
     }
   end
 

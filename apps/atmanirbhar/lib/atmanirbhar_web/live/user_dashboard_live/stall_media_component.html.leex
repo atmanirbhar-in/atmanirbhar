@@ -28,7 +28,11 @@
           <%= for element <- Map.get(@gallery_items_groups, 1, []) do %>
               <div class="p-2 border border-gray-400 mr-2" id="stall-card-<%= element.id %>">
                 <div class="flex flex-row-reverse">
-                  <button phx-click="remove-card-from-stall" phx-value-card="card-<%= element.id %>" class="rounded-full h-4 w-4 flex items-center justify-center bg-red-500 font-bold text-white">
+                  <button phx-click="remove-card-from-stall"
+                          phx-value-card="card-<%= element.id %>"
+                          phx-target="<%= @myself %>"
+                          class="rounded-full h-4 w-4 flex items-center justify-center
+                                 bg-red-500 font-bold text-white">
                     x
                   </button>
                 </div>
