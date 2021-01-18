@@ -146,6 +146,7 @@ Hooks.Stall = {
             // # send which card id
             // # send drop on which card id
             // collect from car through data transfer
+            let phx_target = this.el.getAttribute("phx-target")
 
             let payload = {}
             payload.drag_card_id = e.dataTransfer.getData("dragged_card_id")
@@ -153,7 +154,7 @@ Hooks.Stall = {
             // payload.drop_card_id = this.el.id;
             // payload.drop_card_type = card_type
 
-            this.pushEvent("add-card-to-stall", payload);
+            this.pushEventTo(phx_target, "add-card-to-stall", payload);
         });
     }
 }
