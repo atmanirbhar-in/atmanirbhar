@@ -146,7 +146,8 @@
                 </td>
                 <td class="px-2"></td>
                 <td class="px-2 py-2">
-                  <%= link "Edit Stall", to: Routes.user_dashboard_stall_index_path(@socket, :edit_stall, stall.id), class: "text-lg p-2 btn btn-transparent" %>
+                  <%= live_patch "Edit Stall", to: Routes.user_dashboard_index_path(@socket, :edit_stall, stall.id), class: "text-lg p-2 btn btn-transparent" %>
+                  <%= live_patch "Edit Stall Items", to: Routes.user_dashboard_index_path(@socket, :edit_stall, stall.id), class: "text-lg p-2 btn btn-transparent" %>
                 </td>
 
               </tr>
