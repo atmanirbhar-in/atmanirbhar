@@ -4,9 +4,12 @@ defmodule AtmanirbharWeb.UserDashboardLive.Index do
   alias Atmanirbhar.Marketplace
 
   @impl true
-  def mount(_params, _session, socket) do
-    user_id = 1
-    user_businesses_n_stalls = user_id
+  def mount(_params, session, socket) do
+    user_token = session
+    |> Map.get("user_token")
+    # user_id = 1
+
+    user_businesses_n_stalls = user_token
     |> Atmanirbhar.Marketplace.list_user_businesses
     |> Enum.group_by(&Map.get(&1, :business))
 
@@ -80,6 +83,5 @@ defmodule AtmanirbharWeb.UserDashboardLive.Index do
   def handle_event("recover_wizard", params, socket) do
     {:noreply, socket}
   end
-
 
 end

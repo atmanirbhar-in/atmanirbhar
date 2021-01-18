@@ -18,14 +18,20 @@ defmodule Atmanirbhar.Marketplace do
     Business.changeset(business, attrs)
   end
 
-    def list_user_businesses(user_id) do
+    def list_user_businesses(input_token) do
+    IO.puts "list user business"
+
     query = from stall in Stall,
-      # join: location in assoc(stall, :location),
-      # on: stall.location_id == location.id,
-      inner_join: business in Business,
+      join: business in Business,
       on: stall.business_id == business.id,
+      join: user in User,
+      on: business.owner_id == user.id,
+      join: user_token in UserToken,
+      where: user_token.token == ^input_token,
       preload: [business: business],
-      select: struct(stall, [:id, :title, :description, :location_id, :business_id, location: [:id, :title], business: [:id, :title, :description, :owner_id]])
+      select: struct(stall, [:id, :title, :description, :location_id, :business_id,
+                             location: [:id, :title],
+                             business: [:id, :title, :description, :owner_id]])
     Repo.all(query)
   end
 
