@@ -172,7 +172,8 @@ defmodule AtmanirbharWeb.Router do
     live "/add-my-business", UserDashboardLive.Index, :new_business
     live "/edit-business/:business_id", UserDashboardLive.Index, :edit_business
     live "/new_stall", UserDashboardLive.Index, :new_stall
-    live "/edit_stall/:stall_id", UserDashboardLive.Index, :edit_stall
+    live "/edit-stall/:stall_id", UserDashboardLive.Index, :edit_stall
+    live "/edit-stall-media/:stall_id", UserDashboardLive.Index, :edit_stall_media
     live "/dashboard/gallery", UserDashboardLive.Gallery, :gallery
     live "/dashboard/new_picture", UserDashboardLive.Gallery, :new_picture
     live "/bulk-upload", UserDashboardLive.Index, :new_bulk_upload

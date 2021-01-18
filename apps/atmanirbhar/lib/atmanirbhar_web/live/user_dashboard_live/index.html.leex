@@ -33,6 +33,15 @@
     return_to: Routes.user_dashboard_index_path(@socket, :index)
     %>
 <% end %>
+<%= if @live_action in [:edit_stall_media] do %>
+<%= live_modal @socket, AtmanirbharWeb.UserDashboardLive.StallMediaComponent,
+    id: :stall_media,
+    stall_id: @stall_id,
+    title: @page_title,
+    action: @live_action,
+    return_to: Routes.user_dashboard_index_path(@socket, :index)
+    %>
+<% end %>
 
 <%= if @live_action in [:new_business, :edit_business] do %>
 <%= live_modal @socket, AtmanirbharWeb.UserDashboardLive.BusinessFormComponent,
@@ -146,8 +155,12 @@
                 </td>
                 <td class="px-2"></td>
                 <td class="px-2 py-2">
-                  <%= live_patch "Edit Stall", to: Routes.user_dashboard_index_path(@socket, :edit_stall, stall.id), class: "text-lg p-2 btn btn-transparent" %>
-                  <%= live_patch "Edit Stall Items", to: Routes.user_dashboard_index_path(@socket, :edit_stall, stall.id), class: "text-lg p-2 btn btn-transparent" %>
+                  <%= live_patch "Edit Stall",
+                      to: Routes.user_dashboard_index_path(@socket, :edit_stall, stall.id),
+                      class: "text-lg p-2 btn btn-transparent" %>
+                  <%= live_patch "Edit Stall Items",
+                      to: Routes.user_dashboard_index_path(@socket, :edit_stall_media, stall.id),
+                      class: "text-lg p-2 btn btn-transparent" %>
                 </td>
 
               </tr>

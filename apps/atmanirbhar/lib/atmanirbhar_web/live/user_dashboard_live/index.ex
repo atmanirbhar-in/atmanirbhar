@@ -7,7 +7,6 @@ defmodule AtmanirbharWeb.UserDashboardLive.Index do
   def mount(_params, session, socket) do
     user_token = session
     |> Map.get("user_token")
-    # user_id = 1
 
     user_businesses_n_stalls = user_token
     |> Atmanirbhar.Marketplace.list_user_businesses
@@ -58,6 +57,14 @@ defmodule AtmanirbharWeb.UserDashboardLive.Index do
     socket
     |> assign(:page_title, "Edit Stall")
     |> assign(:stall, stall)
+  end
+
+  defp apply_action(socket, :edit_stall_media, %{"stall_id" => input_stall_id}) do
+    {stall_id, _} = Integer.parse(input_stall_id)
+
+    socket
+    |> assign(:page_title, "Edit Stall")
+    |> assign(:stall_id, stall_id)
   end
 
   defp apply_action(socket, :edit_business, %{"business_id" => input_business_id}) do
