@@ -3,8 +3,18 @@ defmodule AtmanirbharWeb.UserDashboardLive.Gallery do
   alias Atmanirbhar.Marketplace.GalleryUpload
   alias Atmanirbhar.Marketplace
 
-  def mount(_params, _session, socket) do
-    {:ok, socket}
+  def mount(_params, session, socket) do
+    user_token = session
+    |> Map.get("user_token")
+
+    all_picture_albums = Marketplace.list_user_gallery_items(user_token)
+
+    {
+      :ok,
+      socket
+      |> assign(:user_token, user_token)
+      |> assign(:picture_albums, all_picture_albums)
+    }
   end
 
   def handle_params(_params, _url, socket) do
@@ -15,21 +25,14 @@ defmodule AtmanirbharWeb.UserDashboardLive.Gallery do
   end
 
   defp apply_action(socket, :gallery, _params) do
-    user_id = 1
-    all_picture_albums = Marketplace.list_user_gallery_items(user_id)
-
     socket
-    |> assign(:picture_albums, all_picture_albums)
   end
+
   defp apply_action(socket, :new_picture, _params) do
-    user_id = 1
-    all_pictures = []
-    all_picture_albums = Marketplace.list_user_gallery_items(user_id)
+    # all_picture_albums = Marketplace.list_user_gallery_items(socket.assigns.user_token)
     socket
-    # |> assign(assigns)
     |> assign(:page_title, "Upload pictures")
     |> assign(:gallery_upload, %GalleryUpload{})
-    |> assign(:picture_albums, all_picture_albums)
   end
 
 

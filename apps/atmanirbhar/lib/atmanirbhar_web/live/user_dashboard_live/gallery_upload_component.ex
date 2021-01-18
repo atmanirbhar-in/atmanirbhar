@@ -4,7 +4,11 @@ defmodule AtmanirbharWeb.UserDashboardLive.GalleryUploadComponent do
 
   # maybe here is problem?
   def mount(socket) do
+    # user_token = session
+    # |> Map.get("user_token")
+
     {:ok,
+     # assign(socket, :user_token, user_token),
      allow_upload(socket, :picture, accept: [".png", ".jpg"], max_entries: 4)
     }
   end
@@ -33,9 +37,11 @@ defmodule AtmanirbharWeb.UserDashboardLive.GalleryUploadComponent do
   def handle_event("save",
     %{"gallery_upload" => gallery_params} = params,
     socket) do
+    IO.puts inspect(socket.assigns.user_token)
+    IO.puts "-=-=-=-=-=-=-=-=-=-="
     # save creates new records
     # and stores to DB
-    IO.puts "save gallery_upload"
+    # IO.puts "save gallery_upload"
 
     {:noreply, socket}
   end

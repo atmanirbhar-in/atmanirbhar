@@ -4,7 +4,7 @@ defmodule Atmanirbhar.Marketplace.GalleryItem do
   alias Atmanirbhar.Accounts.User
   alias Atmanirbhar.Marketplace.{Stall, StallItem, UserGallery}
 
-  schema "user_gallery_items" do
+  schema "gallery_items" do
     field :description, :string
     field :images, {:array, :string}, nil: false, default: []
     field :title, :string
@@ -12,7 +12,7 @@ defmodule Atmanirbhar.Marketplace.GalleryItem do
 
     timestamps()
     many_to_many(:stalls, Stall, join_through: StallItem, on_replace: :delete)
-    # belongs_to :user, User, join_through: UserGallery
+    belongs_to :gallery, UserGallery
   end
 
   @doc """
