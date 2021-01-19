@@ -23,6 +23,9 @@
   </div>
 </section>
 
+<%= live_patch "New Business",
+    to: Routes.user_dashboard_index_path(@socket, :new_business),
+    class: "text-lg btn btn-primary mr-2" %>
 
 <%= if @live_action in [:new_stall, :edit_stall] do %>
 <%= live_modal @socket, AtmanirbharWeb.UserDashboardLive.StallFormComponent,
