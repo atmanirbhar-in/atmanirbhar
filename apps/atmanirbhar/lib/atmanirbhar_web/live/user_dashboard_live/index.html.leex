@@ -56,6 +56,17 @@
   </div>
 </section>
 
+
+<section class="container py-20 px-5">
+  <%= for todo <- @todos do %>
+      <div class="flex justify-between p-10 bg-red-100">
+        <h3 class="text-3xl font-thin"><%= todo.text %></h3>
+        <button class="btn btn-primary p-5"><%= todo.cta %></button>
+      </div>
+     <% end %>
+</section>
+
+
 <%= live_patch "New Business",
     to: Routes.user_dashboard_index_path(@socket, :new_business),
     class: "text-lg btn btn-primary mr-2" %>

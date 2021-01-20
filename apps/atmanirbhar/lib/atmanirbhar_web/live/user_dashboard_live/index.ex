@@ -13,8 +13,15 @@ defmodule AtmanirbharWeb.UserDashboardLive.Index do
     |> Atmanirbhar.Marketplace.list_user_businesses
     |> Enum.group_by(&Map.get(&1, :business))
 
+    todos = [
+      %{
+        text: "Please add pictures to Gallery",
+        cta: "gallery_path"
+      }
+    ]
+
     {:ok,
-     assign(socket, businesses_kv: user_businesses_n_stalls)
+     assign(socket, businesses_kv: user_businesses_n_stalls, todos: todos)
     }
   end
 
