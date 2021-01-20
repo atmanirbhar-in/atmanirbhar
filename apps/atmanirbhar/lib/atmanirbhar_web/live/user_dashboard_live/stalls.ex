@@ -1,7 +1,7 @@
-defmodule AtmanirbharWeb.UserDashboardLive.Products do
+defmodule AtmanirbharWeb.UserDashboardLive.Stalls do
   use AtmanirbharWeb, :live_view
   alias Atmanirbhar.Marketplace
-  alias AtmanirbharWeb.UserDashboardLive.FolderComponent
+  alias AtmanirbharWeb.UserDashboardLive.FoldersNavigationComponent
 
   def mount(params, session, socket) do
     user_token = session

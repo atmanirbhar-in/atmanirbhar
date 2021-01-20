@@ -2,7 +2,7 @@ defmodule AtmanirbharWeb.UserDashboardLive.Index do
   use AtmanirbharWeb, :live_view
   alias Atmanirbhar.Marketplace.{Business, GalleryItem, Stall}
   alias Atmanirbhar.Marketplace
-  alias AtmanirbharWeb.UserDashboardLive.FolderComponent
+  alias AtmanirbharWeb.UserDashboardLive.FoldersNavigationComponent
 
   @impl true
   def mount(_params, session, socket) do

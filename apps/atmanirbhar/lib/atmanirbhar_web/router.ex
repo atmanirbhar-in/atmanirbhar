@@ -175,7 +175,7 @@ defmodule AtmanirbharWeb.Router do
     live "/dashboard/edit-stall/:stall_id", UserDashboardLive.Index, :edit_stall
     live "/dashboard/edit-stall-media/:stall_id", UserDashboardLive.Index, :edit_stall_media
     live "/dashboard/gallery", UserDashboardLive.Gallery, :gallery
-    live "/dashboard/products-services", UserDashboardLive.Products, :products
+    live "/dashboard/stalls", UserDashboardLive.Stalls, :stalls
     live "/dashboard/new_picture", UserDashboardLive.Gallery, :new_picture
     live "/bulk-upload", UserDashboardLive.Index, :new_bulk_upload
   end
