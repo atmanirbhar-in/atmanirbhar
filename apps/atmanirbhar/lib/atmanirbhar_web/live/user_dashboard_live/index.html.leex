@@ -1,16 +1,38 @@
 <section class="text-gray-600 body-font">
   <div class="container px-5 py-4 mx-auto">
     <div class="flex flex-col text-center w-full mb-20">
-
     </div>
     <div class="flex flex-wrap -m-4 text-center">
-      <div class="md:w-1/4 sm:w-1/2 w-full">
 
-        <%= live_patch to: Routes.user_dashboard_gallery_path(@socket, :gallery), class: "btn btn-link w-full" do %>
+      <div class="
+                  <%= if @live_action in [:index] do %>
+                  md:w-1/4 sm:w-1/2 w-full bg-gray-300
+                  <% else %>
+                  md:w-1/4 sm:w-1/2 w-full
+                  <% end %>
+                  ">
+        <%= live_patch to: Routes.user_dashboard_gallery_path(@socket, :gallery),
+            class: "btn btn-link w-full" do %>
+          <%= img_tag(Routes.static_path(@socket, "/images/dashboard/dashboard_folder.png")) %>
+          <p class="leading-relaxed bg-white">Dashboard</p>
+        <% end %>
+      </div>
+
+
+      <div class="
+                  <%= if @live_action in [:gallery, :new_picture] do %>
+                  md:w-1/4 sm:w-1/2 w-full bg-gray-600
+                  <% else %>
+                  md:w-1/4 sm:w-1/2 w-full
+                  <% end %>
+                  ">
+        <%= live_patch to: Routes.user_dashboard_gallery_path(@socket, :gallery),
+            class: "btn btn-link w-full" do %>
           <%= img_tag(Routes.static_path(@socket, "/images/dashboard/pictures_folder.png")) %>
           <p class="leading-relaxed">Gallery</p>
         <% end %>
       </div>
+
       <div class="md:w-1/4 sm:w-1/2 w-full">
         <%= img_tag(Routes.static_path(@socket, "/images/dashboard/products_folder.png")) %>
         <p class="leading-relaxed">My Products & Services</p>
