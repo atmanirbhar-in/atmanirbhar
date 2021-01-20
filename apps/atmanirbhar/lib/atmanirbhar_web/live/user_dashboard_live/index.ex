@@ -1,6 +1,6 @@
 defmodule AtmanirbharWeb.UserDashboardLive.Index do
   use AtmanirbharWeb, :live_view
-  alias Atmanirbhar.Marketplace.{Advertisement, Deal, Business, GalleryItem, Stall}
+  alias Atmanirbhar.Marketplace.{Business, GalleryItem, Stall}
   alias Atmanirbhar.Marketplace
   alias AtmanirbharWeb.UserDashboardLive.FolderComponent
 
@@ -21,7 +21,7 @@ defmodule AtmanirbharWeb.UserDashboardLive.Index do
     ]
 
     {:ok,
-     assign(socket, businesses_kv: user_businesses_n_stalls, todos: todos)
+     assign(socket, todos: todos)
     }
   end
 
