@@ -7,6 +7,7 @@ defmodule Atmanirbhar.AccountsFixtures do
   def unique_user_email, do: "user#{System.unique_integer()}@example.com"
   def valid_user_password, do: "hello world!"
   def valid_business_name, do: "business#{System.unique_integer()}"
+  def valid_city_name, do: "city#{System.unique_integer()}"
 
 
   def user_with_business_fixture(attrs \\ %{}) do
@@ -15,7 +16,7 @@ defmodule Atmanirbhar.AccountsFixtures do
       |> Enum.into(%{
           email: unique_user_email(),
           password: valid_user_password(),
-          business_name: valid_business_name()
+          business: valid_business_name(),
                    })
 
       # Atmanirbhar.Accounts.register_user()
@@ -26,9 +27,12 @@ defmodule Atmanirbhar.AccountsFixtures do
       attrs
       |> Enum.into(%{
         email: unique_user_email(),
-        password: valid_user_password()
+        password: valid_user_password(),
+        business: valid_business_name(),
+        city: valid_city_name()
       })
       |> Atmanirbhar.Accounts.register_user()
+
 
     user
   end

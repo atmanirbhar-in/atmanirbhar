@@ -48,13 +48,14 @@ defmodule Atmanirbhar.AccountsTest do
   end
 
   describe "register_user/1" do
-    test "requires email and password to be set" do
+    test "requires email and password and Business Name to be set" do
       {:error, changeset} = Accounts.register_user(%{})
 
       assert %{
                password: ["can't be blank"],
-               email: ["can't be blank"]
-             } = errors_on(changeset)
+               email: ["can't be blank"],
+               business: ["can't be blank"]
+      } = errors_on(changeset)
     end
 
     test "validates email and password when given" do
@@ -96,7 +97,7 @@ defmodule Atmanirbhar.AccountsTest do
   describe "change_user_registration/2" do
     test "returns a changeset" do
       assert %Ecto.Changeset{} = changeset = Accounts.change_user_registration(%User{})
-      assert changeset.required == [:password, :email]
+      assert changeset.required == [:city, :business, :password, :email]
     end
   end
 

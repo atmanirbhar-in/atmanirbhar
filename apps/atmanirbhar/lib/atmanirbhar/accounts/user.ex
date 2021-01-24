@@ -11,6 +11,8 @@ defmodule Atmanirbhar.Accounts.User do
     field :hashed_password, :string
     field :confirmed_at, :naive_datetime
     field :avatar, Atmanirbhar.AvatarUploader.Type
+    field :business, :string, virtual: true
+    field :city, :string, virtual: true
 
     timestamps()
 
@@ -29,9 +31,11 @@ defmodule Atmanirbhar.Accounts.User do
   """
   def registration_changeset(user, attrs) do
     user
-    |> cast(attrs, [:email, :password])
+    |> cast(attrs, [:email, :password, :business, :city])
     |> validate_email()
     |> validate_password()
+    |> validate_business()
+    |> validate_city()
   end
 
   defp validate_email(changeset) do
@@ -41,6 +45,16 @@ defmodule Atmanirbhar.Accounts.User do
     |> validate_length(:email, max: 160)
     |> unsafe_validate_unique(:email, Atmanirbhar.Repo)
     |> unique_constraint(:email)
+  end
+
+  defp validate_city(changeset) do
+    changeset
+    |> validate_required([:city])
+  end
+  defp validate_business(changeset) do
+    changeset
+    |> validate_required([:business])
+    |> validate_length(:business, min: 12, max: 80)
   end
 
   defp validate_password(changeset) do
