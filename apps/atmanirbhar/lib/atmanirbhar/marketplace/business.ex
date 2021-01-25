@@ -24,7 +24,7 @@ defmodule Atmanirbhar.Marketplace.Business do
   @doc false
   def changeset(business, attrs) do
     business
-    |> cast(attrs, [:title, :owner_id, :description, :address, :power_index])
-    |> validate_required([:title, :description, :address, :power_index])
+    |> cast(attrs, [:title, :description, :address])
+    |> validate_required([:title])
   end
 end

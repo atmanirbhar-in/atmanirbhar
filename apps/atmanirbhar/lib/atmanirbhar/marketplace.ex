@@ -18,7 +18,22 @@ defmodule Atmanirbhar.Marketplace do
     Business.changeset(business, attrs)
   end
 
-    def list_user_businesses(input_token) do
+  def create_user_business(%User{} = user, business_params) do
+    Ecto.build_assoc(user, :business, business_params)
+  end
+
+  # def create_user_and_business(user_params, business_params) do
+  #   # Ecto.build_assoc(user, :business, business_params)
+  #   user_changeset = Accounts.change_user_registration(user_params)
+  #   Ecto.Multi.new()
+  #   |> Ecto.Multi.insert(:user, user_changeset)
+  #   |> Ecto.Multi.run(:user, fn repo, %{user: user} ->
+  #     Ecto.build_assoc(user, :business, business_params)
+  #   end)
+  #   |> Repo.transaction()
+  # end
+
+  def list_user_businesses(input_token) do
     IO.puts "list user business"
 
     query = from stall in Stall,

@@ -3,6 +3,7 @@ defmodule Atmanirbhar.Accounts.User do
   import Ecto.Changeset
   use Waffle.Ecto.Schema
   alias Atmanirbhar.Marketplace.{GalleryItem, UserGallery}
+  alias Atmanirbhar.Repo
 
   @derive {Inspect, except: [:password]}
   schema "users" do
@@ -14,11 +15,11 @@ defmodule Atmanirbhar.Accounts.User do
     field :business, :string, virtual: true
     field :city, :string, virtual: true
 
-    timestamps()
-
-    has_many :businesses, Atmanirbhar.Marketplace.Business
-    has_one :user_gallery, UserGallery
+    has_many :businesses, Atmanirbhar.Marketplace.Business, foreign_key: :owner_id
+    # has_one :user_gallery, UserGallery
     has_many :gallery_items, GalleryItem
+
+    timestamps()
   end
 
   @doc """
@@ -29,13 +30,24 @@ defmodule Atmanirbhar.Accounts.User do
   could lead to unpredictable or insecure behaviour. Long passwords may
   also be very expensive to hash for certain algorithms.
   """
+  # def registration_form_changeset(user, attrs) do
+  #   user
+  #   |> cast(attrs, [:email, :password, :business, :city])
+  #   |> validate_email()
+  #   |> validate_password()
+  #   |> validate_business()
+  #   |> validate_city()
+  # end
+
   def registration_changeset(user, attrs) do
     user
-    |> cast(attrs, [:email, :password, :business, :city])
+    |> cast(attrs, [:email, :password])
+    |> cast_assoc(:businesses, required: true)
     |> validate_email()
     |> validate_password()
-    |> validate_business()
-    |> validate_city()
+    # |> validate_business()
+    # |> validate_city()
+    # |> Repo.preload(:businesses)
   end
 
   defp validate_email(changeset) do
