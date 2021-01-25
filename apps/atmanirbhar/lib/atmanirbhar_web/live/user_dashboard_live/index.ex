@@ -5,13 +5,11 @@ defmodule AtmanirbharWeb.UserDashboardLive.Index do
   alias AtmanirbharWeb.UserDashboardLive.FoldersNavigationComponent
 
   @impl true
-  def mount(_params, session, socket) do
-    user_token = session
-    |> Map.get("user_token")
+  def mount(params, session, socket) do
+    socket = socket
+      |> MountHelpers.assign_defaults(params, session, [:create_stall, :upload_pictures])
 
-    user_businesses_n_stalls = user_token
-    |> Atmanirbhar.Marketplace.list_user_businesses
-    |> Enum.group_by(&Map.get(&1, :business))
+    user_businesses_n_stalls = Marketplace.list_user_businesses2(socket.assigns.current_user)
 
     todos = [
       %{
@@ -21,7 +19,9 @@ defmodule AtmanirbharWeb.UserDashboardLive.Index do
     ]
 
     {:ok,
-     assign(socket, todos: todos)
+     assign(socket,
+       todos: todos,
+       businesses: user_businesses_n_stalls)
     }
   end
 

@@ -34,8 +34,6 @@ defmodule Atmanirbhar.Marketplace do
   # end
 
   def list_user_businesses(input_token) do
-    IO.puts "list user business"
-
     query = from stall in Stall,
       join: business in Business,
       on: stall.business_id == business.id,
@@ -48,6 +46,16 @@ defmodule Atmanirbhar.Marketplace do
                              location: [:id, :title],
                              business: [:id, :title, :description, :owner_id]])
     Repo.all(query)
+  end
+
+  def list_user_businesses2(%User{id: user_id} = input_user) do
+    query = from business in Business,
+      join: user in assoc(business, :user),
+      preload: [:stalls],
+      where: user.id == ^user_id
+
+      query
+      |> Repo.all
   end
 
   def list_stalls_for_business(input_business_id) do

@@ -7,6 +7,20 @@
 
 
 <section class="container py-20 px-5">
+  <%= for business <- @businesses do %>
+      <div class="flex justify-between p-10 bg-red-100">
+        <h3 class="text-3xl font-thin"><%= business.title %></h3>
+        <p>
+          <%= for stall <- business.stalls do %>
+              <%= stall.title %>
+              <% end %>
+        </p>
+        <button class="btn btn-primary p-5"><%#= todo.cta %></button>
+      </div>
+     <% end %>
+</section>
+
+<section class="container py-20 px-5">
   <%= for todo <- @todos do %>
       <div class="flex justify-between p-10 bg-red-100">
         <h3 class="text-3xl font-thin"><%= todo.text %></h3>

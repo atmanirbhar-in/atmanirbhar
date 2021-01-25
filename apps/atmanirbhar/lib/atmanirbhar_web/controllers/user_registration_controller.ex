@@ -18,7 +18,6 @@ defmodule AtmanirbharWeb.UserRegistrationController do
 
   def create(conn, %{"user" => user_params}) do
     case Accounts.register_user(user_params) do
-    # case Account.register_user_and_business(user_params, business_params) do
       {:ok, user} ->
         {:ok, _} =
           Accounts.deliver_user_confirmation_instructions(
