@@ -14,17 +14,8 @@ defmodule AtmanirbharWeb.UserDashboardLive.FoldersNavigationComponent do
     ~L"""
 
     <section class="text-gray-600 body-font">
-    <div class="container px-5 py-4 mx-auto">
+    <div class="container px-2 py-4 mx-auto">
     <div class="flex flex-wrap -m-4 text-center">
-
-
-      <%= live_component @socket, FolderComponent,
-          highlight_actions: [:index],
-          live_action: @live_action,
-          folder_title: "Dashboard",
-          folder_link: Routes.user_dashboard_index_path(@socket, :index),
-          folder_poster: Routes.static_path(@socket, "/images/dashboard/dashboard_folder.png")
-          %>
 
       <%= live_component @socket, FolderComponent,
           highlight_actions: [:gallery],
@@ -41,14 +32,6 @@ defmodule AtmanirbharWeb.UserDashboardLive.FoldersNavigationComponent do
           folder_title: "Products & Services",
           folder_link: Routes.user_dashboard_index_path(@socket, :index),
           folder_poster: Routes.static_path(@socket, "/images/dashboard/products_folder.png")
-          %>
-
-      <%= live_component @socket, FolderComponent,
-          highlight_actions: [:stalls],
-          live_action: @live_action,
-          folder_title: "Stalls",
-          folder_link: Routes.user_dashboard_stalls_path(@socket, :stalls),
-          folder_poster: Routes.static_path(@socket, "/images/dashboard/stalls_folder.png")
           %>
 
       <%= live_component @socket, FolderComponent,

@@ -21,7 +21,7 @@
   <%= inputs_for f, :businesses, fn i -> %>
       <div class="mb-4">
           <%= label i, :business_name, class: "tag-label" %>
-          <%= text_input i, :title, required: true, class: "tag-input" %>
+          <%= text_input i, :title, required: true, class: "tag-input", placeholder: "sach cakes" %>
           <%= error_tag i, :title %>
      </div>
   <% end %>

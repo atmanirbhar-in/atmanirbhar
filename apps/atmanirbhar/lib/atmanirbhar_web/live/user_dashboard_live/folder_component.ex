@@ -20,8 +20,8 @@ defmodule AtmanirbharWeb.UserDashboardLive.FolderComponent do
     ">
     <%= live_patch to: @folder_link,
     class: "btn btn-link w-full" do %>
-    <%= img_tag(@folder_poster) %>
-    <p class="leading-relaxed bg-white"><%= @folder_title %></p>
+    <%= img_tag(@folder_poster, class: "w-24") %>
+    <p class="leading-relaxed bg-white text-sm"><%= @folder_title %></p>
     <% end %>
     </div>
     """
