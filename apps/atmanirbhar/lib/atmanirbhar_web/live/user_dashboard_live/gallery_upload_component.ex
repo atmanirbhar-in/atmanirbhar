@@ -10,7 +10,7 @@ defmodule AtmanirbharWeb.UserDashboardLive.GalleryUploadComponent do
 
     {:ok,
      # assign(socket, :user_token, user_token),
-     allow_upload(socket, :picture, accept: [".png", ".jpg"], max_entries: 4)
+     allow_upload(socket, :picture, accept: ~w(.png .jpg .jpeg), max_entries: 4)
     }
   end
 
@@ -40,9 +40,9 @@ defmodule AtmanirbharWeb.UserDashboardLive.GalleryUploadComponent do
     gallery_upload = put_image_urls(socket, socket.assigns.gallery_upload)
 
     {business_id, _} = Integer.parse(socket.assigns.business_id)
-    business = Marketplace.load_business_with_media!(business_id)
+    # business = Marketplace.load_business_with_media!(business_id)
     # Marketplace.create_media(socket.business_id, list_of_pictures)
-    case Marketplace.create_media(business, gallery_upload, &consume_pictures(socket, &1)) do
+    case Marketplace.create_media(business_id, gallery_upload, &consume_pictures(socket, &1)) do
       {:ok, _bulk_upload} ->
         {:noreply,
          socket
@@ -63,6 +63,7 @@ defmodule AtmanirbharWeb.UserDashboardLive.GalleryUploadComponent do
   end
 
   def consume_pictures(socket, business) do
+    IO.puts "consume entries .... "
     consume_uploaded_entries(socket, :picture, fn meta, entry ->
       dest = Path.join("priv/static/uploads", "#{entry.uuid}.#{ext(entry)}")
       File.cp!(meta.path, dest)

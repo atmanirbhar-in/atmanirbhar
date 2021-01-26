@@ -75,20 +75,28 @@ defmodule Atmanirbhar.Marketplace do
     # |> Repo.all
   end
 
-  def create_media(business, gallery_params, after_save) do
-    # business
-    # photos = []
+  def create_media(business_id, gallery_params, after_save \\ &{:ok, &1}) do
     list_of_assocs = for photo_url <- gallery_params.urls do
-      Ecto.build_assoc(business, :medias, %{url: photo_url, caption: gallery_params.title})
+      now = NaiveDateTime.utc_now() |> NaiveDateTime.truncate(:second)
+
+      %{ business_id: business_id,
+         url: photo_url,
+         caption: gallery_params.title,
+         inserted_at: now,
+         updated_at: now
+      }
     end
-    Repo.insert_all(list_of_assocs)
-    |> after_save_bulk_photos(after_save)
+    Repo.insert_all(Media, list_of_assocs)
+    after_save_bulk_photos(gallery_params, after_save)
   end
 
   defp after_save_bulk_photos({:ok, bulk_pictures}, func) do
+    IO.puts "aft save ---- "
     {:ok, _post} = func.(bulk_pictures)
   end
   defp after_save_bulk_photos(error, _func) do
+    IO.puts "errrr"
+    IO.puts inspect(error)
     error
   end
 

@@ -10,13 +10,13 @@ defmodule AtmanirbharWeb.UserDashboardLive.Gallery do
 
     # is business_id string? should be integer
 
-    all_picture_albums = Marketplace.list_business_media(business_id)
+    all_media = Marketplace.list_business_media(business_id)
 
     {
       :ok,
       socket
       |> assign(:business_id, business_id)
-      |> assign(:picture_albums, all_picture_albums)
+      |> assign(:media_items, all_media)
     }
   end
 
