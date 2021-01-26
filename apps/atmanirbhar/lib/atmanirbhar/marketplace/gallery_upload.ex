@@ -5,6 +5,7 @@ defmodule Atmanirbhar.Marketplace.GalleryUpload do
   embedded_schema do
     field :title, :string
     field :description, :string
+    field :urls, {:array, :string}, nil: false, default: []
   end
 
   @doc false

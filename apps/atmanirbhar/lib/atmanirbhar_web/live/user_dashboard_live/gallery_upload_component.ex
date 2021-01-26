@@ -1,6 +1,7 @@
 defmodule AtmanirbharWeb.UserDashboardLive.GalleryUploadComponent do
   use AtmanirbharWeb, :live_component
   alias Atmanirbhar.Marketplace
+  alias Atmanirbhar.Marketplace.GalleryUpload
 
   # maybe here is problem?
   def mount(socket) do
@@ -36,10 +37,12 @@ defmodule AtmanirbharWeb.UserDashboardLive.GalleryUploadComponent do
 
   def handle_event("save",
     %{"gallery_upload" => gallery_params} = params, socket) do
-    list_of_pictures = put_image_urls(socket)
-    business = Marketplace.get_business!(socket.assigns.business_id)
+    gallery_upload = put_image_urls(socket, socket.assigns.gallery_upload)
+
+    {business_id, _} = Integer.parse(socket.assigns.business_id)
+    business = Marketplace.load_business_with_media!(business_id)
     # Marketplace.create_media(socket.business_id, list_of_pictures)
-    case Marketplace.create_media(business, gallery_params, &consume_pictures(socket, &1)) do
+    case Marketplace.create_media(business, gallery_upload, &consume_pictures(socket, &1)) do
       {:ok, _bulk_upload} ->
         {:noreply,
          socket
@@ -51,11 +54,12 @@ defmodule AtmanirbharWeb.UserDashboardLive.GalleryUploadComponent do
     end
   end
 
-  defp put_image_urls(socket) do
+  defp put_image_urls(socket, %GalleryUpload{} = gallery_upload) do
     {completed, [] } = uploaded_entries(socket, :picture)
     image_urls = for entry <- completed do
       Routes.static_path(socket, "/uploads/#{entry.uuid}.#{ext(entry)}")
     end
+    %GalleryUpload{gallery_upload | urls: image_urls}
   end
 
   def consume_pictures(socket, business) do

@@ -15,6 +15,15 @@ defmodule Atmanirbhar.Marketplace do
   alias Atmanirbhar.Geo.Location
 
   def get_business!(id), do: Repo.get!(Business, id)
+
+  def load_business_with_media!(business_id) do
+    query = from business in Business,
+      where: business.id == ^business_id,
+      preload: [medias: :medias]
+    query
+    |> Repo.one
+  end
+
   def change_business(%Business{} = business, attrs \\ %{}) do
     Business.changeset(business, attrs)
   end
@@ -66,6 +75,22 @@ defmodule Atmanirbhar.Marketplace do
     # |> Repo.all
   end
 
+  def create_media(business, gallery_params, after_save) do
+    # business
+    # photos = []
+    list_of_assocs = for photo_url <- gallery_params.urls do
+      Ecto.build_assoc(business, :medias, %{url: photo_url, caption: gallery_params.title})
+    end
+    Repo.insert_all(list_of_assocs)
+    |> after_save_bulk_photos(after_save)
+  end
+
+  defp after_save_bulk_photos({:ok, bulk_pictures}, func) do
+    {:ok, _post} = func.(bulk_pictures)
+  end
+  defp after_save_bulk_photos(error, _func) do
+    error
+  end
 
 
   def change_location_form(%LocationForm{} = location_form, attrs \\ %{}) do

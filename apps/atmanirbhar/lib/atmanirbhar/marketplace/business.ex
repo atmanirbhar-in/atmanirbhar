@@ -14,7 +14,7 @@ defmodule Atmanirbhar.Marketplace.Business do
 
     belongs_to :user, Atmanirbhar.Accounts.User, foreign_key: :owner_id
     has_many :stalls, Atmanirbhar.Marketplace.Stall
-    has_many :marketplace_medias, Atmanirbhar.Marketplace.Media
+    has_many :medias, Atmanirbhar.Marketplace.Media
     timestamps()
   end
 
