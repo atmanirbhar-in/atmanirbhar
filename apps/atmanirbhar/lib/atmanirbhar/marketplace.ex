@@ -10,6 +10,7 @@ defmodule Atmanirbhar.Marketplace do
   alias Atmanirbhar.Accounts.{User, UserToken}
   alias Atmanirbhar.Marketplace.{Business, GalleryUpload,
                                  Stall, GalleryItem,
+                                 Media,
                                  LocationForm, StallFilters, BulkUpload}
   alias Atmanirbhar.Geo.Location
 
@@ -21,17 +22,6 @@ defmodule Atmanirbhar.Marketplace do
   def create_user_business(%User{} = user, business_params) do
     Ecto.build_assoc(user, :business, business_params)
   end
-
-  # def create_user_and_business(user_params, business_params) do
-  #   # Ecto.build_assoc(user, :business, business_params)
-  #   user_changeset = Accounts.change_user_registration(user_params)
-  #   Ecto.Multi.new()
-  #   |> Ecto.Multi.insert(:user, user_changeset)
-  #   |> Ecto.Multi.run(:user, fn repo, %{user: user} ->
-  #     Ecto.build_assoc(user, :business, business_params)
-  #   end)
-  #   |> Repo.transaction()
-  # end
 
   def list_user_businesses(input_token) do
     query = from stall in Stall,
@@ -172,11 +162,23 @@ defmodule Atmanirbhar.Marketplace do
     Repo.all query
   end
 
+
+
   # TODO stall elements of User
   def list_all_gallery_items_of_business() do
     query = from se in GalleryItem
     Repo.all query
   end
+
+
+  def list_business_media(business_id) do
+    query = from media in Media,
+      join: business in Business,
+      on: business.id == media.business_id,
+      where: business.id == ^business_id
+    Repo.all query
+  end
+
 
   # def add_gallery_items_to_stall do
   #   s2 = Atmanirbhar.Marketplace.get_stall!(2) |> Atmanirbhar.Repo.preload(:gallery_items)
@@ -259,28 +261,6 @@ defmodule Atmanirbhar.Marketplace do
 
     query
     |> Repo.all()
-  end
-
-  # def get_user_gallery_from_token(token) do
-  #   query = from user_gallery in UserGallery,
-  #     join: user in User,
-  #     on: user_gallery.user_id == user.id,
-  #     where: user.token == ^token
-  #   Repo.one(query)
-  # end
-
-  # def maybe_create_user_gallery(%User{} = user) do
-  #   #
-  #   case get_user_gallery(user) do
-  #     user_gallery -> user_gallery
-  #     _ ->
-  #       create_user_gallery()
-  #   end
-  # end
-
-  def create_gallery_item(%GalleryItem{} = gallery_upload, attrs) do
-    # maybe should share on live
-    #
   end
 
   def get_stall!(id), do: Repo.get!(Stall, id)

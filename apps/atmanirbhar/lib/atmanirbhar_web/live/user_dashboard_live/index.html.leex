@@ -4,7 +4,12 @@
         <div class="flex justify-between">
           <h3 class="text-3xl font-thin"><%= business.title %></h3>
           <div class="flex">
-            <%= live_component @socket, FoldersNavigationComponent, live_action: @live_action %>
+            <%#= live_component @socket, FoldersNavigationComponent, live_action: @live_action %>
+
+            <%= live_patch "Gallery",
+                to: Routes.user_dashboard_gallery_path(@socket,
+                :gallery, business.id),
+                class: "text-lg btn btn-primary mr-2" %>
           </div>
         </div>
 
@@ -60,9 +65,6 @@
                 <td class="px-2 py-2">
                   <%= live_patch "Edit Stall",
                       to: Routes.user_dashboard_index_path(@socket, :edit_stall, stall.id),
-                      class: "text-lg p-2 btn btn-transparent" %>
-                  <%#= live_patch "Edit Stall Items",
-                      to: Routes.user_dashboard_index_path(@socket, :edit_stall_media, stall.id),
                       class: "text-lg p-2 btn btn-transparent" %>
                 </td>
 
