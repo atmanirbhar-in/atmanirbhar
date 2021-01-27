@@ -6,7 +6,7 @@ defmodule Atmanirbhar.Catalog do
   import Ecto.Query, warn: false
   alias Atmanirbhar.Repo
 
-  alias Atmanirbhar.Catalog.Blueprint
+  alias Atmanirbhar.Catalog.{Blueprint, Product}
 
   @doc """
   Returns the list of catalog_blueprints.
@@ -200,4 +200,9 @@ defmodule Atmanirbhar.Catalog do
   def change_taxonomy(%Taxonomy{} = taxonomy, attrs \\ %{}) do
     Taxonomy.changeset(taxonomy, attrs)
   end
+
+  def change_product(%Product{} = product, attrs \\ %{}) do
+    Product.changeset(product, attrs)
+  end
+
 end

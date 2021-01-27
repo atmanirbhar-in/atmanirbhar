@@ -16,7 +16,7 @@
     <span class="text-gray-700">Title</span>
     <%= text_input f, :title,
         class: "form-input mt-1 block w-full",
-        placeholder: "Enter Title" %>
+        placeholder: "Enter name of Product" %>
     <p class="text-red-500 text-xs italic">
       <%= error_tag f, :title %>
     </p>
@@ -26,23 +26,11 @@
     <span class="text-gray-700">Stall Description</span>
     <%= textarea f, :description,
         class: "form-textarea mt-1 block w-full",
-        placeholder: "Enter Stall Description" %>
+        placeholder: "Enter short description of product and deliverables" %>
     <p class="text-red-500 text-xs italic">
       <%= error_tag f, :description %>
     </p>
   </label>
-
-  <label class="block">
-    <span class="text-gray-700">Images</span>
-    <%= text_input f, :images,
-        class: "form-input mt-1 block w-full",
-        placeholder: "Enter Images" %>
-    <p class="text-red-500 text-xs italic">
-      <%= error_tag f, :images %>
-    </p>
-  </label>
-
-
 
   <%= submit "Save", phx_disable_with: "Saving...", class: "btn btn-primary mt-4" %>
 

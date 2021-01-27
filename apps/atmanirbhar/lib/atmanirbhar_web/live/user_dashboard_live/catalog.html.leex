@@ -8,22 +8,23 @@
 
   <div class="p5">
     <%= live_patch "Create Product",
-        to: Routes.user_dashboard_gallery_path(@socket, :new_picture, @business_id),
+        to: Routes.user_dashboard_catalog_path(@socket, :new_product, @business_id),
         class: "text-lg btn mr-2 btn btn-primary" %>
     <%= live_patch "Bulk Upload Products",
-        to: Routes.user_dashboard_gallery_path(@socket, :new_picture, @business_id),
+        to: Routes.user_dashboard_catalog_path(@socket, :new_product, @business_id),
         class: "text-lg btn mr-2" %>
   </div>
 </section>
 <h2 class="text-3xl">My Products and Services</h2>
 
 <%= if @live_action in [:new_product] do %>
-<%= live_modal @socket, AtmanirbharWeb.UserDashboardLive.GalleryUploadComponent,
-    id: :new_gallery_upload,
+<%= live_modal @socket, AtmanirbharWeb.UserDashboardLive.ProductFormComponent,
+    id: :new_product,
     title: @page_title,
     business_id: @business_id,
+    product: @product,
     action: @live_action,
-    return_to: Routes.user_dashboard_gallery_path(@socket, :gallery, @business_id)
+    return_to: Routes.user_dashboard_catalog_path(@socket, :index, @business_id)
     %>
 <% end %>
 

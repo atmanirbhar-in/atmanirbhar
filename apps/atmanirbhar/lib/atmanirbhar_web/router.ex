@@ -174,7 +174,7 @@ defmodule AtmanirbharWeb.Router do
     live "/:business_id/gallery", UserDashboardLive.Gallery, :gallery
     live "/stalls", UserDashboardLive.Stalls, :stalls
     live "/:business_id/new_picture", UserDashboardLive.Gallery, :new_picture
-    live "/:business_id/catalog/new_product", UserDashboardLive.Index, :new_product
+    live "/:business_id/catalog/new_product", UserDashboardLive.Catalog, :new_product
     live "/:business_id/catalog", UserDashboardLive.Catalog, :index
 
     live "/bulk-upload", UserDashboardLive.Index, :new_bulk_upload
