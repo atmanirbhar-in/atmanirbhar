@@ -12,6 +12,7 @@ defmodule Atmanirbhar.Marketplace do
                                  Stall, GalleryItem,
                                  Media,
                                  LocationForm, StallFilters, BulkUpload}
+  alias Atmanirbhar.Catalog.Product
   alias Atmanirbhar.Geo.Location
 
   def get_business!(id), do: Repo.get!(Business, id)
@@ -187,9 +188,14 @@ defmodule Atmanirbhar.Marketplace do
   end
 
   def list_business_products(business_id) do
+    query = from product in Product,
+      join: business in assoc(product, :business),
+      where: business.id == ^business_id,
+      preload: [:business]
+
+    query
+    |> Repo.all
   end
-
-
 
   # TODO stall elements of User
   def list_all_gallery_items_of_business() do
