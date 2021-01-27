@@ -37,7 +37,12 @@ defmodule AtmanirbharWeb.UserDashboardLive.GalleryUploadComponent do
 
   def handle_event("save",
     %{"gallery_upload" => gallery_params} = params, socket) do
-    gallery_upload = put_image_urls(socket, socket.assigns.gallery_upload)
+
+    gallery_params  =
+      GalleryUpload.changeset(socket.assigns.gallery_upload, gallery_params)
+      |> Ecto.Changeset.apply_changes()
+
+    gallery_upload = put_image_urls(socket, gallery_params)
 
     {business_id, _} = Integer.parse(socket.assigns.business_id)
     # business = Marketplace.load_business_with_media!(business_id)
@@ -65,7 +70,6 @@ defmodule AtmanirbharWeb.UserDashboardLive.GalleryUploadComponent do
   end
 
   def consume_pictures(socket, business) do
-    IO.puts "consume entries .... "
     consume_uploaded_entries(socket, :picture, fn meta, entry ->
       dest = Path.join("priv/static/uploads", "#{entry.uuid}.#{ext(entry)}")
       File.cp!(meta.path, dest)
