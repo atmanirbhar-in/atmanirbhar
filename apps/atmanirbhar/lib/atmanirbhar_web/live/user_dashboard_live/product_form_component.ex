@@ -17,7 +17,7 @@ defmodule AtmanirbharWeb.UserDashboardLive.ProductFormComponent do
   @impl true
   def handle_event("validate", %{"product" => product_params}, socket) do
     changeset =
-      socket.assigns.stall_element
+      socket.assigns.product
       |> Catalog.change_product(product_params)
       |> Map.put(:action, :validate)
 
@@ -42,7 +42,12 @@ defmodule AtmanirbharWeb.UserDashboardLive.ProductFormComponent do
   end
 
   defp save_product(socket, :new_product, product_params) do
-    case Catalog.create_product(product_params) do
+    # IO.puts "------  ******"
+    # IO.puts inspect(product_params)
+    # IO.puts "------ attrs ^^^^^"
+
+    business_id = socket.assigns.business_id
+    case Catalog.create_product(business_id, product_params) do
       {:ok, _product} ->
         {:noreply,
          socket

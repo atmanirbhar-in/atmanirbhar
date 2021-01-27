@@ -140,13 +140,13 @@ defmodule Atmanirbhar.Marketplace do
   # end
 
 
-  # set GalleryItem type for Product
-  def create_product(attrs \\ %{}) do
-    %GalleryItem{}
-    |> GalleryItem.product_changeset(attrs)
-    |> put_change(:type, 1)
-    |> Repo.insert()
-  end
+  # # set GalleryItem type for Product
+  # def create_product(attrs \\ %{}) do
+  #   %GalleryItem{}
+  #   |> GalleryItem.product_changeset(attrs)
+  #   |> put_change(:type, 1)
+  #   |> Repo.insert()
+  # end
 
   # link gallery_item and stall
   # def add_gallery_item_to_stall(gallery_item = %GalleryItem{}, stall = %Stall{}) do
@@ -187,14 +187,19 @@ defmodule Atmanirbhar.Marketplace do
     Repo.all query
   end
 
-  def list_business_products(business_id) do
-    query = from product in Product,
-      join: business in assoc(product, :business),
+  def get_business_with_products(business_id) do
+    # query = from business in Business,
+    #   join: product in Product, assoc(product, :business),
+    #   where: business.id == ^business_id,
+    #   preload: [:business],
+    #   select: [product: [:title, :description, :id, :business_id]]
+
+    query = from business in Business,
       where: business.id == ^business_id,
-      preload: [:business]
+      preload: [:products]
 
     query
-    |> Repo.all
+    |> Repo.one
   end
 
   # TODO stall elements of User

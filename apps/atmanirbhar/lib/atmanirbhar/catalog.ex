@@ -7,6 +7,7 @@ defmodule Atmanirbhar.Catalog do
   alias Atmanirbhar.Repo
 
   alias Atmanirbhar.Catalog.{Blueprint, Product}
+  alias Atmanirbhar.Marketplace
 
   @doc """
   Returns the list of catalog_blueprints.
@@ -188,21 +189,30 @@ defmodule Atmanirbhar.Catalog do
     Repo.delete(taxonomy)
   end
 
-  @doc """
-  Returns an `%Ecto.Changeset{}` for tracking taxonomy changes.
-
-  ## Examples
-
-      iex> change_taxonomy(taxonomy)
-      %Ecto.Changeset{data: %Taxonomy{}}
-
-  """
   def change_taxonomy(%Taxonomy{} = taxonomy, attrs \\ %{}) do
     Taxonomy.changeset(taxonomy, attrs)
   end
 
   def change_product(%Product{} = product, attrs \\ %{}) do
     Product.changeset(product, attrs)
+  end
+
+  def create_product(input_business_id, attrs \\ %{}) do
+    business = Marketplace.get_business!(input_business_id)
+    build_prod = Ecto.build_assoc(business, :products, attrs)
+
+    # IO.puts "------  ******"
+    # IO.puts inspect(attrs)
+    # IO.puts "------ attrs ^^^^^"
+    # IO.puts inspect(cs)
+    # IO.puts "------ cs ^^^^^"
+    # IO.puts "------ **********"
+    # Repo.insert(cs)
+
+    build_prod
+    # %Product{}
+    |> Product.changeset(attrs)
+    |> Repo.insert()
   end
 
 end

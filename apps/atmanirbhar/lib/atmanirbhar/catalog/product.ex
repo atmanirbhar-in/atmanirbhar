@@ -6,7 +6,7 @@ defmodule Atmanirbhar.Catalog.Product do
     field :deliverables, :string
     field :delivery_details, :string
     field :description, :string
-    field :images, {:array, :string}
+    field :images, {:array, :string}, nil: false, default: []
     field :title, :string
     field :unit_price_inr, :string
     # field :business_id, :id
@@ -17,8 +17,9 @@ defmodule Atmanirbhar.Catalog.Product do
 
   @doc false
   def changeset(product, attrs) do
+
     product
     |> cast(attrs, [:title, :description, :images, :delivery_details, :unit_price_inr, :deliverables])
-    |> validate_required([:title, :description, :images, :delivery_details, :unit_price_inr, :deliverables])
+    |> validate_required([:title, :description])
   end
 end
