@@ -26,12 +26,9 @@
 
 <section class="flex flex-wrap">
   <%= for media <- @media_items do %>
-      <div class="flex flex-col mr-5 p-5">
-        <span class="text-2xl">
-          <%= media.caption %>
-        </span>
+      <div class="flex flex-col-reverse mr-5 p-5">
         <span class="text-base">
-          <%#= album.description %>
+          <%= media.caption %>
         </span>
         <img alt=""
              class="border h-32 max-w-lg"

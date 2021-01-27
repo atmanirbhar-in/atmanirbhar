@@ -10,6 +10,10 @@
                 to: Routes.user_dashboard_gallery_path(@socket,
                 :gallery, business.id),
                 class: "text-lg btn btn-primary mr-2" %>
+            <%= live_patch "Products & Services",
+                to: Routes.user_dashboard_catalog_path(@socket,
+                :index, business.id),
+                class: "text-lg btn btn-primary mr-2" %>
           </div>
         </div>
 

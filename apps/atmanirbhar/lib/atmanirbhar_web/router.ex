@@ -151,32 +151,32 @@ defmodule AtmanirbharWeb.Router do
     live "/catalog_taxonomies/:id/show/edit", TaxonomyLive.Show, :edit
   end
 
-  scope "/", AtmanirbharWeb do
+  scope "/dashboard/", AtmanirbharWeb do
     pipe_through [:browser, :require_authenticated_user, :user_dashboard]
 
-    get "/users/settings", UserSettingsController, :edit
-    put "/users/settings/update_password", UserSettingsController, :update_password
-    put "/users/settings/update_email", UserSettingsController, :update_email
-    get "/users/settings/confirm_email/:token", UserSettingsController, :confirm_email
-    put "/users/settings/update_avatar", UserSettingsController, :update_avatar
+    get "/settings", UserSettingsController, :edit
+    put "/settings/update_password", UserSettingsController, :update_password
+    put "/settings/update_email", UserSettingsController, :update_email
+    get "/settings/confirm_email/:token", UserSettingsController, :confirm_email
+    put "/settings/update_avatar", UserSettingsController, :update_avatar
 
 
-    live "/dashboard", UserDashboardLive.Index, :index
-    live "/dashboard/new_product", UserDashboardLive.Index, :new_product
-
-    live "/dashboard", UserDashboardLive.Index, :index
+    live "/", UserDashboardLive.Index, :index
 
     live "/marketplace_stalls/:id", StallLive.Show, :show
     live "/marketplace_stalls/:id/show/edit", StallLive.Show, :edit
 
-    live "/dashboard/add-my-business", UserDashboardLive.Index, :new_business
-    live "/dashboard/edit-business/:business_id", UserDashboardLive.Index, :edit_business
-    live "/dashboard/new_stall", UserDashboardLive.Index, :new_stall
-    live "/dashboard/edit-stall/:stall_id", UserDashboardLive.Index, :edit_stall
-    live "/dashboard/edit-stall-media/:stall_id", UserDashboardLive.Index, :edit_stall_media
-    live "/dashboard/:business_id/gallery", UserDashboardLive.Gallery, :gallery
-    live "/dashboard/stalls", UserDashboardLive.Stalls, :stalls
-    live "/dashboard/:business_id/new_picture", UserDashboardLive.Gallery, :new_picture
+    live "/add-my-business", UserDashboardLive.Index, :new_business
+    live "/edit-business/:business_id", UserDashboardLive.Index, :edit_business
+    live "/new_stall", UserDashboardLive.Index, :new_stall
+    live "/edit-stall/:stall_id", UserDashboardLive.Index, :edit_stall
+    live "/edit-stall-media/:stall_id", UserDashboardLive.Index, :edit_stall_media
+    live "/:business_id/gallery", UserDashboardLive.Gallery, :gallery
+    live "/stalls", UserDashboardLive.Stalls, :stalls
+    live "/:business_id/new_picture", UserDashboardLive.Gallery, :new_picture
+    live "/:business_id/catalog/new_product", UserDashboardLive.Index, :new_product
+    live "/:business_id/catalog", UserDashboardLive.Catalog, :index
+
     live "/bulk-upload", UserDashboardLive.Index, :new_bulk_upload
   end
 

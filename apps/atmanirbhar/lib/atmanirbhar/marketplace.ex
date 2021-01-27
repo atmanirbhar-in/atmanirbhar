@@ -161,8 +161,6 @@ defmodule Atmanirbhar.Marketplace do
     |> Repo.update
   end
 
-
-
   def remove_gallery_item_from_stall(gallery_item_id, stall) do
     gallery_item = Repo.get!(GalleryItem, gallery_item_id)
     gallery_items = stall.gallery_items -- [gallery_item]
@@ -186,6 +184,9 @@ defmodule Atmanirbhar.Marketplace do
     query = from se in GalleryItem,
       where: se.type == 1
     Repo.all query
+  end
+
+  def list_business_products(business_id) do
   end
 
 
