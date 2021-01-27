@@ -87,19 +87,12 @@ defmodule Atmanirbhar.Marketplace do
       }
     end
     Repo.insert_all(Media, list_of_assocs)
-    after_save_bulk_photos(gallery_params, after_save)
+    |> after_save_bulk_photos(gallery_params.urls, after_save)
   end
 
-  defp after_save_bulk_photos({:ok, bulk_pictures}, func) do
-    IO.puts "aft save ---- "
-    {:ok, _post} = func.(bulk_pictures)
+  defp after_save_bulk_photos(_, picture_urls, func) do
+    {:ok, _post} = func.(picture_urls)
   end
-  defp after_save_bulk_photos(error, _func) do
-    IO.puts "errrr"
-    IO.puts inspect(error)
-    error
-  end
-
 
   def change_location_form(%LocationForm{} = location_form, attrs \\ %{}) do
     LocationForm.changeset(location_form, attrs)

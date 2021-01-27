@@ -24,7 +24,7 @@
 
 
 
-<section class="flex">
+<section class="flex flex-wrap">
   <%= for media <- @media_items do %>
       <div class="flex flex-col mr-5 p-5">
         <span class="text-2xl">
@@ -34,7 +34,7 @@
           <%#= album.description %>
         </span>
         <img alt=""
-             class="border h-20 w-20"
+             class="border h-40 w-40"
              src="<%= media.url %>" alt="<%#= media.title %>" />
       </div>
       <% end %>

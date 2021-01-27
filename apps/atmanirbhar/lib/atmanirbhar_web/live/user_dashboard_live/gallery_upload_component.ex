@@ -42,7 +42,9 @@ defmodule AtmanirbharWeb.UserDashboardLive.GalleryUploadComponent do
     {business_id, _} = Integer.parse(socket.assigns.business_id)
     # business = Marketplace.load_business_with_media!(business_id)
     # Marketplace.create_media(socket.business_id, list_of_pictures)
-    case Marketplace.create_media(business_id, gallery_upload, &consume_pictures(socket, &1)) do
+    case Marketplace.create_media(business_id,
+          gallery_upload,
+          &consume_pictures(socket, &1)) do
       {:ok, _bulk_upload} ->
         {:noreply,
          socket
