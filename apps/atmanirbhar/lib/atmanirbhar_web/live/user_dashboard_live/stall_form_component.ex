@@ -10,6 +10,15 @@ defmodule AtmanirbharWeb.UserDashboardLive.StallFormComponent do
     my_media = assigns.current_business.medias
     my_products = assigns.current_business.products
 
+    # Enum.group_by(arr, &Map.get(&1, :id))
+    stall_product_ids = [1]
+    stall_products = Enum.filter(my_products,
+      fn obj -> obj.id in stall_product_ids end)
+
+    stall_media_ids = [1]
+    stall_medias = Enum.filter(my_media,
+      fn obj -> obj.id in stall_media_ids end)
+
     {:ok,
      socket
      |> assign(assigns)
@@ -17,6 +26,8 @@ defmodule AtmanirbharWeb.UserDashboardLive.StallFormComponent do
      |> assign(:changeset, changeset)
      |> assign(:all_media, my_media)
      |> assign(:all_products, my_products)
+     |> assign(:stall_products, stall_products)
+     |> assign(:stall_medias, stall_medias)
     }
   end
 
@@ -34,13 +45,14 @@ defmodule AtmanirbharWeb.UserDashboardLive.StallFormComponent do
     save_stall(socket, socket.assigns.action, stall_params)
   end
 
-  # def handle_event("add-card-to-stall",
-  #   %{"drag_card_id" => element_id, "drag_card_type" => element_type}, socket) do
-  #   # save_stall(socket, socket.assigns.action, stall_params)
-  #   # Marketplace.add_element_to_stall()
-  #   # assign(socket, :changeset, changeset)
-  #   {:noreply, socket}
-  # end
+  def handle_event("add-gallery-picture-to-stall", %{"drag_card_id" => element_id}, socket) do
+    # {gallery_item_id, _} = String.trim_leading(element_id, "card-") |> Integer.parse
+
+    # save_stall(socket, socket.assigns.action, stall_params)
+    # Marketplace.add_element_to_stall()
+    # assign(socket, :changeset, changeset)
+    {:noreply, socket}
+  end
 
   defp save_stall(socket, :edit_stall, stall_params) do
     case Marketplace.update_stall(socket.assigns.stall, stall_params) do

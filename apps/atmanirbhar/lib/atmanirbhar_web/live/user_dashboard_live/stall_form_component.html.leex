@@ -126,11 +126,24 @@
   </div>
   <div class="flex w-full flex-col bg-blue-100">
     <h3 class="p-2">Products</h3>
+
     <p>
       drag and drop the ones you want
     </p>
-    <div class="flex border p-2 h-32 w-full">
+
+    <div class="flex p-4">
+      <%= for element <- @stall_products do %>
+          <div class="flex p-2 border">
+            <%= for image <- element.images do %>
+                <img alt=""
+                     src="<%= image %>"
+                     class="w-12 h-12"/>
+                <% end %>
+                <%= element.title %>
+          </div>
+          <% end %>
     </div>
+
   </div>
 
   <div class="mt-4">
@@ -155,6 +168,18 @@
       drag and drop the ones you want
     </p>
     <div class="flex border p-2 h-32 w-full">
+
+      <%= for element <- @stall_medias do %>
+          <div class="p-2 border border-gray-400 mr-2" draggable="true"
+               phx-hook="Card"
+               phx-target="<%= @myself %>"
+               id="card-<%= element.id %>" data_card_type="<%= element.type %>" >
+            <img alt="" src="<%= element.url %>" class="w-24 h-24"/>
+            <%= element.caption %>
+          </div>
+          <% end %>
+
+
     </div>
   </div>
 
