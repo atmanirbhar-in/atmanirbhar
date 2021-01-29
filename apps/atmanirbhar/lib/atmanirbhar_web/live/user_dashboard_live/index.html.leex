@@ -1,3 +1,56 @@
+
+<%= if @live_action in [:new_stall, :edit_stall] do %>
+<%= live_modal @socket, AtmanirbharWeb.UserDashboardLive.StallFormComponent,
+    id: :new,
+    title: @page_title,
+    stall: @stall,
+    action: @live_action,
+    return_to: Routes.user_dashboard_index_path(@socket, :index)
+    %>
+<% end %>
+<%= if @live_action in [:edit_stall_media] do %>
+<%= live_modal @socket, AtmanirbharWeb.UserDashboardLive.StallMediaComponent,
+    id: :stall_media,
+    stall_id: @stall_id,
+    title: @page_title,
+    action: @live_action,
+    return_to: Routes.user_dashboard_index_path(@socket, :index)
+    %>
+<% end %>
+
+<%= if @live_action in [:new_business, :edit_business] do %>
+<%= live_modal @socket, AtmanirbharWeb.UserDashboardLive.BusinessFormComponent,
+    id: :new,
+    title: @page_title,
+    business: @business,
+    action: @live_action,
+    return_to: Routes.user_dashboard_index_path(@socket, :index)
+    %>
+<% end %>
+
+
+<%= if @live_action in [:new_timeline_post, :edit_timeline_post] do %>
+<%= live_modal @socket, AtmanirbharWeb.UserDashboardLive.TimelinePostFormComponent,
+    id: @stall_element.id || :new,
+    title: @page_title,
+    action: @live_action,
+    stall_element: @stall_element,
+    return_to: Routes.user_dashboard_index_path(@socket, :index)
+    %>
+<% end %>
+
+
+<%= if @live_action in [:new_product, :edit_product] do %>
+<%= live_modal @socket, AtmanirbharWeb.UserDashboardLive.ProductFormComponent,
+    id: @stall_element.id || :new,
+    title: @page_title,
+    action: @live_action,
+    stall_element: @stall_element,
+    return_to: Routes.user_dashboard_index_path(@socket, :index)
+    %>
+<% end %>
+
+
 <section class="container py-20 px-5">
   <%= for business <- @businesses do %>
       <div class="flex justify-between bg-red-100 flex-col">
@@ -90,57 +143,6 @@
      <% end %>
 </section>
 
-
-<%= if @live_action in [:new_stall, :edit_stall] do %>
-<%= live_modal @socket, AtmanirbharWeb.UserDashboardLive.StallFormComponent,
-    id: :new,
-    title: @page_title,
-    stall: @stall,
-    action: @live_action,
-    return_to: Routes.user_dashboard_index_path(@socket, :index)
-    %>
-<% end %>
-<%= if @live_action in [:edit_stall_media] do %>
-<%= live_modal @socket, AtmanirbharWeb.UserDashboardLive.StallMediaComponent,
-    id: :stall_media,
-    stall_id: @stall_id,
-    title: @page_title,
-    action: @live_action,
-    return_to: Routes.user_dashboard_index_path(@socket, :index)
-    %>
-<% end %>
-
-<%= if @live_action in [:new_business, :edit_business] do %>
-<%= live_modal @socket, AtmanirbharWeb.UserDashboardLive.BusinessFormComponent,
-    id: :new,
-    title: @page_title,
-    business: @business,
-    action: @live_action,
-    return_to: Routes.user_dashboard_index_path(@socket, :index)
-    %>
-<% end %>
-
-
-<%= if @live_action in [:new_timeline_post, :edit_timeline_post] do %>
-<%= live_modal @socket, AtmanirbharWeb.UserDashboardLive.TimelinePostFormComponent,
-    id: @stall_element.id || :new,
-    title: @page_title,
-    action: @live_action,
-    stall_element: @stall_element,
-    return_to: Routes.user_dashboard_index_path(@socket, :index)
-    %>
-<% end %>
-
-
-<%= if @live_action in [:new_product, :edit_product] do %>
-<%= live_modal @socket, AtmanirbharWeb.UserDashboardLive.ProductFormComponent,
-    id: @stall_element.id || :new,
-    title: @page_title,
-    action: @live_action,
-    stall_element: @stall_element,
-    return_to: Routes.user_dashboard_index_path(@socket, :index)
-    %>
-<% end %>
 
 
 <%#= live_patch "Add Products", to: Routes.user_dashboard_index_path(@socket, :new_product), class: "text-lg btn mr-2" %>
