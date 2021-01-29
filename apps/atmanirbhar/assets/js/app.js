@@ -150,7 +150,7 @@ Hooks.Stall = {
 
             let payload = {}
             payload.drag_card_id = e.dataTransfer.getData("dragged_card_id")
-            payload.drag_card_type = e.dataTransfer.getData("dragged_card_type")
+            // payload.drag_card_type = e.dataTransfer.getData("dragged_card_type")
             // payload.drop_card_id = this.el.id;
             // payload.drop_card_type = card_type
 
