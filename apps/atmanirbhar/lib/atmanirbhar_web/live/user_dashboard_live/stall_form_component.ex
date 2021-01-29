@@ -7,12 +7,17 @@ defmodule AtmanirbharWeb.UserDashboardLive.StallFormComponent do
   def update(%{stall: stall} = assigns, socket) do
     changeset = Marketplace.change_stall(stall)
     locations = Atmanirbhar.Geo.list_locations() |> Enum.map(&{&1.title, &1.id})
+    my_media = assigns.current_business.medias
+    my_products = assigns.current_business.products
 
     {:ok,
      socket
      |> assign(assigns)
      |> assign(:locations, locations)
-     |> assign(:changeset, changeset)}
+     |> assign(:changeset, changeset)
+     |> assign(:all_media, my_media)
+     |> assign(:all_products, my_products)
+    }
   end
 
   @impl true

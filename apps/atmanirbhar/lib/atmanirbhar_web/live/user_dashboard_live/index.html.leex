@@ -4,6 +4,8 @@
     id: :new,
     title: @page_title,
     stall: @stall,
+    current_user: @current_user,
+    current_business: @current_business,
     action: @live_action,
     return_to: Routes.user_dashboard_index_path(@socket, :index)
     %>
