@@ -12,7 +12,7 @@ defmodule Atmanirbhar.Marketplace.Business do
     field :city_id, :id
     field :areas_id, :id
 
-    belongs_to :user, Atmanirbhar.Accounts.User, foreign_key: :owner_id
+    belongs_to :user, Atmanirbhar.Accounts.User
     has_many :stalls, Atmanirbhar.Marketplace.Stall
     has_many :medias, Atmanirbhar.Marketplace.Media
     has_many :products, Atmanirbhar.Catalog.Product

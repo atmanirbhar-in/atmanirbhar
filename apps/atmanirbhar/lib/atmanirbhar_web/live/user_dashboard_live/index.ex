@@ -9,7 +9,7 @@ defmodule AtmanirbharWeb.UserDashboardLive.Index do
     socket = socket
       |> MountHelpers.assign_defaults(params, session, [:create_stall, :upload_pictures])
 
-    user_businesses_n_stalls = Marketplace.list_user_businesses2(socket.assigns.current_user)
+    # user_businesses_n_stalls = Marketplace.list_user_businesses2(socket.assigns.current_business)
 
     todos = [
       %{
@@ -21,7 +21,7 @@ defmodule AtmanirbharWeb.UserDashboardLive.Index do
     {:ok,
      assign(socket,
        todos: todos,
-       businesses: user_businesses_n_stalls)
+       business: socket.assigns.current_business)
     }
   end
 

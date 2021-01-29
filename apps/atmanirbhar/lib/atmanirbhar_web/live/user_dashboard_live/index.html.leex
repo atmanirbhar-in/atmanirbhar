@@ -52,20 +52,22 @@
 
 
 <section class="container py-20 px-5">
-  <%= for business <- @businesses do %>
+  <%#= for business <- @businesses do %>
       <div class="flex justify-between bg-red-100 flex-col">
         <div class="flex justify-between">
-          <h3 class="text-3xl font-thin"><%= business.title %></h3>
+          <h3 class="text-3xl font-thin"><%= @business.title %></h3>
           <div class="flex">
-            <%#= live_component @socket, FoldersNavigationComponent, live_action: @live_action %>
+            <%#= live_component @socket,
+                 FoldersNavigationComponent,
+                 live_action: @live_action %>
 
             <%= live_patch "Gallery",
                 to: Routes.user_dashboard_gallery_path(@socket,
-                :gallery, business.id),
+                :gallery),
                 class: "text-lg btn btn-primary mr-2" %>
             <%= live_patch "Products & Services",
                 to: Routes.user_dashboard_catalog_path(@socket,
-                :index, business.id),
+                :index),
                 class: "text-lg btn btn-primary mr-2" %>
           </div>
         </div>
@@ -100,7 +102,7 @@
             </td>
 
           </tr>
-          <%= for stall <- business.stalls do %>
+          <%= for stall <- @business.stalls do %>
               <tr id="stall-<%= stall.id %>" class="border border-b-2 p-2 mt-7">
                 <td class="px-2">
                   <%= stall.title %>
@@ -131,7 +133,7 @@
       </table>
 
       </div>
-     <% end %>
+     <%# end %>
 </section>
 
 <section class="container py-20 px-5">

@@ -9,6 +9,7 @@ defmodule AtmanirbharWeb.MountHelpers do
   def assign_defaults(socket, params, session, acl) do
     socket
     |> assign_current_user(session)
+    |> assign_current_business
     # |> assign_current_membership(params)
     # |> assign_current_org()
     # |> assign(:navbar, :org)
@@ -56,12 +57,12 @@ defmodule AtmanirbharWeb.MountHelpers do
   #   end)
   # end
 
-  # defp assign_current_org(socket) do
-  #   assign_new(socket, :current_org, fn ->
-  #     membership = socket.assigns.current_membership
-  #     membership && membership.org
-  #   end)
-  # end
+  defp assign_current_business(socket) do
+    assign_new(socket, :current_business, fn ->
+      user = socket.assigns.current_user
+      user && user.business
+    end)
+  end
 
   # defp ensure_access(socket, [:user, _] = acl) do
   #   assign(socket, :acl, acl)

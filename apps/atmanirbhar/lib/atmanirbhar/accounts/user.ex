@@ -12,12 +12,14 @@ defmodule Atmanirbhar.Accounts.User do
     field :hashed_password, :string
     field :confirmed_at, :naive_datetime
     field :avatar, Atmanirbhar.AvatarUploader.Type
-    field :business, :string, virtual: true
-    field :city, :string, virtual: true
+    # field :business, :string, virtual: true
+    # field :city, :string, virtual: true
 
-    has_many :businesses, Atmanirbhar.Marketplace.Business, foreign_key: :owner_id
+
+    has_one :business, Atmanirbhar.Marketplace.Business
+    # has_many :businesses, Atmanirbhar.Marketplace.Business, foreign_key: :owner_id
     # has_one :user_gallery, UserGallery
-    has_many :gallery_items, GalleryItem
+    # has_many :gallery_items, GalleryItem
 
     timestamps()
   end

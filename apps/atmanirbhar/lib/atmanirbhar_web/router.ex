@@ -149,6 +149,8 @@ defmodule AtmanirbharWeb.Router do
 
     live "/catalog_taxonomies/:id", TaxonomyLive.Show, :show
     live "/catalog_taxonomies/:id/show/edit", TaxonomyLive.Show, :edit
+    live "/marketplace_stalls/:id", StallLive.Show, :show
+    live "/marketplace_stalls/:id/show/edit", StallLive.Show, :edit
   end
 
   scope "/dashboard/", AtmanirbharWeb do
@@ -163,19 +165,19 @@ defmodule AtmanirbharWeb.Router do
 
     live "/", UserDashboardLive.Index, :index
 
-    live "/marketplace_stalls/:id", StallLive.Show, :show
-    live "/marketplace_stalls/:id/show/edit", StallLive.Show, :edit
-
     live "/add-my-business", UserDashboardLive.Index, :new_business
-    live "/edit-business/:business_id", UserDashboardLive.Index, :edit_business
+    live "/edit-business", UserDashboardLive.Index, :edit_business
+
+    live "/stalls", UserDashboardLive.Stalls, :stalls
     live "/new_stall", UserDashboardLive.Index, :new_stall
     live "/edit-stall/:stall_id", UserDashboardLive.Index, :edit_stall
     live "/edit-stall-media/:stall_id", UserDashboardLive.Index, :edit_stall_media
-    live "/:business_id/gallery", UserDashboardLive.Gallery, :gallery
-    live "/stalls", UserDashboardLive.Stalls, :stalls
-    live "/:business_id/new_picture", UserDashboardLive.Gallery, :new_picture
-    live "/:business_id/catalog/new_product", UserDashboardLive.Catalog, :new_product
-    live "/:business_id/catalog", UserDashboardLive.Catalog, :index
+
+    live "/gallery", UserDashboardLive.Gallery, :gallery
+    live "/gallery/new_picture", UserDashboardLive.Gallery, :new_picture
+
+    live "/catalog", UserDashboardLive.Catalog, :index
+    live "/catalog/new_product", UserDashboardLive.Catalog, :new_product
 
     live "/bulk-upload", UserDashboardLive.Index, :new_bulk_upload
   end
