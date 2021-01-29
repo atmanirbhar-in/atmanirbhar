@@ -76,11 +76,10 @@ defmodule Atmanirbhar.Marketplace do
     # |> Repo.all
   end
 
-  def create_media(business_id, gallery_params, after_save \\ &{:ok, &1}) do
+  def create_media(business, gallery_params, after_save \\ &{:ok, &1}) do
+    now = NaiveDateTime.utc_now() |> NaiveDateTime.truncate(:second)
     list_of_assocs = for photo_url <- gallery_params.urls do
-      now = NaiveDateTime.utc_now() |> NaiveDateTime.truncate(:second)
-
-      %{ business_id: business_id,
+      %{ business_id: business.id,
          url: photo_url,
          caption: gallery_params.title,
          inserted_at: now,

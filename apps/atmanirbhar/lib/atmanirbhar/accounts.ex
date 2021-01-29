@@ -186,7 +186,7 @@ defmodule Atmanirbhar.Accounts do
     {:ok, query} = UserToken.verify_session_token_query(token)
     query
     |> Repo.one
-    |> Repo.preload([business: [:stalls, :products]])
+    |> Repo.preload([business: [:stalls, :products, :medias]])
   end
 
   @doc """
