@@ -6,7 +6,8 @@ defmodule AtmanirbharWeb.UserDashboardLive.Catalog do
 
   def mount(params, session, socket) do
     socket = socket
-    |> MountHelpers.assign_defaults(params, session, [:upload_pictures, :view_gallery])
+    |> MountHelpers.assign_defaults(params, session,
+    [:upload_pictures, :view_gallery])
 
     {
       :ok,

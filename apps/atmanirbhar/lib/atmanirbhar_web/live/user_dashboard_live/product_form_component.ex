@@ -18,6 +18,8 @@ defmodule AtmanirbharWeb.UserDashboardLive.ProductFormComponent do
     {:ok,
      socket
      |> assign(assigns)
+     # |> assign(:current_user, socket.assigns.current_user)
+     # |> assign(:current_business, socket.assigns.current_business)
      |> assign(:changeset, changeset)}
   end
 
@@ -49,7 +51,7 @@ defmodule AtmanirbharWeb.UserDashboardLive.ProductFormComponent do
   end
 
   defp save_product(socket, :new_product, input_product_params) do
-    business_id = socket.assigns.business_id
+    business = socket.assigns.current_business
 
     prod_params = Product.changeset(%Product{}, input_product_params)
     |> Ecto.Changeset.apply_changes
@@ -58,7 +60,7 @@ defmodule AtmanirbharWeb.UserDashboardLive.ProductFormComponent do
       put_picture_urls(socket, prod_params)
       |> Map.from_struct
 
-    case Catalog.create_product(business_id,
+    case Catalog.create_product(business,
           product_params,
           &consume_uploaded_pictures(socket, &1)
         ) do

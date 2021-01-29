@@ -22,6 +22,8 @@
     id: :new_product,
     title: @page_title,
     product: @product,
+    current_user: @current_user,
+    current_business: @current_business,
     action: @live_action,
     return_to: Routes.user_dashboard_catalog_path(@socket, :index)
     %>
