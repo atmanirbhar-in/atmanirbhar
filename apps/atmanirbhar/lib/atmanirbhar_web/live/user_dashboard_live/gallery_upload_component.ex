@@ -5,11 +5,8 @@ defmodule AtmanirbharWeb.UserDashboardLive.GalleryUploadComponent do
 
   # maybe here is problem?
   def mount(socket) do
-    # user_token = session
-    # |> Map.get("user_token")
 
     {:ok,
-     # assign(socket, :user_token, user_token),
      allow_upload(socket, :picture, accept: ~w(.png .jpg .jpeg), max_entries: 4)
     }
   end
