@@ -5,6 +5,13 @@ defmodule AtmanirbharWeb.UserDashboardLive.ProductFormComponent do
   alias Atmanirbhar.Catalog
   alias Atmanirbhar.Catalog.Product
 
+  def mount(socket) do
+    {:ok,
+     socket
+     |> allow_upload(:product_image, accept: ~w(.jpg .png .jpeg), max_entries: 4)
+    }
+  end
+
   @impl true
   def update(%{product: product} = assigns, socket) do
     changeset = Catalog.change_product(product)
@@ -41,13 +48,20 @@ defmodule AtmanirbharWeb.UserDashboardLive.ProductFormComponent do
     end
   end
 
-  defp save_product(socket, :new_product, product_params) do
-    # IO.puts "------  ******"
-    # IO.puts inspect(product_params)
-    # IO.puts "------ attrs ^^^^^"
-
+  defp save_product(socket, :new_product, input_product_params) do
     business_id = socket.assigns.business_id
-    case Catalog.create_product(business_id, product_params) do
+
+    prod_params = Product.changeset(%Product{}, input_product_params)
+    |> Ecto.Changeset.apply_changes
+
+    product_params =
+      put_picture_urls(socket, prod_params)
+      |> Map.from_struct
+
+    case Catalog.create_product(business_id,
+          product_params,
+          &consume_uploaded_pictures(socket, &1)
+        ) do
       {:ok, _product} ->
         {:noreply,
          socket
@@ -57,6 +71,26 @@ defmodule AtmanirbharWeb.UserDashboardLive.ProductFormComponent do
       {:error, %Ecto.Changeset{} = changeset} ->
         {:noreply, assign(socket, changeset: changeset)}
     end
+  end
+
+  def consume_uploaded_pictures(socket, product) do
+    consume_uploaded_entries(socket, :product_image, fn meta, entry ->
+      dest = Path.join("priv/static/uploads", "#{entry.uuid}.#{ext(entry)}")
+      File.cp!(meta.path, dest)
+    end)
+    {:ok, product}
+  end
+
+  def put_picture_urls(socket, %Product{} = product) do
+    {completed, [] } = uploaded_entries(socket, :product_image)
+    image_urls = for entry <- completed do
+      Routes.static_path(socket, "/uploads/#{entry.uuid}.#{ext(entry)}")
+    end
+    %Product{product | images: image_urls}
+  end
+
+  def ext(entry) do
+    [first | _] = MIME.extensions(entry.client_type)
   end
 
 end

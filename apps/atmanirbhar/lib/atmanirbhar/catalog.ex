@@ -197,22 +197,24 @@ defmodule Atmanirbhar.Catalog do
     Product.changeset(product, attrs)
   end
 
-  def create_product(input_business_id, attrs \\ %{}) do
+  def create_product(input_business_id, attrs \\ %{}, after_save_function) do
     business = Marketplace.get_business!(input_business_id)
     build_prod = Ecto.build_assoc(business, :products, attrs)
-
-    # IO.puts "------  ******"
-    # IO.puts inspect(attrs)
-    # IO.puts "------ attrs ^^^^^"
-    # IO.puts inspect(cs)
-    # IO.puts "------ cs ^^^^^"
-    # IO.puts "------ **********"
-    # Repo.insert(cs)
 
     build_prod
     # %Product{}
     |> Product.changeset(attrs)
     |> Repo.insert()
+    |> after_save(after_save_function)
+  end
+
+  def after_save({:ok, product}, funtn) do
+    funtn.(product)
+  end
+
+  # {:error, changeset} = error
+  def after_save(error, _funtn) do
+    error
   end
 
 end

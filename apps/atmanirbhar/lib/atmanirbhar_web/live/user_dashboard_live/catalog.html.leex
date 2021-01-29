@@ -32,9 +32,15 @@
 
 <section class="p-5 flex flex-wrap">
   <%= for product <- @products do %>
-      <div class="w-16 border p-3 m-1">
+      <div class="w-52 border p-3 m-1">
         <h2><%= product.title %></h2>
         <h3><%= product.description %></h2>
+<div class="flex w-52">
+  <%= for image <- product.images do %>
+      <img alt="" src="<%= image %>" class="w-16 mr-2" />
+      <% end %>
+</div>
+
       </div>
       <% end %>
 </section>
