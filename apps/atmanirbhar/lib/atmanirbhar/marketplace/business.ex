@@ -8,9 +8,8 @@ defmodule Atmanirbhar.Marketplace.Business do
     field :description, :string
     field :power_index, :integer
     field :title, :string
-    # field :owner_id, :id
     field :city_id, :id
-    field :areas_id, :id
+    # field :areas_id, :id
 
     belongs_to :user, Atmanirbhar.Accounts.User
     has_many :stalls, Atmanirbhar.Marketplace.Stall

@@ -4,19 +4,14 @@ defmodule AtmanirbharWeb.UserDashboardLive.Gallery do
   alias Atmanirbhar.Marketplace
   alias AtmanirbharWeb.UserDashboardLive.FoldersNavigationComponent
 
-  def mount(%{"business_id" => business_id} = params, session, socket) do
+  def mount(params, session, socket) do
     socket = socket
     |> MountHelpers.assign_defaults(params, session, [:upload_pictures, :view_gallery])
-
-    # is business_id string? should be integer
-
-    all_media = Marketplace.list_business_media(business_id)
 
     {
       :ok,
       socket
-      |> assign(:business_id, business_id)
-      |> assign(:media_items, all_media)
+      |> assign(:media_items, socket.assigns.current_business.medias)
     }
   end
 

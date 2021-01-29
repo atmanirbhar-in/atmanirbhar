@@ -44,7 +44,7 @@ defmodule Atmanirbhar.Accounts.User do
   def registration_changeset(user, attrs) do
     user
     |> cast(attrs, [:email, :password])
-    |> cast_assoc(:businesses, required: true)
+    |> cast_assoc(:business, required: true)
     |> validate_email()
     |> validate_password()
     # |> validate_business()

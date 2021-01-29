@@ -76,9 +76,9 @@ defmodule AtmanirbharWeb.Router do
   scope "/", AtmanirbharWeb do
     pipe_through [:browser, :redirect_if_user_is_authenticated, :put_session_layout]
 
-    get "/users/register", UserRegistrationController, :new
+    get "/signup", UserRegistrationController, :new
     post "/users/register", UserRegistrationController, :create
-    get "/users/login", UserSessionController, :new
+    get "/signin", UserSessionController, :new
     post "/users/login", UserSessionController, :create
     get "/users/reset_password", UserResetPasswordController, :new
     post "/users/reset_password", UserResetPasswordController, :create

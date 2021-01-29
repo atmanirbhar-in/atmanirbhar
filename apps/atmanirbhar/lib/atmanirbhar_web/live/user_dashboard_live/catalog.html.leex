@@ -8,10 +8,10 @@
 
   <div class="p5">
     <%= live_patch "Create Product",
-        to: Routes.user_dashboard_catalog_path(@socket, :new_product, @business_id),
+        to: Routes.user_dashboard_catalog_path(@socket, :new_product),
         class: "text-lg btn mr-2 btn btn-primary" %>
     <%= live_patch "Bulk Upload Products",
-        to: Routes.user_dashboard_catalog_path(@socket, :new_product, @business_id),
+        to: Routes.user_dashboard_catalog_path(@socket, :new_product),
         class: "text-lg btn mr-2" %>
   </div>
 </section>
@@ -21,10 +21,9 @@
 <%= live_modal @socket, AtmanirbharWeb.UserDashboardLive.ProductFormComponent,
     id: :new_product,
     title: @page_title,
-    business_id: @business_id,
     product: @product,
     action: @live_action,
-    return_to: Routes.user_dashboard_catalog_path(@socket, :index, @business_id)
+    return_to: Routes.user_dashboard_catalog_path(@socket, :index)
     %>
 <% end %>
 

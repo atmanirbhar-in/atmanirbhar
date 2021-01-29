@@ -4,16 +4,15 @@ defmodule AtmanirbharWeb.UserDashboardLive.Catalog do
   alias Atmanirbhar.Catalog
   alias Atmanirbhar.Catalog.Product
 
-  def mount(%{"business_id" => input_business_id} = params, session, socket) do
-    {business_id, _} = Integer.parse(input_business_id)
-
-    business = Marketplace.get_business_with_products(business_id)
-
+  def mount(params, session, socket) do
     socket = socket
-    |> assign(products: business.products)
-    |> assign(:business_id, business_id)
+    |> MountHelpers.assign_defaults(params, session, [:upload_pictures, :view_gallery])
 
-    {:ok, socket}
+    {
+      :ok,
+      socket
+      |> assign(:products, socket.assigns.current_business.products)
+    }
   end
 
   # def handle_event("validate", %{"product" => product_params}, socket) do

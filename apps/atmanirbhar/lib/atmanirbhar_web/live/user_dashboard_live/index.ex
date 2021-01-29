@@ -9,8 +9,6 @@ defmodule AtmanirbharWeb.UserDashboardLive.Index do
     socket = socket
       |> MountHelpers.assign_defaults(params, session, [:create_stall, :upload_pictures])
 
-    # user_businesses_n_stalls = Marketplace.list_user_businesses2(socket.assigns.current_business)
-
     todos = [
       %{
         text: "Please add pictures to Gallery",

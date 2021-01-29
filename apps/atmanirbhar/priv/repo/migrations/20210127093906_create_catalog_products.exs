@@ -6,7 +6,7 @@ defmodule Atmanirbhar.Repo.Migrations.CreateCatalogProducts do
       add :title, :string
       add :description, :text
       add :images, {:array, :string}
-      add :delivery_details, :string
+      add :delivery_details, :text
       add :unit_price_inr, :string
       add :deliverables, :text
       add :business_id, references(:businesses, on_delete: :nothing)

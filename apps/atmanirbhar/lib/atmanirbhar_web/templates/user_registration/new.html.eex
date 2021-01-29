@@ -18,7 +18,7 @@
       <%= error_tag f, :password %>
   </div>
 
-  <%= inputs_for f, :businesses, fn i -> %>
+  <%= inputs_for f, :business, fn i -> %>
       <div class="mb-4">
           <%= label i, :business_name, class: "tag-label" %>
           <%= text_input i, :title, required: true, class: "tag-input", placeholder: "sach cakes" %>

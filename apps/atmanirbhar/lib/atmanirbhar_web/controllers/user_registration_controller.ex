@@ -11,7 +11,7 @@ defmodule AtmanirbharWeb.UserRegistrationController do
     # changeset = Accounts.change_user_registration(%User{businesses: [%Business{}]})
     user = Accounts.change_user_registration(%User{})
     business = Marketplace.change_business(%Business{})
-    user_with_business = Ecto.Changeset.put_assoc(user, :businesses, [business])
+    user_with_business = Ecto.Changeset.put_assoc(user, :business, business)
 
     render(conn, "new.html", changeset: user_with_business)
   end
