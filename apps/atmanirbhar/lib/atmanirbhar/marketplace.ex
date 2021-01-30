@@ -72,8 +72,6 @@ defmodule Atmanirbhar.Marketplace do
   def list_stalls_with_filters(%StallFilters{} = stall_filters) do
     StallFilters.query_for(stall_filters)
     |> Repo.all
-    # |> Repo.preload(:gallery_items)
-    # |> Repo.all
   end
 
   def create_media(business, gallery_params, after_save \\ &{:ok, &1}) do
@@ -301,6 +299,25 @@ defmodule Atmanirbhar.Marketplace do
   end
 
   def get_stall!(id), do: Repo.get!(Stall, id)
+
+  def load_stall(stall_id) do
+    query = from stall in Stall,
+      join: business in assoc(stall, :business),
+      where: stall.id == ^stall_id,
+      preload: [:business]
+    Repo.one(query)
+  end
+
+  def list_media(list) do
+    query = from media in Media,
+      where: media.id in ^list
+    Repo.all(query)
+  end
+  def list_products(list) do
+    query = from product in Product,
+      where: product.id in ^list
+    Repo.all(query)
+  end
 
   def get_stall_detail!(id) do
     query = from stall in Stall,

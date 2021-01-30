@@ -40,7 +40,7 @@ defmodule Atmanirbhar.Marketplace.StallFilters do
       show_female: for_female,
       audience_min: audience_min,
       audience_max: audience_max,
-      pincode: pincode
+      # pincode: pincode
                     })
   end
 
@@ -69,10 +69,10 @@ defmodule Atmanirbhar.Marketplace.StallFilters do
 
     from stall in Stall,
       join: business in Business,
-      join: location in Location,
+      # join: location in Location,
       # join: stall_element in StallElement,
       on: stall.business_id == business.id,
-      on: stall.location_id == location.id,
+      # on: stall.location_id == location.id,
       # on: stall_element.stall_id == stall.id,
       where: stall.audience_average >= ^audience_min and stall.audience_average <= ^audience_max,
       order_by: [desc: stall.inserted_at],

@@ -14,8 +14,8 @@ defmodule AtmanirbharWeb.PageLive do
     pincode_changeset = Marketplace.change_location_form(location_form)
 
 
-    topic = "marketplace:#{pincode}"
-    initial_count = Presence.list(topic) |> map_size
+    # topic = "marketplace:#{pincode}"
+    # initial_count = Presence.list(topic) |> map_size
 
     # # Track changes to the topic
     # Presence.track(
@@ -25,17 +25,22 @@ defmodule AtmanirbharWeb.PageLive do
     #   %{}
     # )
 
+    stall_filters = Marketplace.change_stall_filters(%StallFilters{}, params)
+    |> Ecto.Changeset.apply_changes
+
+    stalls = Atmanirbhar.Marketplace.list_stalls_with_filters(stall_filters)
+    changeset = Marketplace.change_stall_filters(stall_filters)
+
     socket = socket
-    |> assign(:page_title, "Packages")
-    |> assign(location_form: location_form)
-
+    |> assign(:stalls, stalls)
+    |> assign(stall_filters_changeset: changeset)
+    |> assign(:page_title, "Micro businesses in this region")
     {:ok, socket}
-
   end
 
   def handle_params(params, url, socket) do
-    host_name =  URI.parse(url).host
-    Atmanirbhar.Repo.put_org_id(host_name)
+    # host_name =  URI.parse(url).host
+    # Atmanirbhar.Repo.put_org_id(host_name)
     # IO.puts "^^^^^^^^^^^^^^^^^^"
     {:noreply, apply_action(socket, socket.assigns.live_action, params)}
   end

@@ -33,6 +33,8 @@ defmodule Atmanirbhar.Marketplace.Stall do
           :poster_image_url, :is_active,
         ])
         |> validate_required([:title, :description, :audience_average, :for_male, :for_female, :is_active])
+        |> cast_embed(:stall_atlas)
+        |> validate_inclusion(:audience_average, 5..100)
         # |> put_embed(:stall_atlas)
     # |> cast_assoc(:gallery_items, required: true, on_replace: :delete)
     # |> cast_embed(:stall_media_ids, required: true)
