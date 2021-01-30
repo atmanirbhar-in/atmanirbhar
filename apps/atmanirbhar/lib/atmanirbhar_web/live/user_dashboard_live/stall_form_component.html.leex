@@ -111,9 +111,9 @@
     <div class="p-4 border border-2 flex bg-white">
       <%= for element <- @all_products do %>
           <div class="p-2 border border-gray-400 mr-2" draggable="true"
-               phx-hook="Card"
+               phx-hook="ProductCard"
                phx-target="<%= @myself %>"
-               id="card-<%= element.id %>">
+               id="product-card-<%= element.id %>" data_card_type="product" >
             <%= for image <- element.images do %>
                 <img alt=""
                      src="<%= image %>"
@@ -124,7 +124,11 @@
           <% end %>
     </div>
   </div>
-  <div class="flex w-full flex-col bg-blue-100">
+  <div class="flex w-full flex-col bg-blue-100"
+       phx-hook="StallProd"
+       phx-target="<%= @myself %>"
+       id="stall-prod-<%= @stall.id %>">
+       >
     <h3 class="p-2">Products</h3>
 
     <p>
@@ -151,9 +155,9 @@
     <div class="p-4 border border-2 flex bg-white">
       <%= for element <- @all_media do %>
           <div class="p-2 border border-gray-400 mr-2" draggable="true"
-               phx-hook="Card"
+               phx-hook="MediaCard"
                phx-target="<%= @myself %>"
-               id="card-<%= element.id %>" data_card_type="<%= element.type %>" >
+               id="media-card-<%= element.id %>" data_card_type="media" >
             <img alt="" src="<%= element.url %>" class="w-24 h-24"/>
             <%= element.caption %>
           </div>
@@ -163,7 +167,7 @@
 
 
   <div class="flex w-full flex-col bg-green-100"
-       phx-hook="Stall"
+       phx-hook="StallMedia"
        phx-target="<%= @myself %>"
        id="stall-<%= @stall.id %>">
        >

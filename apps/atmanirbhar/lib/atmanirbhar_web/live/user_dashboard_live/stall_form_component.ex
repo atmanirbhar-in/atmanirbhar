@@ -10,16 +10,6 @@ defmodule AtmanirbharWeb.UserDashboardLive.StallFormComponent do
     my_media = assigns.current_business.medias
     my_products = assigns.current_business.products
 
-    # Enum.group_by(arr, &Map.get(&1, :id))
-    # stall_product_ids = [1]
-    # stall_products = Enum.filter(my_products,
-    #   fn obj -> obj.id in stall_product_ids end)
-    # stall_media_ids = [1,5,3, 25]
-    # stall_medias = Enum.filter(my_media,
-    #   fn obj -> obj.id in stall_media_ids end)
-
-    stall_media_ids = []
-
     socket = socket
     |> assign(assigns)
     |> assign(:locations, locations)
@@ -31,8 +21,8 @@ defmodule AtmanirbharWeb.UserDashboardLive.StallFormComponent do
 
     {:ok,
      socket
-     |> assign(:stall_products, stall_products(socket))
-     |> assign(:stall_medias, filter_stall_medias(my_media, stall_media_ids))
+     |> assign(:stall_medias, filter_stall_medias(my_media, socket.assigns[:stall_media_ids]))
+     |> assign(:stall_products, filter_stall_medias(my_products, socket.assigns[:stall_product_ids]))
     }
   end
 
@@ -44,6 +34,11 @@ defmodule AtmanirbharWeb.UserDashboardLive.StallFormComponent do
   defp filter_stall_medias(all_media, stall_media_ids) do
     Enum.filter(all_media,
       fn obj -> obj.id in stall_media_ids
+      end)
+  end
+  defp filter_stall_products(all_elements, stall_element_ids) do
+    Enum.filter(all_elements,
+      fn obj -> obj.id in stall_element_ids
       end)
   end
 
@@ -61,11 +56,10 @@ defmodule AtmanirbharWeb.UserDashboardLive.StallFormComponent do
     save_stall(socket, socket.assigns.action, stall_params)
   end
 
-  def handle_event("add-card-to-stall", %{"drag_card_id" => element_id}, socket) do
-    {element_item_id, _} = String.trim_leading(element_id, "card-") |> Integer.parse
-
-    # IO.puts "add - card to stall #{ element_item_id }"
-    # IO.puts socket.assigns.stall_media_ids
+  def handle_event("add-card-to-stall", %{"drag_card_id" => element_id,
+                                          "drag_card_type" => "media"
+                                         }, socket) do
+    {element_item_id, _} = String.trim_leading(element_id, "media-card-") |> Integer.parse
 
     stall_media_ids = [element_item_id | socket.assigns.stall_media_ids] |> Enum.uniq
 
@@ -74,6 +68,18 @@ defmodule AtmanirbharWeb.UserDashboardLive.StallFormComponent do
       socket
       |> assign(:stall_media_ids, stall_media_ids)
       |> assign(:stall_medias, filter_stall_medias(socket.assigns[:all_media], stall_media_ids))
+    }
+  end
+  def handle_event("add-card-to-stall", %{"drag_card_id" => element_id,
+                                          "drag_card_type" => "product"
+                                         }, socket) do
+    {element_item_id, _} = String.trim_leading(element_id, "product-card-") |> Integer.parse
+    stall_product_ids = [element_item_id | socket.assigns.stall_product_ids] |> Enum.uniq
+    {
+      :noreply,
+      socket
+      |> assign(:stall_product_ids, stall_product_ids)
+      |> assign(:stall_products, filter_stall_products(socket.assigns[:all_products], stall_product_ids))
     }
   end
 
