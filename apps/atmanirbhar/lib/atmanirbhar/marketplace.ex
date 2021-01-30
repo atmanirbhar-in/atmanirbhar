@@ -48,26 +48,25 @@ defmodule Atmanirbhar.Marketplace do
     Repo.all(query)
   end
 
-  def list_user_businesses2(%User{id: user_id} = input_user) do
-    query = from business in Business,
-      join: user in assoc(business, :user),
-      preload: [:stalls],
-      where: user.id == ^user_id
+  # def list_user_businesses2(%User{id: user_id} = input_user) do
+  #   query = from business in Business,
+  #     join: user in assoc(business, :user),
+  #     preload: [:stalls],
+  #     where: user.id == ^user_id
+  #     query
+  #     |> Repo.all
+  # end
 
-      query
-      |> Repo.all
-  end
-
-  def list_stalls_for_business(input_business_id) do
-    query = from stall in Stall,
-      left_join: location in Location,
-      on: stall.location_id == location.id,
-      join: business in Business,
-      on: stall.business_id == ^input_business_id,
-      preload: [business: business, location: location],
-      select: struct(stall, [:id, :title, :description, :location_id, :business_id, location: [:id, :title]])
-    Repo.all(query)
-  end
+  # def list_stalls_for_business(input_business_id) do
+  #   query = from stall in Stall,
+  #     left_join: location in Location,
+  #     on: stall.location_id == location.id,
+  #     join: business in Business,
+  #     on: stall.business_id == ^input_business_id,
+  #     preload: [business: business, location: location],
+  #     select: struct(stall, [:id, :title, :description, :location_id, :business_id, location: [:id, :title]])
+  #   Repo.all(query)
+  # end
 
   def list_stalls_with_filters(%StallFilters{} = stall_filters) do
     StallFilters.query_for(stall_filters)
@@ -137,74 +136,19 @@ defmodule Atmanirbhar.Marketplace do
   # end
 
 
-  # # set GalleryItem type for Product
-  # def create_product(attrs \\ %{}) do
-  #   %GalleryItem{}
-  #   |> GalleryItem.product_changeset(attrs)
-  #   |> put_change(:type, 1)
-  #   |> Repo.insert()
-  # end
-
   # link gallery_item and stall
   # def add_gallery_item_to_stall(gallery_item = %GalleryItem{}, stall = %Stall{}) do
   # def add_gallery_item_to_stall(gallery_item_id, stall_id) do
-  def add_gallery_item_to_stall(gallery_item_id, stall) do
-    gallery_item = Repo.get!(GalleryItem, gallery_item_id)
-    gallery_items = stall.gallery_items ++ [gallery_item]
-    |> Enum.map(&Ecto.Changeset.change/1)
 
-    stall
-    |> Ecto.Changeset.change
-    |> Ecto.Changeset.put_assoc(:gallery_items, gallery_items)
-    |> Repo.update
-  end
-
-  def remove_gallery_item_from_stall(gallery_item_id, stall) do
-    gallery_item = Repo.get!(GalleryItem, gallery_item_id)
-    gallery_items = stall.gallery_items -- [gallery_item]
-    |> Enum.map(&Ecto.Changeset.change/1)
-
-    stall
-    |> Ecto.Changeset.change
-    |> Ecto.Changeset.put_assoc(:gallery_items, gallery_items)
-    |> Repo.update
-  end
-
-  # set GalleryItem type for Happy Customers i.e Timeline post
-  def create_timeline_post(attrs \\ %{}) do
-    %GalleryItem{}
-    |> GalleryItem.product_changeset(attrs)
-    |> put_change(:type, 2)
-    |> Repo.insert()
-  end
-
-  def list_products_of_business() do
-    query = from se in GalleryItem,
-      where: se.type == 1
-    Repo.all query
-  end
-
-  def get_business_with_products(business_id) do
-    # query = from business in Business,
-    #   join: product in Product, assoc(product, :business),
-    #   where: business.id == ^business_id,
-    #   preload: [:business],
-    #   select: [product: [:title, :description, :id, :business_id]]
-
-    query = from business in Business,
-      where: business.id == ^business_id,
-      preload: [:products]
-
-    query
-    |> Repo.one
-  end
-
-  # TODO stall elements of User
-  def list_all_gallery_items_of_business() do
-    query = from se in GalleryItem
-    Repo.all query
-  end
-
+  # def remove_gallery_item_from_stall(gallery_item_id, stall) do
+  #   gallery_item = Repo.get!(GalleryItem, gallery_item_id)
+  #   gallery_items = stall.gallery_items -- [gallery_item]
+  #   |> Enum.map(&Ecto.Changeset.change/1)
+  #   stall
+  #   |> Ecto.Changeset.change
+  #   |> Ecto.Changeset.put_assoc(:gallery_items, gallery_items)
+  #   |> Repo.update
+  # end
 
   def list_business_media(business_id) do
     query = from media in Media,
@@ -214,20 +158,6 @@ defmodule Atmanirbhar.Marketplace do
     Repo.all query
   end
 
-
-  # def add_gallery_items_to_stall do
-  #   s2 = Atmanirbhar.Marketplace.get_stall!(2) |> Atmanirbhar.Repo.preload(:gallery_items)
-  #   # cs = Ecto.Changeset.change(s2) |> Ecto.Changeset.put_assoc(:gallery_items, [se3])
-  # end
-
-  def get_gallery_item!(id), do: Repo.get!(GalleryItem, id)
-
-  def change_product(%GalleryItem{} = product, attrs \\ %{}) do
-    GalleryItem.product_changeset(product, attrs)
-  end
-  def change_timeline_post(%GalleryItem{} = product, attrs \\ %{}) do
-    GalleryItem.timeline_post_changeset(product, attrs)
-  end
 
   def list_marketplace_bulk_uploads do
     Repo.all(BulkUpload)
@@ -262,40 +192,6 @@ defmodule Atmanirbhar.Marketplace do
 
   def change_bulk_upload(%BulkUpload{} = bulk_upload, attrs \\ %{}) do
     BulkUpload.changeset(bulk_upload, attrs)
-  end
-
-  def change_gallery_upload(%GalleryUpload{} = gallery_upload, attrs \\ %{}) do
-    GalleryUpload.changeset(gallery_upload, attrs)
-  end
-
-  def list_marketplace_stalls do
-    Repo.all(Stall)
-  end
-
-  # def foo_bar_query(input_token) do
-  #   from token in UserToken.token_and_context_query(input_token, "session"),
-  #     join: user in assoc(token, :user),
-  #     join: user_gallery in assoc(user, :user_gallery),
-  #     on: user_gallery.user_id == user.id,
-  #     join: gallery_items in assoc(user_gallery, :gallery_items),
-  #     on: gallery_item.gallery_id == user_gallery.id,
-  #     select: gallery_items
-  #     # where: token == ^input_token
-  # end
-
-  # TODO token type has to be session
-  def list_user_gallery_items(input_token) do
-    query = from gallery_item in GalleryItem,
-      join: user_gallery in assoc(gallery_item, :gallery),
-      join: user in assoc(user_gallery, :user),
-      on: user_gallery.user_id == user.id,
-      join: user_token in UserToken,
-      where: user_token.token == ^input_token,
-      preload: [:user, :user_gallery],
-      select: gallery_item
-
-    query
-    |> Repo.all()
   end
 
   def get_stall!(id), do: Repo.get!(Stall, id)

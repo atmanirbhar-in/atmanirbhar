@@ -7,30 +7,16 @@ defmodule AtmanirbharWeb.StallLive.Index do
   alias Atmanirbhar.Presence
 
   @impl true
-  # def mount(params, %{"locale" => locale}, socket) do
   def mount(params, session, socket) do
-
-    # IO.puts inspect(socket)
-    # IO.puts "host in socket? -----------------"
-
     {:ok, socket}
-
-  end
-
-  @impl true
-  def handle_event("suggest", %{"q" => query}, socket) do
-    # {:noreply, assign(socket, results: search(query), query: query)}
-    {:noreply, socket}
   end
 
   def handle_params(params, url, socket) do
-    host_name =  URI.parse(url).host
     {:noreply, apply_action(socket, socket.assigns.live_action, params)}
   end
 
   defp apply_action(socket, :index, %{"stall_id" => stall_id}) do
     stall = Marketplace.load_stall(stall_id)
-
     products = Marketplace.list_products(stall.stall_atlas.product_ids)
     medias = Marketplace.list_media(stall.stall_atlas.media_ids)
 
@@ -50,8 +36,7 @@ defmodule AtmanirbharWeb.StallLive.Index do
   end
 
 
-  def grouped_gallery_items([]), do: %{1 => [], 2 => []}
-  def grouped_gallery_items(elements), do: elements |> Enum.group_by(&Map.get(&1, :type))
-
+  # def grouped_gallery_items([]), do: %{1 => [], 2 => []}
+  # def grouped_gallery_items(elements), do: elements |> Enum.group_by(&Map.get(&1, :type))
 
 end
