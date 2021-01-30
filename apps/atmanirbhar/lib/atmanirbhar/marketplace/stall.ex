@@ -1,7 +1,7 @@
 defmodule Atmanirbhar.Marketplace.Stall do
   use Ecto.Schema
   import Ecto.Changeset
-  alias Atmanirbhar.Marketplace.{Business, GalleryItem, StallItem}
+  alias Atmanirbhar.Marketplace.{Business, GalleryItem, StallAtlas}
   alias Atmanirbhar.Geo.Location
 
   schema "marketplace_stalls" do
@@ -12,9 +12,8 @@ defmodule Atmanirbhar.Marketplace.Stall do
     field :is_active, :boolean, default: false
     field :poster_image_url, :string
     field :title, :string
-    field :stall_pods, :string, virtual: true
-    # field :business_id, :id
-    # field :location_id, :id
+    # field :stall_product_ids, {:array, :integer}, default: []
+    # field :stall_media_ids, {:array, :integer}, default: []
 
     many_to_many(:gallery_items, GalleryItem, join_through: StallItem, on_replace: :delete)
 
@@ -22,31 +21,30 @@ defmodule Atmanirbhar.Marketplace.Stall do
 
     belongs_to :business, Business
     belongs_to :location, Location
+
+    embeds_one :stall_atlas, StallAtlas
   end
-
-  # @doc false
-  # def changeset(stall, attrs) do
-  #   stall
-  #   |> cast(attrs, [:title, :description, :business_id, :location_id, :audience_average, :for_male, :for_female, :poster_image_url, :is_active])
-  #   |> validate_required([:title, :description, :audience_average, :for_male, :for_female, :is_active])
-  #   |> cast_assoc(:gallery_items, required: true, on_replace: :nilify)
-  # end
-
-  # # allow delete, ref many_to_many
-  # def changeset(stall, %{"delete" => "true"}) do
-  #   %{Ecto.Changeset.change(stall) | action: :delete}
-  # end
 
   def changeset(stall, attrs) do
     stall
-    |> cast(attrs, [:title, :description, :business_id, :location_id, :audience_average, :for_male, :for_female, :poster_image_url, :is_active])
-    |> validate_required([:title, :description, :audience_average, :for_male, :for_female, :is_active])
-    |> cast_assoc(:gallery_items, required: true, on_replace: :delete)
+    |> cast(attrs, [
+          :title, :description, :location_id,
+          :audience_average, :for_male, :for_female,
+          :poster_image_url, :is_active,
+        ])
+        |> validate_required([:title, :description, :audience_average, :for_male, :for_female, :is_active])
+        # |> put_embed(:stall_atlas)
+    # |> cast_assoc(:gallery_items, required: true, on_replace: :delete)
+    # |> cast_embed(:stall_media_ids, required: true)
   end
 
   def create_changeset(stall, attrs) do
     stall
-    |> cast(attrs, [:title, :description, :business_id, :location_id, :audience_average, :for_male, :for_female, :poster_image_url, :is_active])
+    |> cast(attrs, [:title, :description, :business_id,
+                   :location_id, :audience_average, :for_male, :for_female,
+                   :poster_image_url, :is_active,
+                   :stall_media_ids, :stall_product_ids,
+                   ])
     |> validate_required([:title, :description, :audience_average, :for_male, :for_female, :is_active])
     # |> cast_assoc(:gallery_items, required: true, on_replace: :delete)
   end

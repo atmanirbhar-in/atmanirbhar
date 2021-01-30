@@ -9,7 +9,7 @@ defmodule Atmanirbhar.Marketplace do
 
   alias Atmanirbhar.Accounts.{User, UserToken}
   alias Atmanirbhar.Marketplace.{Business, GalleryUpload,
-                                 Stall, GalleryItem,
+                                 Stall, GalleryItem, StallAtlas,
                                  Media,
                                  LocationForm, StallFilters, BulkUpload}
   alias Atmanirbhar.Catalog.Product
@@ -314,9 +314,12 @@ defmodule Atmanirbhar.Marketplace do
     Repo.one(query) |> Repo.preload(:gallery_items)
   end
 
-  def create_stall(attrs \\ %{}) do
-    %Stall{}
-    |> Stall.create_changeset(attrs)
+  def create_stall(%Business{} = business, %StallAtlas{} = stall_atlas , attrs \\ %{}) do
+    build_stall = Ecto.build_assoc(business, :stalls, attrs)
+
+    build_stall
+    |> Stall.changeset(attrs)
+    |> put_embed(:stall_atlas, stall_atlas)
     |> Repo.insert()
   end
 
