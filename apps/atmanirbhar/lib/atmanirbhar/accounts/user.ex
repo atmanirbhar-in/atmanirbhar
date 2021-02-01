@@ -17,9 +17,6 @@ defmodule Atmanirbhar.Accounts.User do
 
 
     has_one :business, Atmanirbhar.Marketplace.Business
-    # has_many :businesses, Atmanirbhar.Marketplace.Business, foreign_key: :owner_id
-    # has_one :user_gallery, UserGallery
-    # has_many :gallery_items, GalleryItem
 
     timestamps()
   end

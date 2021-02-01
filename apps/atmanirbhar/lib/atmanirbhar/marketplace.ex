@@ -228,7 +228,7 @@ defmodule Atmanirbhar.Marketplace do
       where: stall.id == ^id,
       preload: [business: business, location: location],
       select: struct(stall, [:id, :title, :description, :location_id, :business_id, business: [:id, :title, :address], location: [:id, :title]])
-    Repo.one(query) |> Repo.preload(:gallery_items)
+    Repo.one(query)
   end
 
   def create_stall(%Business{} = business, %StallAtlas{} = stall_atlas , attrs \\ %{}) do

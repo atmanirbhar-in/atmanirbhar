@@ -1,7 +1,7 @@
 defmodule Atmanirbhar.Marketplace.Stall do
   use Ecto.Schema
   import Ecto.Changeset
-  alias Atmanirbhar.Marketplace.{Business, GalleryItem, StallAtlas}
+  alias Atmanirbhar.Marketplace.{Business, StallAtlas}
   alias Atmanirbhar.Geo.Location
 
   schema "marketplace_stalls" do
@@ -15,7 +15,7 @@ defmodule Atmanirbhar.Marketplace.Stall do
     # field :stall_product_ids, {:array, :integer}, default: []
     # field :stall_media_ids, {:array, :integer}, default: []
 
-    many_to_many(:gallery_items, GalleryItem, join_through: StallItem, on_replace: :delete)
+    # many_to_many(:gallery_items, GalleryItem, join_through: StallItem, on_replace: :delete)
 
     timestamps()
 

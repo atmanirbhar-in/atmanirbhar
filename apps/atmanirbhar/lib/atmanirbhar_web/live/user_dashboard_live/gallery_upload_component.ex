@@ -5,8 +5,11 @@ defmodule AtmanirbharWeb.UserDashboardLive.GalleryUploadComponent do
 
   # maybe here is problem?
   def mount(socket) do
-    dest_folder = Path.join([:code.priv_dir(:atmanirbhar), "static", "uploads"])
-    File.mkdir_p!(dest_folder)
+
+    if connected?(socket) do
+      path = uploads_path()
+      File.mkdir_p!(path)
+    end
 
     {:ok,
      allow_upload(socket, :picture, accept: ~w(.png .jpg .jpeg), max_entries: 4)
@@ -70,8 +73,7 @@ defmodule AtmanirbharWeb.UserDashboardLive.GalleryUploadComponent do
 
   def consume_pictures(socket, business) do
     consume_uploaded_entries(socket, :picture, fn meta, entry ->
-      dest_folder = Path.join([:code.priv_dir(:atmanirbhar), "static", "uploads"])
-      dest = Path.join(dest_folder, "#{entry.uuid}.#{ext(entry)}")
+      dest = Path.join(uploads_path, "#{entry.uuid}.#{ext(entry)}")
       File.cp!(meta.path, dest)
     end)
     {:ok, business}
@@ -80,4 +82,9 @@ defmodule AtmanirbharWeb.UserDashboardLive.GalleryUploadComponent do
   defp ext(entry) do
     [ext | _] = MIME.extensions(entry.client_type)
   end
+
+  defp uploads_path do
+    Path.join([:code.priv_dir(:atmanirbhar), "static", "uploads"])
+  end
+
 end
