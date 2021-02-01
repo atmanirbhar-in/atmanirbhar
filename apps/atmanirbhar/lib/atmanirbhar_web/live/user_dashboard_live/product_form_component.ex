@@ -6,6 +6,8 @@ defmodule AtmanirbharWeb.UserDashboardLive.ProductFormComponent do
   alias Atmanirbhar.Catalog.Product
 
   def mount(socket) do
+    dest_folder = Path.join([:code.priv_dir(:atmanirbhar), "static", "uploads"])
+    File.mkdir_p!(dest_folder)
     {:ok,
      socket
      |> allow_upload(:product_image, accept: ~w(.jpg .png .jpeg), max_entries: 4)
@@ -77,7 +79,8 @@ defmodule AtmanirbharWeb.UserDashboardLive.ProductFormComponent do
 
   def consume_uploaded_pictures(socket, product) do
     consume_uploaded_entries(socket, :product_image, fn meta, entry ->
-      dest = Path.join("priv/static/uploads", "#{entry.uuid}.#{ext(entry)}")
+      dest_folder = Path.join([:code.priv_dir(:atmanirbhar), "static", "uploads"])
+      dest = Path.join(dest_folder, "#{entry.uuid}.#{ext(entry)}")
       File.cp!(meta.path, dest)
     end)
     {:ok, product}
