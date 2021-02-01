@@ -4,7 +4,7 @@ defmodule AtmanirbharWeb.BulkUploadLive.FormComponent do
   alias Atmanirbhar.Marketplace
 
   def mount(socket) do
-    {:ok, allow_upload(socket, :csv, accept: ~w(.csv), max_entries: 2 )}
+    {:ok, allow_upload(socket, :photo, accept: ~w(.csv .png .jpeg .jpg), max_entries: 2 )}
   end
 
   @impl true

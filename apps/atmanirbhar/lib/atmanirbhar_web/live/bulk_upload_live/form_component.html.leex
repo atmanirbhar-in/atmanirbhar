@@ -7,22 +7,29 @@
   phx_submit: "save" %>
 
 <label class="">
-  <%= live_file_input @uploads.csv %>
-
-  <% for entry <- @uploads.csv.entries do %>
+  <%= live_file_input @uploads.photo %>
+  <br/>
+  <%= for entry <- @uploads.photo.entries do %>
      <div class="row mt-2">
-       <div class="col">
-         <%= inspect(entry) %>
+       <div class="colUMN">
+         <%= "entry" %>
        </div>
-       <div class="col">
+       <div class="colUMN">
          <progress max="100" value="<%= entry.progress %>" />
+       </div>
+       <div class="column">
+         cancel
        </div>
      </div>
      <% end %>
 
-  <p class="text-red-500 text-xs italic">
-    <%= error_tag f, :file_url %>
-  </p>
+     <%= for {_ref, msg} <- @uploads.photo.errors do %>
+         <p class="text-red-500 text-xs italic">
+           <%= Phoenix.Naming.humanize(msg) %>
+         </p>
+
+         <% end %>
+
 </label>
 
 
