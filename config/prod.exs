@@ -10,10 +10,11 @@ use Mix.Config
 # which you should run after static files are built and
 # before starting your production server.
 config :atmanirbhar, AtmanirbharWeb.Endpoint,
-#  url: [host: "example.com", port: 80],
-  url: [host: "atmanirbhar.in", port: 80],
+  cache_static_manifest: "priv/static/cache_manifest.json",
+  url: [scheme: "https", host: "atmanirbhar.in", port: 443],
   check_origin: ["//localhost", "//atmanirbhar.in", "//www.atmanirbhar.in"],
-  cache_static_manifest: "priv/static/cache_manifest.json"
+  force_ssl: [hsts: true, rewrite_on: [:x_forwarded_proto]],
+  server: true
 
 # Do not print debug messages in production
 config :logger, level: :info
