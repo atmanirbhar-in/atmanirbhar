@@ -15,7 +15,6 @@ defmodule Atmanirbhar.Accounts.User do
     # field :business, :string, virtual: true
     # field :city, :string, virtual: true
 
-
     has_one :business, Atmanirbhar.Marketplace.Business
 
     timestamps()
@@ -29,6 +28,7 @@ defmodule Atmanirbhar.Accounts.User do
   could lead to unpredictable or insecure behaviour. Long passwords may
   also be very expensive to hash for certain algorithms.
   """
+
   # def registration_form_changeset(user, attrs) do
   #   user
   #   |> cast(attrs, [:email, :password, :business, :city])
@@ -44,6 +44,7 @@ defmodule Atmanirbhar.Accounts.User do
     |> cast_assoc(:business, required: true)
     |> validate_email()
     |> validate_password()
+
     # |> validate_business()
     # |> validate_city()
     # |> Repo.preload(:businesses)
@@ -62,6 +63,7 @@ defmodule Atmanirbhar.Accounts.User do
     changeset
     |> validate_required([:city])
   end
+
   defp validate_business(changeset) do
     changeset
     |> validate_required([:business])

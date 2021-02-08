@@ -5,21 +5,20 @@ defmodule AtmanirbharWeb.UserDashboardLive.GalleryUploadComponent do
 
   # maybe here is problem?
   def mount(socket) do
-
     if connected?(socket) do
       path = uploads_path()
       File.mkdir_p!(path)
     end
 
-    {:ok,
-     allow_upload(socket, :picture, accept: ~w(.png .jpg .jpeg), max_entries: 4)
-    }
+    {:ok, allow_upload(socket, :picture, accept: ~w(.png .jpg .jpeg), max_entries: 4)}
   end
 
   # socket, session, params?
   def update(%{gallery_upload: input_gallery_upload} = assigns, socket) do
     changeset = Atmanirbhar.Marketplace.change_gallery_upload(input_gallery_upload)
-    {:ok, socket
+
+    {:ok,
+     socket
      |> assign(assigns)
      |> assign(:changeset, changeset)}
   end
@@ -37,10 +36,8 @@ defmodule AtmanirbharWeb.UserDashboardLive.GalleryUploadComponent do
     {:noreply, cancel_upload(socket, :picture, ref)}
   end
 
-  def handle_event("save",
-    %{"gallery_upload" => gallery_params} = params, socket) do
-
-    gallery_params  =
+  def handle_event("save", %{"gallery_upload" => gallery_params} = params, socket) do
+    gallery_params =
       GalleryUpload.changeset(socket.assigns.gallery_upload, gallery_params)
       |> Ecto.Changeset.apply_changes()
 
@@ -49,9 +46,11 @@ defmodule AtmanirbharWeb.UserDashboardLive.GalleryUploadComponent do
     # {business_id, _} = Integer.parse(socket.assigns.business_id)
     # business = Marketplace.load_business_with_media!(business_id)
     # Marketplace.create_media(socket.business_id, list_of_pictures)
-    case Marketplace.create_media(socket.assigns.current_business,
-          gallery_upload,
-          &consume_pictures(socket, &1)) do
+    case Marketplace.create_media(
+           socket.assigns.current_business,
+           gallery_upload,
+           &consume_pictures(socket, &1)
+         ) do
       {:ok, _bulk_upload} ->
         {:noreply,
          socket
@@ -64,10 +63,13 @@ defmodule AtmanirbharWeb.UserDashboardLive.GalleryUploadComponent do
   end
 
   defp put_image_urls(socket, %GalleryUpload{} = gallery_upload) do
-    {completed, [] } = uploaded_entries(socket, :picture)
-    image_urls = for entry <- completed do
-      Routes.static_path(socket, "/uploads/#{entry.uuid}.#{ext(entry)}")
-    end
+    {completed, []} = uploaded_entries(socket, :picture)
+
+    image_urls =
+      for entry <- completed do
+        Routes.static_path(socket, "/uploads/#{entry.uuid}.#{ext(entry)}")
+      end
+
     %GalleryUpload{gallery_upload | urls: image_urls}
   end
 
@@ -76,6 +78,7 @@ defmodule AtmanirbharWeb.UserDashboardLive.GalleryUploadComponent do
       dest = Path.join(uploads_path, "#{entry.uuid}.#{ext(entry)}")
       File.cp!(meta.path, dest)
     end)
+
     {:ok, business}
   end
 
@@ -86,5 +89,4 @@ defmodule AtmanirbharWeb.UserDashboardLive.GalleryUploadComponent do
   defp uploads_path do
     Path.join([:code.priv_dir(:atmanirbhar), "static", "uploads"])
   end
-
 end

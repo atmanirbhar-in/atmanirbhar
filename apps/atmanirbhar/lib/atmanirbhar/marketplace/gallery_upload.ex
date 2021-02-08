@@ -13,5 +13,4 @@ defmodule Atmanirbhar.Marketplace.GalleryUpload do
     gallery_upload
     |> cast(attrs, [:title])
   end
-
 end

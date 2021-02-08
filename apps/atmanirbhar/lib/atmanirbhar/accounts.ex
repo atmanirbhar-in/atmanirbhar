@@ -28,14 +28,17 @@ defmodule Atmanirbhar.Accounts do
     |> Repo.insert()
   end
 
-
-  def change_user_and_business_registration_form(%UserBusinessRegistrationForm{} = user_form, attrs \\ %{}) do
+  def change_user_and_business_registration_form(
+        %UserBusinessRegistrationForm{} = user_form,
+        attrs \\ %{}
+      ) do
     UserBusinessRegistrationForm.registration_changeset(user_form, attrs)
   end
 
   def register_user_and_business(user_params, business_params) do
     # Ecto.build_assoc(user, :business, business_params)
     user_changeset = change_user_registration(%User{}, user_params)
+
     Ecto.Multi.new()
     |> Ecto.Multi.insert(:user, user_changeset)
     |> Ecto.Multi.run(:user, fn repo, %{user: user} ->
@@ -184,9 +187,10 @@ defmodule Atmanirbhar.Accounts do
   """
   def get_user_by_session_token(token) do
     {:ok, query} = UserToken.verify_session_token_query(token)
+
     query
-    |> Repo.one
-    |> Repo.preload([business: [:stalls, :products, :medias]])
+    |> Repo.one()
+    |> Repo.preload(business: [:stalls, :products, :medias])
   end
 
   @doc """
@@ -324,7 +328,7 @@ defmodule Atmanirbhar.Accounts do
     |> Repo.update()
   end
 
- @doc """
+  @doc """
   Returns an `%Ecto.Changeset{}` for tracking user changes.
 
   ## Examples

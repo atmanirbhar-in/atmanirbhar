@@ -28,28 +28,55 @@ defmodule Atmanirbhar.Marketplace.Stall do
   def changeset(stall, attrs) do
     stall
     |> cast(attrs, [
-          :title, :description, :location_id,
-          :audience_average, :for_male, :for_female,
-          :poster_image_url, :is_active,
-        ])
-        |> validate_required([:title, :description, :audience_average, :for_male, :for_female, :is_active])
-        |> cast_embed(:stall_atlas)
-        |> validate_inclusion(:audience_average, 5..100)
-        # |> put_embed(:stall_atlas)
+      :title,
+      :description,
+      :location_id,
+      :audience_average,
+      :for_male,
+      :for_female,
+      :poster_image_url,
+      :is_active
+    ])
+    |> validate_required([
+      :title,
+      :description,
+      :audience_average,
+      :for_male,
+      :for_female,
+      :is_active
+    ])
+    |> cast_embed(:stall_atlas)
+    |> validate_inclusion(:audience_average, 5..100)
+
+    # |> put_embed(:stall_atlas)
     # |> cast_assoc(:gallery_items, required: true, on_replace: :delete)
     # |> cast_embed(:stall_media_ids, required: true)
   end
 
   def create_changeset(stall, attrs) do
     stall
-    |> cast(attrs, [:title, :description, :business_id,
-                   :location_id, :audience_average, :for_male, :for_female,
-                   :poster_image_url, :is_active,
-                   :stall_media_ids, :stall_product_ids,
-                   ])
-    |> validate_required([:title, :description, :audience_average, :for_male, :for_female, :is_active])
+    |> cast(attrs, [
+      :title,
+      :description,
+      :business_id,
+      :location_id,
+      :audience_average,
+      :for_male,
+      :for_female,
+      :poster_image_url,
+      :is_active,
+      :stall_media_ids,
+      :stall_product_ids
+    ])
+    |> validate_required([
+      :title,
+      :description,
+      :audience_average,
+      :for_male,
+      :for_female,
+      :is_active
+    ])
+
     # |> cast_assoc(:gallery_items, required: true, on_replace: :delete)
   end
-
-
 end

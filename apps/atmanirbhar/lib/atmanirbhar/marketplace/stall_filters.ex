@@ -17,6 +17,7 @@ defmodule Atmanirbhar.Marketplace.StallFilters do
   def changeset(stall_filters_form, attrs) do
     stall_filters_form
     |> cast(attrs, [:show_male, :show_female, :audience_max, :audience_min])
+
     # |> validate_required([:pincode])
     # |> validate_length(:pincode, is: 6)
   end
@@ -24,9 +25,8 @@ defmodule Atmanirbhar.Marketplace.StallFilters do
   # def stall_filters_from_params(params) do
   # end
 
-
   def query_for(%__MODULE__{} = stall_filters) do
-    IO.puts inspect(stall_filters)
+    IO.puts(inspect(stall_filters))
 
     for_male = Map.get(stall_filters, :for_male, true)
     for_female = Map.get(stall_filters, :for_female, true)
@@ -34,29 +34,54 @@ defmodule Atmanirbhar.Marketplace.StallFilters do
     audience_max = Map.get(stall_filters, :audience_max, 60)
     pincode = Map.get(stall_filters, :pincode, 12345)
 
-
     build_query_for(%{
       show_male: for_male,
       show_female: for_female,
       audience_min: audience_min,
-      audience_max: audience_max,
+      audience_max: audience_max
       # pincode: pincode
-                    })
+    })
   end
 
-  defp build_query_for(%{show_male: true, show_female: false, audience_min: audience_min, audience_max: audience_max} = form_params) do
+  defp build_query_for(
+         %{
+           show_male: true,
+           show_female: false,
+           audience_min: audience_min,
+           audience_max: audience_max
+         } = form_params
+       ) do
     from s in Stall,
-      where: s.for_male == true and s.audience_average >= ^audience_min and s.audience_average <= ^audience_max,
+      where:
+        s.for_male == true and s.audience_average >= ^audience_min and
+          s.audience_average <= ^audience_max,
       order_by: [desc: s.inserted_at]
   end
-  defp build_query_for(%{show_male: false, show_female: true, audience_min: audience_min, audience_max: audience_max} = form_params) do
+
+  defp build_query_for(
+         %{
+           show_male: false,
+           show_female: true,
+           audience_min: audience_min,
+           audience_max: audience_max
+         } = form_params
+       ) do
     # IO.puts inspect(form_params)
     from s in Stall,
-      where: s.for_female == true and s.audience_average >= ^audience_min and s.audience_average <= ^audience_max,
+      where:
+        s.for_female == true and s.audience_average >= ^audience_min and
+          s.audience_average <= ^audience_max,
       order_by: [desc: s.inserted_at]
   end
-  defp build_query_for(%{show_male: _show_male, show_female: _show_female, audience_min: audience_min, audience_max: audience_max} = form_params) do
 
+  defp build_query_for(
+         %{
+           show_male: _show_male,
+           show_female: _show_female,
+           audience_min: audience_min,
+           audience_max: audience_max
+         } = form_params
+       ) do
     # query = from stall in Stall,
     #   join: business in Business,
     #   join: location in Location,
@@ -69,7 +94,7 @@ defmodule Atmanirbhar.Marketplace.StallFilters do
 
     from stall in Stall,
       join: business in assoc(stall, :business),
-    # Business,
+      # Business,
       # join: location in Location,
       # join: stall_element in StallElement,
       # on: stall.business_id == business.id,
@@ -79,8 +104,8 @@ defmodule Atmanirbhar.Marketplace.StallFilters do
       order_by: [desc: stall.inserted_at],
       # preload: [location: location, business: business],
       preload: [:business]
-      # select: struct(stall, [:id, :title, :description])
-      # select: struct(stall, [:id, :title, :description, :location_id, :business_id, business: [:id, :title, :address]])
-  end
 
+    # select: struct(stall, [:id, :title, :description])
+    # select: struct(stall, [:id, :title, :description, :location_id, :business_id, business: [:id, :title, :address]])
+  end
 end

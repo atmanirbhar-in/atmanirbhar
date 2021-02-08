@@ -7,6 +7,7 @@ defmodule AtmanirbharWeb.UserDashboardLive.TimelinePostFormComponent do
   @impl true
   def update(%{stall_element: stall_element} = assigns, socket) do
     changeset = Marketplace.change_timeline_post(stall_element)
+
     {:ok,
      socket
      |> assign(assigns)
@@ -52,5 +53,4 @@ defmodule AtmanirbharWeb.UserDashboardLive.TimelinePostFormComponent do
         {:noreply, assign(socket, changeset: changeset)}
     end
   end
-
 end

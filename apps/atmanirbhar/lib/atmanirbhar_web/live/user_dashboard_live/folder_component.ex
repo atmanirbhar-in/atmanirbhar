@@ -30,5 +30,4 @@ defmodule AtmanirbharWeb.UserDashboardLive.FolderComponent do
   # defp folder_poster_filename do
   #   Routes.static_path(@socket, "/images/dashboard/<%= @folder_poster) %>")
   # end
-
 end

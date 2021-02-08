@@ -2,6 +2,7 @@ defmodule Atmanirbhar.Repo do
   use Ecto.Repo,
     otp_app: :atmanirbhar,
     adapter: Ecto.Adapters.Postgres
+
   require Ecto.Query
   @tenant_key {__MODULE__, :org_id}
 
@@ -30,6 +31,4 @@ defmodule Atmanirbhar.Repo do
   #       raise "expected org_id or skip_org_id to be set"
   #   end
   # end
-
-
 end

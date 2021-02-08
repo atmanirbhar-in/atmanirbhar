@@ -17,12 +17,23 @@ defmodule Atmanirbhar.Resources.RawMaterial do
   @doc false
   def changeset(raw_material, attrs) do
     raw_material
-    |> cast(attrs, [:name, :package_quantity, :picture_url,
-                   :retail_price, :wholesale_price,
-                   :category_id, :seller_id])
-                   |> validate_required([:name, :package_quantity, :picture_url,
-                                        :retail_price, :wholesale_price,
-                                        :category_id,
-                                        :seller_id])
+    |> cast(attrs, [
+      :name,
+      :package_quantity,
+      :picture_url,
+      :retail_price,
+      :wholesale_price,
+      :category_id,
+      :seller_id
+    ])
+    |> validate_required([
+      :name,
+      :package_quantity,
+      :picture_url,
+      :retail_price,
+      :wholesale_price,
+      :category_id,
+      :seller_id
+    ])
   end
 end

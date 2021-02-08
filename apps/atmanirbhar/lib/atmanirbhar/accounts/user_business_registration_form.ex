@@ -39,6 +39,7 @@ defmodule Atmanirbhar.Accounts.UserBusinessRegistrationForm do
     changeset
     |> validate_required([:city])
   end
+
   defp validate_business(changeset) do
     changeset
     |> validate_required([:business])

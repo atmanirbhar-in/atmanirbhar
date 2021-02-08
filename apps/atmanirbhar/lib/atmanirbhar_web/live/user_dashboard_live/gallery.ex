@@ -5,8 +5,9 @@ defmodule AtmanirbharWeb.UserDashboardLive.Gallery do
   alias AtmanirbharWeb.UserDashboardLive.FoldersNavigationComponent
 
   def mount(params, session, socket) do
-    socket = socket
-    |> MountHelpers.assign_defaults(params, session, [:upload_pictures, :view_gallery])
+    socket =
+      socket
+      |> MountHelpers.assign_defaults(params, session, [:upload_pictures, :view_gallery])
 
     {
       :ok,
@@ -32,17 +33,4 @@ defmodule AtmanirbharWeb.UserDashboardLive.Gallery do
     |> assign(:page_title, "Upload pictures")
     |> assign(:gallery_upload, %GalleryUpload{})
   end
-
-
-
 end
-
-
-
-
-
-
-
-
-
-

@@ -17,9 +17,15 @@ defmodule Atmanirbhar.Catalog.Product do
 
   @doc false
   def changeset(product, attrs) do
-
     product
-    |> cast(attrs, [:title, :description, :images, :delivery_details, :unit_price_inr, :deliverables])
+    |> cast(attrs, [
+      :title,
+      :description,
+      :images,
+      :delivery_details,
+      :unit_price_inr,
+      :deliverables
+    ])
     |> validate_required([:title, :description])
   end
 end

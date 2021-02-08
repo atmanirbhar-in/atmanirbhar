@@ -13,5 +13,4 @@ defmodule Atmanirbhar.Marketplace.LocationForm do
     |> validate_required([:pincode])
     |> validate_length(:pincode, is: 6)
   end
-
 end

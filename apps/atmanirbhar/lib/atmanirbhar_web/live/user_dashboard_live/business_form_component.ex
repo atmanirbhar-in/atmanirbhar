@@ -11,8 +11,6 @@ defmodule AtmanirbharWeb.UserDashboardLive.BusinessFormComponent do
      |> assign(assigns)
      |> assign(:changeset, changeset)
      |> assign(:cities, cities)
-     |> assign(:areas, [])
-    }
+     |> assign(:areas, [])}
   end
-
 end

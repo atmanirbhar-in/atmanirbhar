@@ -11,10 +11,10 @@ defmodule Atmanirbhar.Marketplace.StallAtlas do
     struct
     |> cast(params, [:media_ids, :product_ids])
   end
-    # , {:array, :integer}, default: []
-    # field :media_ids, {:array, :integer}, default: []
+
+  # , {:array, :integer}, default: []
+  # field :media_ids, {:array, :integer}, default: []
 
   # def changeset() do
   # end
-
 end

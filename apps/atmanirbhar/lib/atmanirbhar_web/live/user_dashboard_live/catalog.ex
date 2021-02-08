@@ -5,9 +5,9 @@ defmodule AtmanirbharWeb.UserDashboardLive.Catalog do
   alias Atmanirbhar.Catalog.Product
 
   def mount(params, session, socket) do
-    socket = socket
-    |> MountHelpers.assign_defaults(params, session,
-    [:upload_pictures, :view_gallery])
+    socket =
+      socket
+      |> MountHelpers.assign_defaults(params, session, [:upload_pictures, :view_gallery])
 
     {
       :ok,
@@ -40,5 +40,4 @@ defmodule AtmanirbharWeb.UserDashboardLive.Catalog do
     |> assign(:page_title, "New Product")
     |> assign(:product, %Product{})
   end
-
 end

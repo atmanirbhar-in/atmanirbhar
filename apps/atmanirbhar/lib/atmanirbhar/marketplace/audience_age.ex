@@ -1,5 +1,4 @@
 defmodule Atmanirbhar.Marketplace.AudienceAge do
-
   @moduledoc """
 
   Audience as.
@@ -30,6 +29,4 @@ defmodule Atmanirbhar.Marketplace.AudienceAge do
   # collection variety.
   def what_to_dos do
   end
-
-
 end

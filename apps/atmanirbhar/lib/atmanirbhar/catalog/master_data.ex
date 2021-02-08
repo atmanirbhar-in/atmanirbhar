@@ -1,5 +1,4 @@
 defmodule Atmanirbhar.Catalog.MasterData do
-
   def list do
   end
 
@@ -33,5 +32,4 @@ defmodule Atmanirbhar.Catalog.MasterData do
       }
     ]
   end
-
 end

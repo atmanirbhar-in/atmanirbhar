@@ -8,21 +8,32 @@ defmodule Atmanirbhar.Marketplace do
   alias Atmanirbhar.Repo
 
   alias Atmanirbhar.Accounts.{User, UserToken}
-  alias Atmanirbhar.Marketplace.{Business, GalleryUpload,
-                                 Stall, GalleryItem, StallAtlas,
-                                 Media,
-                                 LocationForm, StallFilters, BulkUpload}
+
+  alias Atmanirbhar.Marketplace.{
+    Business,
+    GalleryUpload,
+    Stall,
+    GalleryItem,
+    StallAtlas,
+    Media,
+    LocationForm,
+    StallFilters,
+    BulkUpload
+  }
+
   alias Atmanirbhar.Catalog.Product
   alias Atmanirbhar.Geo.Location
 
   def get_business!(id), do: Repo.get!(Business, id)
 
   def load_business_with_media!(business_id) do
-    query = from business in Business,
-      where: business.id == ^business_id,
-      preload: [medias: :medias]
+    query =
+      from business in Business,
+        where: business.id == ^business_id,
+        preload: [medias: :medias]
+
     query
-    |> Repo.one
+    |> Repo.one()
   end
 
   def change_gallery_upload(%GalleryUpload{} = gallery_upload, attrs \\ %{}) do
@@ -38,17 +49,26 @@ defmodule Atmanirbhar.Marketplace do
   end
 
   def list_user_businesses(input_token) do
-    query = from stall in Stall,
-      join: business in Business,
-      on: stall.business_id == business.id,
-      join: user in User,
-      on: business.owner_id == user.id,
-      join: user_token in UserToken,
-      where: user_token.token == ^input_token,
-      preload: [business: business],
-      select: struct(stall, [:id, :title, :description, :location_id, :business_id,
-                             location: [:id, :title],
-                             business: [:id, :title, :description, :owner_id]])
+    query =
+      from stall in Stall,
+        join: business in Business,
+        on: stall.business_id == business.id,
+        join: user in User,
+        on: business.owner_id == user.id,
+        join: user_token in UserToken,
+        where: user_token.token == ^input_token,
+        preload: [business: business],
+        select:
+          struct(stall, [
+            :id,
+            :title,
+            :description,
+            :location_id,
+            :business_id,
+            location: [:id, :title],
+            business: [:id, :title, :description, :owner_id]
+          ])
+
     Repo.all(query)
   end
 
@@ -74,19 +94,23 @@ defmodule Atmanirbhar.Marketplace do
 
   def list_stalls_with_filters(%StallFilters{} = stall_filters) do
     StallFilters.query_for(stall_filters)
-    |> Repo.all
+    |> Repo.all()
   end
 
   def create_media(business, gallery_params, after_save \\ &{:ok, &1}) do
     now = NaiveDateTime.utc_now() |> NaiveDateTime.truncate(:second)
-    list_of_assocs = for photo_url <- gallery_params.urls do
-      %{ business_id: business.id,
-         url: photo_url,
-         caption: gallery_params.title,
-         inserted_at: now,
-         updated_at: now
-      }
-    end
+
+    list_of_assocs =
+      for photo_url <- gallery_params.urls do
+        %{
+          business_id: business.id,
+          url: photo_url,
+          caption: gallery_params.title,
+          inserted_at: now,
+          updated_at: now
+        }
+      end
+
     Repo.insert_all(Media, list_of_assocs)
     |> after_save_bulk_photos(gallery_params.urls, after_save)
   end
@@ -101,17 +125,17 @@ defmodule Atmanirbhar.Marketplace do
 
   # default params when empty
   def change_stall_filters(%StallFilters{} = stall_filters, input_params \\ %{}) do
-
-    raw_params = input_params
-    |> Enum.filter(fn {_, v} -> v != nil end)
-    |> Enum.into(%{})
+    raw_params =
+      input_params
+      |> Enum.filter(fn {_, v} -> v != nil end)
+      |> Enum.into(%{})
 
     stall_filters_prepared = %{
       show_male: Map.get(raw_params, "show_male", true) |> to_bool,
       show_female: Map.get(raw_params, "show_female", true) |> to_bool,
       audience_min: Map.get(raw_params, "minimum_audience", "20") |> parse_num,
       audience_max: Map.get(raw_params, "maximum_audience", "60") |> parse_num,
-      pincode: Map.get(raw_params, "pincode", "413512") |> parse_num,
+      pincode: Map.get(raw_params, "pincode", "413512") |> parse_num
     }
 
     StallFilters.changeset(stall_filters, stall_filters_prepared)
@@ -139,7 +163,6 @@ defmodule Atmanirbhar.Marketplace do
   #   {:ok, deal}
   # end
 
-
   # link gallery_item and stall
   # def add_gallery_item_to_stall(gallery_item = %GalleryItem{}, stall = %Stall{}) do
   # def add_gallery_item_to_stall(gallery_item_id, stall_id) do
@@ -155,13 +178,14 @@ defmodule Atmanirbhar.Marketplace do
   # end
 
   def list_business_media(business_id) do
-    query = from media in Media,
-      join: business in Business,
-      on: business.id == media.business_id,
-      where: business.id == ^business_id
-    Repo.all query
-  end
+    query =
+      from media in Media,
+        join: business in Business,
+        on: business.id == media.business_id,
+        where: business.id == ^business_id
 
+    Repo.all(query)
+  end
 
   def list_marketplace_bulk_uploads do
     Repo.all(BulkUpload)
@@ -179,6 +203,7 @@ defmodule Atmanirbhar.Marketplace do
   defp after_save_bulk_upload({:ok, bulk_upload}, func) do
     {:ok, _post} = func.(bulk_upload)
   end
+
   defp after_save_bulk_upload(error, _func) do
     error
   end
@@ -201,37 +226,55 @@ defmodule Atmanirbhar.Marketplace do
   def get_stall!(id), do: Repo.get!(Stall, id)
 
   def load_stall(stall_id) do
-    query = from stall in Stall,
-      join: business in assoc(stall, :business),
-      where: stall.id == ^stall_id,
-      preload: [:business]
+    query =
+      from stall in Stall,
+        join: business in assoc(stall, :business),
+        where: stall.id == ^stall_id,
+        preload: [:business]
+
     Repo.one(query)
   end
 
   def list_media(list) do
-    query = from media in Media,
-      where: media.id in ^list
+    query =
+      from media in Media,
+        where: media.id in ^list
+
     Repo.all(query)
   end
+
   def list_products(list) do
-    query = from product in Product,
-      where: product.id in ^list
+    query =
+      from product in Product,
+        where: product.id in ^list
+
     Repo.all(query)
   end
 
   def get_stall_detail!(id) do
-    query = from stall in Stall,
-      join: business in Business,
-      join: location in Location,
-      on: stall.business_id == business.id,
-      on: stall.location_id == location.id,
-      where: stall.id == ^id,
-      preload: [business: business, location: location],
-      select: struct(stall, [:id, :title, :description, :location_id, :business_id, business: [:id, :title, :address], location: [:id, :title]])
+    query =
+      from stall in Stall,
+        join: business in Business,
+        join: location in Location,
+        on: stall.business_id == business.id,
+        on: stall.location_id == location.id,
+        where: stall.id == ^id,
+        preload: [business: business, location: location],
+        select:
+          struct(stall, [
+            :id,
+            :title,
+            :description,
+            :location_id,
+            :business_id,
+            business: [:id, :title, :address],
+            location: [:id, :title]
+          ])
+
     Repo.one(query)
   end
 
-  def create_stall(%Business{} = business, %StallAtlas{} = stall_atlas , attrs \\ %{}) do
+  def create_stall(%Business{} = business, %StallAtlas{} = stall_atlas, attrs \\ %{}) do
     build_stall = Ecto.build_assoc(business, :stalls, attrs)
 
     build_stall

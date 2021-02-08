@@ -24,5 +24,4 @@ defmodule Atmanirbhar.BulkUpload.BusinessImportJob do
   defp attach_imported_by(changeset) do
     changeset
   end
-
 end

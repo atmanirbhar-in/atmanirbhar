@@ -6,7 +6,8 @@ defmodule AtmanirbharWeb.UserDashboardLive.Index do
 
   @impl true
   def mount(params, session, socket) do
-    socket = socket
+    socket =
+      socket
       |> MountHelpers.assign_defaults(params, session, [:create_stall, :upload_pictures])
 
     todos = [
@@ -23,8 +24,7 @@ defmodule AtmanirbharWeb.UserDashboardLive.Index do
        todos: todos,
        business: socket.assigns.current_business,
        products: products
-     )
-    }
+     )}
   end
 
   @impl true
@@ -33,13 +33,16 @@ defmodule AtmanirbharWeb.UserDashboardLive.Index do
   end
 
   defp filter_stall_products(all_elements, stall_element_ids) do
-    Enum.filter(all_elements,
-      fn obj -> obj.id in stall_element_ids
-      end)
+    Enum.filter(
+      all_elements,
+      fn obj -> obj.id in stall_element_ids end
+    )
   end
+
   def display_stall_product_thumbnails(socket, assigns, stall) do
     product_ids = Map.get(stall.stall_atlas, :product_ids)
     products = filter_stall_products(assigns.products, product_ids)
+
     ~L"""
     <%= for product <- products do %>
     <img alt="" src="<%= List.first product.images %>" class="w-12 h-12 p-1 m-1" />
@@ -62,6 +65,7 @@ defmodule AtmanirbharWeb.UserDashboardLive.Index do
     |> assign(:page_title, "create new stall")
     |> assign(:stall, %Stall{})
   end
+
   defp apply_action(socket, :edit_stall, %{"stall_id" => input_stall_id}) do
     {stall_id, _} = Integer.parse(input_stall_id)
     stall = Marketplace.get_stall_detail!(stall_id)
@@ -94,5 +98,4 @@ defmodule AtmanirbharWeb.UserDashboardLive.Index do
   def handle_event("recover_wizard", params, socket) do
     {:noreply, socket}
   end
-
 end

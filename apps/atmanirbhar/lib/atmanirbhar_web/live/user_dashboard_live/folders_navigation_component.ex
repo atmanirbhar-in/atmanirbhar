@@ -55,5 +55,4 @@ defmodule AtmanirbharWeb.UserDashboardLive.FoldersNavigationComponent do
     </section>
     """
   end
-
 end

@@ -16,7 +16,13 @@ defmodule Atmanirbhar.Marketplace.BulkUpload do
   @doc false
   def changeset(bulk_upload, attrs) do
     bulk_upload
-    |> cast(attrs, [:csv_urls, :city_name, :location_name, :content_description, :processesed_flag])
+    |> cast(attrs, [
+      :csv_urls,
+      :city_name,
+      :location_name,
+      :content_description,
+      :processesed_flag
+    ])
     |> validate_required([:csv_urls, :city_name, :location_name, :content_description])
   end
 end

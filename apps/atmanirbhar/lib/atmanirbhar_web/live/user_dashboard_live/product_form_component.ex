@@ -6,7 +6,6 @@ defmodule AtmanirbharWeb.UserDashboardLive.ProductFormComponent do
   alias Atmanirbhar.Catalog.Product
 
   def mount(socket) do
-
     if connected?(socket) do
       path = uploads_path()
       File.mkdir_p!(path)
@@ -14,13 +13,13 @@ defmodule AtmanirbharWeb.UserDashboardLive.ProductFormComponent do
 
     {:ok,
      socket
-     |> allow_upload(:product_image, accept: ~w(.jpg .png .jpeg), max_entries: 4)
-    }
+     |> allow_upload(:product_image, accept: ~w(.jpg .png .jpeg), max_entries: 4)}
   end
 
   @impl true
   def update(%{product: product} = assigns, socket) do
     changeset = Catalog.change_product(product)
+
     {:ok,
      socket
      |> assign(assigns)
@@ -59,17 +58,19 @@ defmodule AtmanirbharWeb.UserDashboardLive.ProductFormComponent do
   defp save_product(socket, :new_product, input_product_params) do
     business = socket.assigns.current_business
 
-    prod_params = Product.changeset(%Product{}, input_product_params)
-    |> Ecto.Changeset.apply_changes
+    prod_params =
+      Product.changeset(%Product{}, input_product_params)
+      |> Ecto.Changeset.apply_changes()
 
     product_params =
       put_picture_urls(socket, prod_params)
-      |> Map.from_struct
+      |> Map.from_struct()
 
-    case Catalog.create_product(business,
-          product_params,
-          &consume_uploaded_pictures(socket, &1)
-        ) do
+    case Catalog.create_product(
+           business,
+           product_params,
+           &consume_uploaded_pictures(socket, &1)
+         ) do
       {:ok, _product} ->
         {:noreply,
          socket
@@ -86,14 +87,18 @@ defmodule AtmanirbharWeb.UserDashboardLive.ProductFormComponent do
       dest = Path.join(uploads_path, "#{entry.uuid}.#{ext(entry)}")
       File.cp!(meta.path, dest)
     end)
+
     {:ok, product}
   end
 
   def put_picture_urls(socket, %Product{} = product) do
-    {completed, [] } = uploaded_entries(socket, :product_image)
-    image_urls = for entry <- completed do
-      Routes.static_path(socket, "/uploads/#{entry.uuid}.#{ext(entry)}")
-    end
+    {completed, []} = uploaded_entries(socket, :product_image)
+
+    image_urls =
+      for entry <- completed do
+        Routes.static_path(socket, "/uploads/#{entry.uuid}.#{ext(entry)}")
+      end
+
     %Product{product | images: image_urls}
   end
 
@@ -104,5 +109,4 @@ defmodule AtmanirbharWeb.UserDashboardLive.ProductFormComponent do
   defp uploads_path do
     Path.join([:code.priv_dir(:atmanirbhar), "static", "uploads"])
   end
-
 end
