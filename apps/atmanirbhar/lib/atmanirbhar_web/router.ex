@@ -8,16 +8,22 @@ defmodule AtmanirbharWeb.Router do
     plug :accepts, ["html"]
     plug :fetch_session
     plug :fetch_live_flash
-    plug :put_root_layout, {AtmanirbharWeb.LayoutView, :root}
     plug :protect_from_forgery
     plug :put_secure_browser_headers
     plug :fetch_current_user
+  end
+
+  pipeline :marketplace do
+    plug :put_root_layout, {AtmanirbharWeb.LayoutView, :root}
   end
 
   pipeline :user_dashboard do
     plug :put_root_layout, {AtmanirbharWeb.LayoutView, :user_dashboard}
   end
 
+  pipeline :store do
+    plug :put_root_layout, {AtmanirbharWeb.LayoutView, :store_layout}
+  end
 
   # Admin Dashboard
   pipeline :kaffy_browser do
@@ -34,19 +40,6 @@ defmodule AtmanirbharWeb.Router do
   pipeline :api do
     plug :accepts, ["json"]
     plug :fetch_session
-  end
-
-  scope "/", AtmanirbharWeb do
-    pipe_through :browser
-
-    live "/", PageLive, :index
-    live "/pincode/:pincode", PageLive, :pincode
-    live "/stall/:stall_id", StallPublicLive, :index
-
-    live "/faqs", FaqsLive, :index
-    # import
-    # post "/import", BulkUploadController, :import_city_data
-
   end
 
   # Other scopes may use custom stacks.
@@ -74,7 +67,7 @@ defmodule AtmanirbharWeb.Router do
 
   ## Authentication routes
 
-  scope "/", AtmanirbharWeb do
+  scope "/accounts", AtmanirbharWeb do
     pipe_through [:browser, :redirect_if_user_is_authenticated, :put_session_layout]
 
     get "/signup", UserRegistrationController, :new
@@ -154,7 +147,7 @@ defmodule AtmanirbharWeb.Router do
     live "/marketplace_stalls/:id/show/edit", StallLive.Show, :edit
   end
 
-  scope "/dashboard/", AtmanirbharWeb do
+  scope "/dashboard", AtmanirbharWeb do
     pipe_through [:browser, :require_authenticated_user, :user_dashboard]
 
     get "/settings", UserSettingsController, :edit
@@ -192,6 +185,27 @@ defmodule AtmanirbharWeb.Router do
     get "/users/confirm/:token", UserConfirmationController, :confirm
 
   end
+
+  scope "/", AtmanirbharWeb do
+    pipe_through [:browser, :marketplace]
+
+    live "/", PageLive, :index
+    live "/pincode/:pincode", PageLive, :pincode
+  end
+
+  scope "/", AtmanirbharWeb do
+    pipe_through [:browser, :store]
+
+    # live "/:stall_id", StallPublicLive, :index
+    live "/:store_id", StorePublicLive, :index
+  end
+
+  scope "/pages", AtmanirbharWeb do
+    pipe_through [:browser, :marketplace]
+
+    live "/faqs", FaqsLive, :index
+  end
+
 
   if Mix.env == :dev do
     forward "/sent_emails", Bamboo.SentEmailViewerPlug

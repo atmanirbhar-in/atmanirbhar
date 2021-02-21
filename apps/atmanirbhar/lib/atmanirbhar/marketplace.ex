@@ -25,15 +25,18 @@ defmodule Atmanirbhar.Marketplace do
   alias Atmanirbhar.Geo.Location
 
   def get_business!(id), do: Repo.get!(Business, id)
+  def list_business_products(business) do
+    Ecto.assoc(business, :products)
+    |> Repo.all
+  end
+  def list_business_medias(business) do
+    Ecto.assoc(business, :medias)
+    |> Repo.all
+  end
 
-  def load_business_with_media!(business_id) do
-    query =
-      from business in Business,
-        where: business.id == ^business_id,
-        preload: [medias: :medias]
-
-    query
-    |> Repo.one()
+  def load_business!(business_id) do
+    Repo.get(Business, business_id)
+    # |> preload: [:medias, :products]
   end
 
   def change_gallery_upload(%GalleryUpload{} = gallery_upload, attrs \\ %{}) do
@@ -185,6 +188,10 @@ defmodule Atmanirbhar.Marketplace do
         where: business.id == ^business_id
 
     Repo.all(query)
+  end
+
+  def list_business do
+    Repo.all(Business)
   end
 
   def list_marketplace_bulk_uploads do

@@ -5,23 +5,30 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <%= csrf_meta_tag() %>
-    <%= live_title_tag assigns[:page_title] || "Atmanirbhar Admin", suffix: " · Admin" %>
+    <%= live_title_tag assigns[:page_title] || "STORE  Atmanirbhar.in", suffix: " . Vocal for local India nearby small Business" %>
     <link phx-track-static rel="stylesheet" href="<%= Routes.static_path(@conn, "/css/app.css") %>"/>
     <script defer phx-track-static type="text/javascript" src="<%= Routes.static_path(@conn, "/js/app.js") %>"></script>
+    <meta name="google-site-verification" content="oNt7GtKbAYNnPlX767UvWcMWVtMyX9baHHilURGpROY" />
+
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'G-FZ0L8C6CH6');
+    </script>
+
   </head>
-  <body class="flex flex-col h-full bg-gray-100">
+  <body class="flex flex-col h-full">
     <header class="z-30 fixed top-0 right-0 left-0 bg-white shadow px-2 sm:px-4 py-4">
       <div class="container mx-auto flex justify-between items-center">
-        <a href="/" title="Atmanirbhar Home Page" class="flex items-center text-xl text-gray-900">
+        <div class="flex h-8 md:h-12">
+          <%= live_redirect to: Routes.page_path(@conn, :index), class: "text-xl" do %>
           <%= img_tag(Routes.path(@conn, "/images/atmanirbhar-logo.png"), class: "w-8 h-8 md:w-12 md:h-12") %>
-        </a>
+          <% end %>
+
+        </div>
         <div class="flex items-center space-x-1">
-          <div class="hidden md:inline-flex space-x-1">
-            <%= if function_exported?(Routes, :live_dashboard_path, 2) do %>
-              <%= link "LiveDashboard", to: Routes.live_dashboard_path(@conn, :home), class: "btn btn-sm btn-link" %>
-            <% end %>
-          </div>
-          <%#= render "_user_menu.html", assigns %>
           <div class="inline-flex md:hidden" x-data="{ open: false }">
             <button class="btn btn-link btn-sm px-2 flex-none" @click="open = true">
               <svg
@@ -61,25 +68,22 @@
                 </svg>
                 <span class="sr-only">Close Menu</span>
               </button>
-
               <%= link "Home", to: Routes.page_path(@conn, :index), class: "btn btn-link w-full" %>
-
               <%= if function_exported?(Routes, :live_dashboard_path, 2) do %>
                 <%= link "LiveDashboard", to: Routes.live_dashboard_path(@conn, :home), class: "btn btn-link w-full" %>
               <% end %>
-
             </div>
           </div>
+
         </div>
+        <%= render "_store_menu.html", assigns %>
       </div>
     </header>
 
     <%= @inner_content %>
 
-    <footer class="footer bg-gray-800 text-gray-600 mt-auto py-6">
-      <div class="container mx-auto px-4 max-w-6xl">
-        <span class="text-muted">Atmanirbhar</span>
-      </div>
-    </footer>
+
+    <%= render "_footer.html", assigns %>
+
   </body>
 </html>

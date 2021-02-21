@@ -12,7 +12,7 @@ defmodule AtmanirbharWeb.UserDashboardLive.Index do
 
     todos = [
       %{
-        text: "Please add pictures to Gallery",
+        text: "Product / Service appointment booking",
         cta: "gallery_path"
       }
     ]

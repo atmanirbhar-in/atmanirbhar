@@ -31,11 +31,13 @@ defmodule AtmanirbharWeb.PageLive do
       |> Ecto.Changeset.apply_changes()
 
     stalls = Atmanirbhar.Marketplace.list_stalls_with_filters(stall_filters)
+    stores = Atmanirbhar.Marketplace.list_business()
     changeset = Marketplace.change_stall_filters(stall_filters)
 
     socket =
       socket
       |> assign(:stalls, stalls)
+      |> assign(:stores, stores)
       |> assign(stall_filters_changeset: changeset)
       |> assign(:page_title, "Micro businesses in this region")
 
