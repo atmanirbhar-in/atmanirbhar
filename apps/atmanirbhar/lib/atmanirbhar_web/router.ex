@@ -196,7 +196,7 @@ defmodule AtmanirbharWeb.Router do
   scope "/", AtmanirbharWeb do
     pipe_through [:browser, :store]
 
-    # live "/:stall_id", StallPublicLive, :index
+    live "/cart", CustomerCartLive, :cart
     live "/:store_id", StorePublicLive, :index
   end
 

@@ -5,7 +5,7 @@
     <%= link "Logout", to: Routes.user_session_path(@conn, :delete), method: :delete, class: "btn btn-sm btn-link" %>
 <% else %>
     <div class="flex">
-        <%= link to: Routes.faqs_path(@conn, :index), class: "mr-2" do %>
+        <%= link to: Routes.customer_cart_path(@conn, :cart), class: "btn btn-sm btn-link" do %>
             <span>
                 <svg
                     class="h-10 w-10"
@@ -40,6 +40,5 @@
             </span>
         <% end %>
     </div>
-
 
 <% end %>
