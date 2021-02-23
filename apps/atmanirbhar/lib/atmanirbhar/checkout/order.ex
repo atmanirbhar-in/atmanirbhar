@@ -24,4 +24,10 @@ defmodule Atmanirbhar.Checkout.Order do
     |> cast(attrs, [:order_date, :preferred_delivery_datetime, :error_message, :error_location, :fullfilled, :deleted])
     |> validate_required([:order_date, :preferred_delivery_datetime, :error_message, :error_location, :fullfilled, :deleted])
   end
+
+
+  def add(product, customer, business) do
+    IO.puts "product #{ product }"
+  end
+
 end
