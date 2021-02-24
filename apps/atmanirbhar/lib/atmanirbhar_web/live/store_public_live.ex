@@ -1,10 +1,17 @@
 defmodule AtmanirbharWeb.StorePublicLive do
   use AtmanirbharWeb, :live_view
   alias Atmanirbhar.Marketplace
+  alias Atmanirbhar.Checkout
 
   @impl true
-  def mount(params, _session, socket) do
-    {:ok, socket}
+  def mount(%{"store_id" => store_id} = params, session, socket) do
+    basket_id = session["basket_id"]
+
+    {:ok,
+     socket
+     |> assign(:basket_id, basket_id)
+     |> assign(:store_id, store_id)
+    }
   end
 
   def handle_params(params, url, socket) do
@@ -25,8 +32,14 @@ defmodule AtmanirbharWeb.StorePublicLive do
     |> assign(:medias, medias)
   end
 
-  # def handle_event("add-product", socket) do
-  # end
+  def handle_event("add-to-cart", %{"product" => product_id}, socket) do
+    basket_id = socket.assigns.basket_id
+    store_id = socket.assigns.store_id
+
+    # Task async
+    Checkout.add_to_basket(product_id, basket_id, store_id)
+    {:noreply, socket}
+  end
 
   def store_menu(socket, assigns) do
     ~L"""

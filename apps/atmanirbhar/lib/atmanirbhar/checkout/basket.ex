@@ -1,12 +1,14 @@
 defmodule Atmanirbhar.Checkout.Basket do
   use Ecto.Schema
   import Ecto.Changeset
+  alias Atmanirbhar.Checkout.BasketItem
 
   schema "user_baskets" do
     field :is_guest, :boolean, default: false
     field :customer_id, :id
 
     timestamps()
+    has_many :basket_items, BasketItem
   end
 
   @doc false
