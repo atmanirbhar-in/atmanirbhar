@@ -2,6 +2,7 @@ defmodule Atmanirbhar.Checkout.Basket do
   use Ecto.Schema
   import Ecto.Changeset
   alias Atmanirbhar.Checkout.BasketItem
+  alias Atmanirbhar.Checkout
 
   schema "user_baskets" do
     field :is_guest, :boolean, default: false
@@ -18,8 +19,5 @@ defmodule Atmanirbhar.Checkout.Basket do
     |> validate_required([:is_guest])
   end
 
-  # def create_for_guest do
-  #   changeset(%__MODULE__{}, %{is_guest: true})
-  # end
 
 end

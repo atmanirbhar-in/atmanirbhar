@@ -6,11 +6,14 @@ defmodule AtmanirbharWeb.StorePublicLive do
   @impl true
   def mount(%{"store_id" => store_id} = params, session, socket) do
     basket_id = session["basket_id"]
+    {int_store_id, _} = Integer.parse(store_id)
+    basket_items = Checkout.get_basket_items(basket_id, int_store_id)
 
     {:ok,
      socket
      |> assign(:basket_id, basket_id)
-     |> assign(:store_id, store_id)
+     |> assign(:basket_items, basket_items)
+     |> assign(:store_id, int_store_id)
     }
   end
 
