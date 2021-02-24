@@ -9,4 +9,8 @@ defmodule Atmanirbhar.Checkout do
   def remove_from_cart(product, customer, business) do
   end
 
+  def get_cart(cart_id) do
+    #
+  end
+
 end
