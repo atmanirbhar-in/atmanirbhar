@@ -138,22 +138,23 @@
               <%= "120" %> &#8377;
             </span>
           </p>
-          <% count = (@basket_items |> Enum.count(&(&1.product_id == product.id) )) %>
-    <%= if count == 0 do %>
+          <%# count = (@basket_items |> Enum.count(&(&1.product_id == product.id) )) %>
+    <%= case Enum.find(@basket_items, fn(item) -> item.product_id == product.id; end) do %>
+    <%= nil -> %>
     <button
       phx-click="add-to-cart"
       phx-value-product="<%= product.id %>"
       class="px-2 py-2 transition ease-in duration-200 uppercase rounded rounded-full hover:bg-gray-800 hover:text-white border-2 border-gray-900 focus:outline-none">Add
       to cart</button>
-    <% else %>
+    <%= item -> %>
     <div>
-    <button
+      <button
       phx-click="add-to-cart"
       phx-value-product="<%= product.id %>"
       class="px-2 py-2 transition ease-in duration-200 uppercase rounded-full hover:bg-gray-800 hover:text-white border-2 border-gray-900 focus:outline-none">
       +
     </button>
-    <%= count %>
+    <%= item.quantity %>
     <button
       phx-click="add-to-cart"
       phx-value-product="<%= product.id %>"
@@ -161,8 +162,8 @@
       -
     </button>
     </div>
-
     <% end %>
+
     </div>
 
       </div>

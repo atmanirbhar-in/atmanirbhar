@@ -38,7 +38,7 @@ defmodule Atmanirbhar.Checkout do
       # %BasketItem{product_id: int_product_id, business_id: int_business_id, quantity: 1}
       build_basket_item,
       on_conflict: query,
-      conflict_target: [:business_id, :product_id]
+      conflict_target: [:product_id, :business_id]
     )
 
 
