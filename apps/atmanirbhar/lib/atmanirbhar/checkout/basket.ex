@@ -15,4 +15,9 @@ defmodule Atmanirbhar.Checkout.Basket do
     |> cast(attrs, [:is_guest])
     |> validate_required([:is_guest])
   end
+
+  # def create_for_guest do
+  #   changeset(%__MODULE__{}, %{is_guest: true})
+  # end
+
 end

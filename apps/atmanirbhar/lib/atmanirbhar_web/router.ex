@@ -23,7 +23,7 @@ defmodule AtmanirbharWeb.Router do
 
   pipeline :store do
     plug :put_root_layout, {AtmanirbharWeb.LayoutView, :store_layout}
-    # plug :fetch_cart
+    plug AtmanirbharWeb.Plugs.FetchBasket
   end
 
   # Admin Dashboard
