@@ -28,7 +28,6 @@ defmodule AtmanirbharWeb.StorePublicLive do
 
     products = Marketplace.list_business_products(business)
     medias = Marketplace.list_business_medias(business)
-    # # cart = []
 
     socket
     |> assign(:business, business)
@@ -48,15 +47,21 @@ defmodule AtmanirbharWeb.StorePublicLive do
    }
   end
 
-  def handle_event("remove-from-cart", %{"product" => product_id}, socket) do
+  def handle_event("remove-from-cart", %{"product" => input_product_id}, socket) do
     basket_id = socket.assigns.basket_id
     store_id = socket.assigns.store_id
     basket_items = socket.assigns.basket_items
+    product_id = String.to_integer(input_product_id)
 
-    res = Checkout.remove_from_basket(product_id, basket_id, store_id)
+    updated_basket_items =
+      case Checkout.remove_from_basket(product_id, basket_id, store_id) do
+        {1, _ } -> Map.update(basket_items, product_id, 0, &(&1 - 1))
+          _ -> basket_items
+      end
+
     {:noreply,
      socket
-     |> assign(:basket_items, Map.put(basket_items, res.product_id, res.quantity))
+     |> assign(:basket_items, updated_basket_items)
     }
   end
 

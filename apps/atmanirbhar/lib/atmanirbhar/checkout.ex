@@ -59,19 +59,6 @@ defmodule Atmanirbhar.Checkout do
       update: [inc: [quantity: -1]]
 
     Repo.update_all(query, [])
-
-    # query =
-    #   from "posts",
-    #   where: [id: ^post.id],
-    #   update: [inc: [page_views: 1]]
-    # MyApp.Repo.update_all(query, [])
-
-
-    # from(p in Post, where: p.id < 10, update: [set: [title: "New title"]])
-    # |> MyRepo.update_all([])
-    # Repo.update_all(query)
-      # query
-
   end
 
   def get_basket(basket_id) do
