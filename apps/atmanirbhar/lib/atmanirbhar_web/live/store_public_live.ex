@@ -7,7 +7,8 @@ defmodule AtmanirbharWeb.StorePublicLive do
   def mount(%{"store_id" => store_id} = params, session, socket) do
     basket_id = session["basket_id"]
     {int_store_id, _} = Integer.parse(store_id)
-    basket_items = Checkout.get_basket_items(basket_id, int_store_id)
+    # basket_items = Checkout.get_basket_items(basket_id, int_store_id)
+    basket_items = Checkout.get_store_basket_items_map(basket_id, int_store_id)
 
     {:ok,
      socket
@@ -38,10 +39,22 @@ defmodule AtmanirbharWeb.StorePublicLive do
   def handle_event("add-to-cart", %{"product" => product_id}, socket) do
     basket_id = socket.assigns.basket_id
     store_id = socket.assigns.store_id
+    basket_items = socket.assigns.basket_items
 
     # Task async
-    Checkout.add_to_basket(product_id, basket_id, store_id)
-    {:noreply, socket}
+   res = Checkout.add_to_basket(product_id, basket_id, store_id)
+    IO.puts inspect(res)
+    IO.puts "after success - add-to-basket"
+    # replace this in store_items
+    # iex> users = %{"john" => %{age: 27}, "meg" => %{age: 23}}
+    # put_in(users, ["john", :age], 28)
+    # %{9 => 8, 10 => 1}
+    # require IEx; IEx.pry
+    # Map.put(basket_items, res.product_id, res.quantity)
+    {:noreply,
+     socket
+     |> assign(:basket_items, Map.put(basket_items, res.product_id, res.quantity))
+   }
   end
 
   def store_menu(socket, assigns) do

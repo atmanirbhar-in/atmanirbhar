@@ -16,6 +16,17 @@ defmodule Atmanirbhar.Checkout do
     |> Repo.all
   end
 
+  def get_store_basket_items_map(basket_id, store_id) do
+      query = from bi in Atmanirbhar.Checkout.BasketItem,
+      where: bi.basket_id ==^basket_id,
+      where: bi.business_id == ^store_id,
+      select: {bi.product_id, bi.quantity}
+
+      query
+      |> Repo.all
+      |> Enum.into(%{})
+  end
+
   def add_to_basket(product_id, customer_basket_id, business_id) do
     basket =
       customer_basket_id
@@ -37,6 +48,7 @@ defmodule Atmanirbhar.Checkout do
     Repo.insert!(
       # %BasketItem{product_id: int_product_id, business_id: int_business_id, quantity: 1}
       build_basket_item,
+      returning: true,
       on_conflict: query,
       conflict_target: [:product_id, :business_id]
     )
