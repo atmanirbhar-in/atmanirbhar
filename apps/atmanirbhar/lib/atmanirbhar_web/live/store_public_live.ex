@@ -68,8 +68,8 @@ defmodule AtmanirbharWeb.StorePublicLive do
   def store_menu(socket, assigns) do
     ~L"""
 
-    <%= link to: Routes.customer_cart_path(socket, :cart), class: "btn btn-sm btn-link" do %>
-    <span>
+    <%= link to: Routes.customer_cart_path(socket, :cart), class: "btn btn-sm btn-link flex" do %>
+    <span class="">
     <svg
                     class="h-10 w-10"
                     viewBox="0 0 90.9655 101.37777"
@@ -101,9 +101,15 @@ defmodule AtmanirbharWeb.StorePublicLive do
 
 
             </span>
-        <% end %>
+            <span class="rounded-full h-8 w-8 -mt-1 flex items-center justify-center bg-blue-400"><%= count_map_val(assigns.basket_items) %></span>
+    <% end %>
 
     """
+  end
+
+  defp count_map_val(map) do
+    map
+    |> Enum.reduce(0, fn {_k,v}, count -> (v + count) end)
   end
 
 end
